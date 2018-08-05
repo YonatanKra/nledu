@@ -246,7 +246,8 @@ module.exports = Vue.extend({
 	components: {
 		'code-mirror': require('../../vue/codemirror'),
 		'modal-dialog': require('../../ui/modal-dialog'),
-		'tag-editor': require('./tag-editor')
+		'tag-editor': require('./tag-editor'),
+		'asset-editor': require('./asset-editor')
 	},
 
 	vuex: {

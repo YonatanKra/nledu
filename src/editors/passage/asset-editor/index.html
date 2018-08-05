@@ -1,0 +1,18 @@
+<div class="passageTags">
+	<span class="tags"></span>
+
+	<button class="subtle" type="button" @click="showNew" v-show="!newVisible"><i class="fa fa-plus"></i>
+		<!-- L10n: this is the noun form, as in tags you would apply to content. -->
+		{{ 'Assets' | say }}
+	</button>
+
+	<span v-show="newVisible">
+		<template v-for="assetType in assets" transition="fade-in-out">
+			<div class="tag label label-info">{{ assetType.type }}<button>
+				<i class="fa fa-caret-down"></i>
+				<assets-menu :assets="assetType.options" :passage="passage" :story-id="storyId"></assets-menu>
+			</button></div>
+		</template>
+		<button type="button" @click="hideNew">Cancel</button>
+	</span>
+</div>
