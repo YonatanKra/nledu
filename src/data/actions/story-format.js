@@ -35,11 +35,11 @@ const actions = module.exports = {
 					const pVer = semverUtils.parse(data.version);
 					const pMinor = parseInt(pVer.minor);
 					const pPatch = parseInt(pVer.patch);
-	
+
 					/*
 					Check for an identical version.
 					*/
-	
+
 					if (store.state.storyFormat.formats.some(current => {
 						return current.name === data.name &&
 							current.version === data.version;
@@ -49,14 +49,14 @@ const actions = module.exports = {
 						));
 						return;
 					}
-	
+
 					/*
 					Check for a more recent version.
 					*/
-	
+
 					if (store.state.storyFormat.formats.some(current => {
 						const cVer = semverUtils.parse(current.version);
-	
+
 						return current.name === data.name &&
 							cVer.major === pVer.major &&
 							parseInt(cVer.minor) >= pMinor &&
@@ -70,7 +70,7 @@ const actions = module.exports = {
 						));
 						return;
 					}
-	
+
 					const format = {
 						name: data.name,
 						version: data.version,
@@ -78,7 +78,7 @@ const actions = module.exports = {
 						userAdded: true,
 						properties: data
 					};
-	
+
 					store.dispatch('CREATE_FORMAT', format);
 					resolve(format);
 				}
@@ -223,7 +223,7 @@ const actions = module.exports = {
 			setPref(
 				store,
 				'defaultFormat',
-				{ name: 'Harlowe', version: '2.1.0' }
+				{ name: 'SugarCube', version: '2.21.0' }
 			);
 		}
 
