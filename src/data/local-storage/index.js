@@ -23,6 +23,8 @@ module.exports = store => {
 	pref.load(store);
 	story.load(store);
 	storyFormat.load(store);
+	student.load(store);
+	schoolClass.load(store);
 	previousStories = store.state.story.stories;
 	enabled = true;
 
