@@ -8,8 +8,8 @@ const locale = require('../../locale');
 const { setPref } = require('./pref');
 
 const actions = module.exports = {
-	createComment({ dispatch }, id, text) {
+	createComment({ dispatch }, id, comment) {
 
-		dispatch('CREATE_COMMENT', id, { content: text } );
+		dispatch('CREATE_COMMENT', id, comment );
 	}
 };

@@ -149,7 +149,12 @@ module.exports = Vue.extend({
 				blankTextError:
 					locale.say('Please enter a comment.')
 			})
-				.then(comment => {
+				.then(text => {
+
+					const comment = {
+						content: text
+					};
+
 					this.createComment(this.story.id, comment);
 				});
 		},
