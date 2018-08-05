@@ -14,7 +14,7 @@
 				<li v-for="(index, field) in fields">
 					<input v-if="field.type !== 'select'" type="{{field.type}}" id="field{{index}}" class="block" required v-model="response[field.name]">
 					<label v-if="field.type !== 'select'" for="field{{index}}">{{field.label}}</label>
-					<select v-else v-model="response">
+					<select v-else v-model="response[field.name]">
 						<option value="">בחר כיתה</option>
 						<option v-for="schoolClass in field.options" :value="schoolClass">
 							{{schoolClass.school + ' ' + schoolClass.class + ' ' + schoolClass.town}}

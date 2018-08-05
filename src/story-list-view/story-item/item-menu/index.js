@@ -174,9 +174,9 @@ module.exports = Vue.extend({
 
 					return 'אנא בחר כיתה';
 				}
-			}).then(schoolClass => {
-				const data = {class: schoolClass, lessonId: this.story.id};
-				this.linkLesson(data);
+			}).then(data => {
+				const linkLessonData = {class: data.class, lessonId: this.story.id};
+				this.linkLesson(linkLessonData);
 			});
 		}
 	},
