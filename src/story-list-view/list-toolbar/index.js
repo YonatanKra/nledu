@@ -115,10 +115,6 @@ module.exports = Vue.extend({
 						label: 'יישוב',
 						type: 'text',
 						name: 'town'
-					},
-					{
-						label: 'תלמידים',
-
 					}
 				],
 				validator: data => data
