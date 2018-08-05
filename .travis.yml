@@ -8,8 +8,6 @@ script:
   - cd functions
   - yarn
   - cd ..
-  - npm run lint
-  - npm run test
   - echo 'Building!'
   - npm run build:release
 install:
