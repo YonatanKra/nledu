@@ -12,6 +12,7 @@ this, for compatibility.
 const pref = require('./pref');
 const story = require('./story');
 const storyFormat = require('./story-format');
+const storyComments = require ('./story-comments');
 
 let enabled = true;
 let previousStories;
@@ -21,6 +22,7 @@ module.exports = store => {
 	pref.load(store);
 	story.load(store);
 	storyFormat.load(store);
+	storyComments.load(store);
 	previousStories = store.state.story.stories;
 	enabled = true;
 
@@ -104,6 +106,10 @@ module.exports = store => {
 				break;
 			}
 
+			case 'COMMENT_STORY':
+				storyComments.save(store);
+				break;
+
 			/*
 			When saving a passage, we have to make sure to save its parent
 			story too, since its lastUpdate property has changed.
@@ -142,7 +148,7 @@ module.exports = store => {
 				}
 				break;
 			}
-				
+
 			case 'DELETE_PASSAGE_IN_STORY': {
 				const parentStory = state.story.stories.find(
 					s => s.id === mutation.payload[0]
@@ -175,6 +181,10 @@ module.exports = store => {
 				/* This change doesn't need to be persisted. */
 				break;
 
+			case 'CREATE_COMMENT':
+				storyComments.save(store);
+				break;
+
 			default:
 				throw new Error(
 					`Don't know how to handle mutation ${mutation.type}`
@@ -184,7 +194,7 @@ module.exports = store => {
 		/*
 		We save a copy of the stories structure in aid of deleting, as above.
 		*/
-		
+
 		previousStories = state.story.stories;
 	});
 };

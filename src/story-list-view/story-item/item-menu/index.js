@@ -4,6 +4,7 @@ const escape = require('lodash.escape');
 const Vue = require('vue');
 const { confirm } = require('../../../dialogs/confirm');
 const { deleteStory, duplicateStory, updateStory } = require('../../../data/actions/story');
+const { createComment } = require('../../../data/actions/story-comments');
 const { loadFormat } = require('../../../data/actions/story-format');
 const { prompt } = require('../../../dialogs/prompt');
 const locale = require('../../../locale');
@@ -133,6 +134,22 @@ module.exports = Vue.extend({
 			.then(name => {
 				this.duplicateStory(this.story.id, name);
 			});
+		},
+
+		comment() {
+			prompt({
+				message:
+					locale.say('Coming Soon...'),
+				buttonLabel:
+					'<i class="fa fa-comment"></i> ' + locale.say('Comment'),
+				response:
+					locale.say('Comment on %s', this.story.name),
+				blankTextError:
+					locale.say('Please enter a comment.')
+			})
+				.then(comment => {
+					this.createComment(this.story.id, comment);
+				});
 		}
 	},
 
@@ -141,7 +158,8 @@ module.exports = Vue.extend({
 			deleteStory,
 			duplicateStory,
 			loadFormat,
-			updateStory
+			updateStory,
+			createComment
 		},
 
 		getters: {
