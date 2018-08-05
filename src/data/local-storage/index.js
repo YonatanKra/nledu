@@ -82,6 +82,17 @@ module.exports = store => {
 				});
 				break;
 
+			case 'UPDATE_CLASS':
+				schoolClass.update(transaction => {
+					schoolClass.saveClass(
+						transaction,
+						state.class.classes.find(
+							c => c.id === mutation.payload[0]
+						)
+					)
+				});
+				break;
+
 			case 'DUPLICATE_STORY':
 				story.update(transaction => {
 					const dupe = state.story.stories.find(

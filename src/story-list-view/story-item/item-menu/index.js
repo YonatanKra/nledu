@@ -10,6 +10,8 @@ const { prompt } = require('../../../dialogs/prompt');
 const locale = require('../../../locale');
 const { publishStoryWithFormat } = require('../../../data/publish');
 const save = require('../../../file/save');
+const store = require('../../../data/store');
+const {linkLesson} = require('../../../data/actions/class');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -150,6 +152,32 @@ module.exports = Vue.extend({
 				.then(comment => {
 					this.createComment(this.story.id, comment);
 				});
+		},
+		assignToClass() {
+			prompt({
+				message: locale.say(
+					'קשר כיתה למערך שיעור'
+				),
+				buttonLabel: '<i class="fa"> ' + locale.say('קשר'),
+				fields: [
+					{
+						label: 'כיתה',
+						type: 'select',
+						name: 'class',
+						options: store.state.class.classes
+					}
+				],
+				validator: schoolClass => {
+					if (schoolClass) {
+						return true;
+					}
+
+					return 'אנא בחר כיתה';
+				}
+			}).then(schoolClass => {
+				const data = {class: schoolClass, lessonId: this.story.id};
+				this.linkLesson(data);
+			});
 		}
 	},
 
@@ -159,7 +187,8 @@ module.exports = Vue.extend({
 			duplicateStory,
 			loadFormat,
 			updateStory,
-			createComment
+			createComment,
+			linkLesson
 		},
 
 		getters: {

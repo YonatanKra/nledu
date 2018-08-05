@@ -31,11 +31,14 @@ const prompter = module.exports = {
 				fieldToSelect = this.$els.response;
 			}
 			else {
-				fieldToSelect = this.$els.response_fields.getElementsByTagName('input')[0];
+				const responseFields = this.$els.response_fields;
+
+				fieldToSelect = responseFields.getElementsByTagName('input')[0] ||
+					responseFields.getElementsByTagName('select')[0];
 			}
 
 			fieldToSelect.focus();
-			fieldToSelect.select();
+			fieldToSelect.select && fieldToSelect.select();
 		},
 
 		methods: {
