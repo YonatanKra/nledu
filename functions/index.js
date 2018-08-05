@@ -1,5 +1,8 @@
 const functions = require('firebase-functions');
 
+const cors = require('cors')({origin: true});
+
+
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -21,7 +24,24 @@ exports.saveStory = functions.https.onRequest((req, res) => {
 	return admin.database().ref('/stories').push( req.body).then((snapshot) => {
 		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
 		console.log('MM ' +  snapshot.ref.toString());
+		cors(req, res, () => {});
+
 		return res.send(  snapshot.ref.toString());
+		//return snapshot.exportVal();
+	});
+});
+
+exports.getStories = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	const original = req.query.text;
+	console.log(req.body);
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories').once("value",(snapshot) => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		console.log('MM ' +  snapshot.val());
+		cors(req, res, () => {});
+
+		return res.send(  snapshot.val());
 		//return snapshot.exportVal();
 	});
 });
