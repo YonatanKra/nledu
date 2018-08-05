@@ -10,6 +10,7 @@ const { prompt } = require('../../dialogs/prompt');
 const { publishArchive } = require('../../data/publish');
 const saveFile = require('../../file/save');
 const {createStudent} = require('../../data/actions/student');
+const {createClass} = require('../../data/actions/class');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -83,7 +84,34 @@ module.exports = Vue.extend({
 		},
 
 		createClassPrompt(e) {
-
+			prompt({
+				message: locale.say(
+					'כיתה חדשה'
+				),
+				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
+				buttonClass: 'create',
+				origin: e.target,
+				fields: [
+					{
+						label: 'בית ספר',
+						type: 'text',
+						name: 'school'
+					},
+					{
+						label: 'שכבת גיל',
+						type: 'text',
+						name: 'class'
+					},
+					{
+						label: 'יישוב',
+						type: 'text',
+						name: 'town'
+					}
+				],
+				validator: data => data
+			}).then(data => {
+				this.createClass({data});
+			});
 		},
 
 		importFile(e) {
@@ -133,7 +161,8 @@ module.exports = Vue.extend({
 	vuex: {
 		actions: {
 			createStory,
-			createStudent
+			createStudent,
+			createClass
 		},
 
 		getters: {

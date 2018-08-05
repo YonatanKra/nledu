@@ -13,6 +13,7 @@ const pref = require('./pref');
 const story = require('./story');
 const storyFormat = require('./story-format');
 const student = require('./student');
+const schoolClass = require('./class');
 
 let enabled = true;
 let previousStories;
@@ -48,6 +49,19 @@ module.exports = store => {
 						transaction,
 						state.student.students.find(
 							s => s.email === mutation.payload[0].email
+						)
+					);
+				});
+				break;
+
+			case 'CREATE_CLASS':
+				schoolClass.update(transaction => {
+					schoolClass.saveClass(
+						transaction,
+						state.class.classes.find(
+							s => s.school === mutation.payload[0].school &&
+								s.class === mutation.payload[0].class &&
+								s.town === mutation.payload[0].town
 						)
 					);
 				});
