@@ -13,7 +13,8 @@ module.exports = {
 			let newComment = {
 				id : uuid(),
 				storyId: id,
-				content: comment
+				content: comment.content,
+				commentedBy: comment.commentedBy
 			}
 
 			newComment.loaded = false;

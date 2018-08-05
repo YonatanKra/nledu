@@ -45,7 +45,7 @@ module.exports = {
 					window.localStorage.getItem('twine-storycomments-' + id)
 				);
 
-				createComment(store, item);
+				createComment(store, item.storyId, item);
 			}
 			catch (e) {
 				console.warn(
