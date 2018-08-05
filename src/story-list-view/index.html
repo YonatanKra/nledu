@@ -21,6 +21,8 @@
 					<i class="fa fa-sort-alpha-{{storyOrderDir}}" v-if="storyOrder === 'name'"></i>
 				</button>
 			</span>
+			
+			<input class="form-control" @change="sortByName" v-model="filterTerm" placeholder="Search">
 		</p>
 	</header>
 
