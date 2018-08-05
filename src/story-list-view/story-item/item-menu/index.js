@@ -168,7 +168,7 @@ module.exports = Vue.extend({
 					}
 				],
 				validator: schoolClass => {
-					if (schoolClass) {
+					if (schoolClass.class) {
 						return true;
 					}
 
