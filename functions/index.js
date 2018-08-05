@@ -1,5 +1,8 @@
 const functions = require('firebase-functions');
 
+const cors = require('cors')({origin: true});
+
+
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -10,6 +13,82 @@ exports.addMessage = functions.https.onRequest((req, res) => {
 	return admin.database().ref('/messages').push({original: original}).then((snapshot) => {
 		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
 		return res.redirect(303, snapshot.ref.toString());
+	});
+});
+
+exports.saveStory = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories').update({[JSON.parse(req.body).id]: JSON.parse(req.body)}).then(() => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		cors(req, res, () => {});
+
+		return res.send(  'OK');
+		//return snapshot.exportVal();
+	});
+});
+
+
+exports.saveStories = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	const original = req.query.text;
+	console.log(req.body);
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories_meta').update({storyIds: req.body}).then(() => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		//console.log('MM ' +  snapshot.ref.toString());
+		cors(req, res, () => {
+		});
+
+		return res.send('OK');
+		//return snapshot.exportVal();
+	});
+});
+
+exports.savePassages = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	const original = req.query.text;
+	console.log(req.body);
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories_meta').update({passageIds: req.body}).then((snapshot) => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		//console.log('MM ' +  snapshot.ref.toString());
+		cors(req, res, () => {
+		});
+
+		return res.send('OK');
+		//return snapshot.exportVal();
+	});
+});
+
+exports.getStory = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	const id = req.query.storyID;
+	console.log(req.body);
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories').once("value",(snapshot) => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		console.log('MM ' +  snapshot.val());
+		cors(req, res, () => {});
+
+		return res.send(  snapshot.val()[id]);
+		//return snapshot.exportVal();
+	});
+});
+
+
+exports.getStories = functions.https.onRequest((req, res) => {
+	// Grab the text parameter.
+	const original = req.query.text;
+	console.log(req.body);
+	// Push the new message into the Realtime Database using the Firebase Admin SDK.
+	return admin.database().ref('/stories_meta').once("value",(snapshot) => {
+		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+		console.log('MM ' +  snapshot.val());
+		cors(req, res, () => {});
+
+		return res.send(  snapshot.val().storyIds);
+		//return snapshot.exportVal();
 	});
 });
 

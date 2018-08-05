@@ -12,6 +12,8 @@ this, for compatibility.
 const pref = require('./pref');
 const story = require('./story');
 const storyFormat = require('./story-format');
+const student = require('./student');
+const schoolClass = require('./class');
 const storyComments = require ('./story-comments');
 
 let enabled = true;
@@ -23,6 +25,8 @@ module.exports = store => {
 	story.load(store);
 	storyFormat.load(store);
 	storyComments.load(store);
+	student.load(store);
+	schoolClass.load(store);
 	previousStories = store.state.story.stories;
 	enabled = true;
 
@@ -38,6 +42,30 @@ module.exports = store => {
 						transaction,
 						state.story.stories.find(
 							s => s.name === mutation.payload[0].name
+						)
+					);
+				});
+				break;
+
+			case 'CREATE_STUDENT':
+				student.update(transaction => {
+					student.saveStudent(
+						transaction,
+						state.student.students.find(
+							s => s.email === mutation.payload[0].email
+						)
+					);
+				});
+				break;
+
+			case 'CREATE_CLASS':
+				schoolClass.update(transaction => {
+					schoolClass.saveClass(
+						transaction,
+						state.class.classes.find(
+							s => s.school === mutation.payload[0].school &&
+								s.class === mutation.payload[0].class &&
+								s.town === mutation.payload[0].town
 						)
 					);
 				});
