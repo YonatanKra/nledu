@@ -8,6 +8,16 @@
 			</button>
 		</li>
 		<li>
+			<button class="create block" @click="createStudentPrompt" title="{{'צור תלמיד' | say}}">
+				<i class="fa fa-plus"></i> {{'תלמיד' | say}}
+			</button>
+		</li>
+		<li>
+			<button class="create block" @click="createClassPrompt" title="{{'צור כיתה' | say}}">
+				<i class="fa fa-plus"></i> {{'כיתה' | say}}
+			</button>
+		</li>
+		<li>
 			<button class="block" @click="importFile" title="{{ 'Import a published story or Twine archive' | say }}">
 				<i class="fa fa-upload"></i> {{'Import From File' | say}}
 			</button>

@@ -6,8 +6,16 @@
 			{{ validationError }}
 		</p>
 
-		<p class="prompt">
+		<p class="prompt" v-if="!fields">
 			<input type="text" class="block" required v-model="response" v-el:response>
+		</p>
+		<p class="prompt" v-else>
+			<ul v-el:response_fields>
+				<li v-for="(index, field) in fields">
+					<input type="{{field.type}}" id="field{{index}}" class="block" required v-model="response[field.name]">
+					<label for="field{{index}}">{{field.label}}</label>
+				</li>
+			</ul>
 		</p>
 
 		<p class="buttons">
