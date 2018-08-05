@@ -9,7 +9,7 @@ require('./index.less');
 const prompter = module.exports = {
 	component: Vue.extend({
 		template: require('./index.html'),
-		
+
 		data: () => ({
 			message: '',
 			response: '',
@@ -25,14 +25,22 @@ const prompter = module.exports = {
 		}),
 
 		ready() {
-			this.$els.response.focus();
-			this.$els.response.select();
+			let fieldToSelect;
+
+			if (this.$els.response) {
+				fieldToSelect = this.$els.response;
+			}
+			else {
+				fieldToSelect = this.$els.response_fields.getElementsByTagName('input')[0];
+			}
+
+			fieldToSelect.focus();
+			fieldToSelect.select();
 		},
 
 		methods: {
 			accept() {
 				const validResponse = this.validator(this.response);
-
 				if (typeof validResponse === 'string') {
 					this.isValid = false;
 					this.validationError = validResponse;
@@ -62,11 +70,12 @@ const prompter = module.exports = {
 
 	prompt(data) {
 		return new prompter.component({ data }).$mountTo(document.body).then(
+
 			result => {
 				/*
 				False results are produced by the close button and the cancel
 				button. If the result is false, convert it into a rejection.
-				
+
 				Note: this may change in the future, as using rejections for
 				negative results is somewhat unidiomatic.
 				*/

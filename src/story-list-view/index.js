@@ -35,7 +35,8 @@ module.exports = Vue.extend({
 		*/
 
 		storyOrder: 'name',
-		storyOrderDir: 'asc'
+		storyOrderDir: 'asc',
+	    filterTerm: ''
 	}),
 
 	computed: {
@@ -48,9 +49,10 @@ module.exports = Vue.extend({
 				return this.stories;
 			}
 
+			const stories = this.stories.filter(story => story.name.indexOf(this.filterTerm) > -1)
 			switch (this.storyOrder) {
 				case 'name':
-					return this.stories.sort((a, b) => {
+					return stories.sort((a, b) => {
 						if (a.name > b.name) {
 							return this.storyOrderDir === 'asc' ? 1 : -1;
 						}
@@ -63,7 +65,7 @@ module.exports = Vue.extend({
 					});
 
 				case 'lastUpdate':
-					return this.stories.sort((a, b) => {
+					return stories.sort((a, b) => {
 						const aTime = a.lastUpdate.getTime();
 						const bTime = b.lastUpdate.getTime();
 

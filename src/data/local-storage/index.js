@@ -12,6 +12,7 @@ this, for compatibility.
 const pref = require('./pref');
 const story = require('./story');
 const storyFormat = require('./story-format');
+const student = require('./student');
 
 let enabled = true;
 let previousStories;
@@ -36,6 +37,17 @@ module.exports = store => {
 						transaction,
 						state.story.stories.find(
 							s => s.name === mutation.payload[0].name
+						)
+					);
+				});
+				break;
+
+			case 'CREATE_STUDENT':
+				student.update(transaction => {
+					student.saveStudent(
+						transaction,
+						state.student.students.find(
+							s => s.email === mutation.payload[0].email
 						)
 					);
 				});
@@ -142,7 +154,7 @@ module.exports = store => {
 				}
 				break;
 			}
-				
+
 			case 'DELETE_PASSAGE_IN_STORY': {
 				const parentStory = state.story.stories.find(
 					s => s.id === mutation.payload[0]
@@ -184,7 +196,7 @@ module.exports = store => {
 		/*
 		We save a copy of the stories structure in aid of deleting, as above.
 		*/
-		
+
 		previousStories = state.story.stories;
 	});
 };

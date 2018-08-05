@@ -9,6 +9,7 @@ const locale = require('../../locale');
 const { prompt } = require('../../dialogs/prompt');
 const { publishArchive } = require('../../data/publish');
 const saveFile = require('../../file/save');
+const {createStudent} = require('../../data/actions/student');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -48,6 +49,41 @@ module.exports = Vue.extend({
 					);
 				}, 300);
 			});
+		},
+
+		createStudentPrompt(e) {
+			prompt({
+				message: locale.say(
+					'תלמיד חדש'
+				),
+				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
+				buttonClass: 'create',
+				origin: e.target,
+				fields: [
+					{
+						label: 'שם',
+						type: 'text',
+						name: 'name'
+					},
+					{
+						label: 'כיתה',
+						type: 'text',
+						name: 'class'
+					},
+					{
+						label: 'E-mail',
+						type: 'text',
+						name: 'email'
+					}
+				],
+				validator: data => data
+			}).then(data => {
+				this.createStudent({data});
+			});
+		},
+
+		createClassPrompt(e) {
+
 		},
 
 		importFile(e) {
@@ -96,7 +132,8 @@ module.exports = Vue.extend({
 
 	vuex: {
 		actions: {
-			createStory
+			createStory,
+			createStudent
 		},
 
 		getters: {
