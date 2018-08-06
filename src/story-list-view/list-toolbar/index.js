@@ -61,6 +61,7 @@ module.exports = Vue.extend({
 				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
 				buttonClass: 'create',
 				origin: e.target,
+				customClass: 'rtl',
 				fields: [
 					{
 						label: 'שם',
@@ -100,6 +101,7 @@ module.exports = Vue.extend({
 				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
 				buttonClass: 'create',
 				origin: e.target,
+				customClass: 'rtl',
 				fields: [
 					{
 						label: 'בית ספר',
