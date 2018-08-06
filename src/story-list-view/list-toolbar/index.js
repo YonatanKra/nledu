@@ -11,6 +11,7 @@ const { publishArchive } = require('../../data/publish');
 const saveFile = require('../../file/save');
 const {createStudent} = require('../../data/actions/student');
 const {createClass} = require('../../data/actions/class');
+const store = require('../../data/store');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -68,8 +69,9 @@ module.exports = Vue.extend({
 					},
 					{
 						label: 'כיתה',
-						type: 'text',
-						name: 'class'
+						type: 'select',
+						name: 'class',
+						options: store.state.class.classes
 					},
 					{
 						label: 'E-mail',
@@ -77,9 +79,16 @@ module.exports = Vue.extend({
 						name: 'email'
 					}
 				],
-				validator: data => data
+				validator: data => {
+					if (data && data.class) {
+						return true;
+					}
+
+					return 'אנא מלא את כל השדות';
+				}
 			}).then(data => {
-				this.createStudent({data});
+				const studentData = {email: data.email, name: data.name, class: data.class.id};
+				this.createStudent(studentData);
 			});
 		},
 

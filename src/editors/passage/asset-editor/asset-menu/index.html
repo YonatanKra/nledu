@@ -1,0 +1,9 @@
+<drop-down position="bottom left" class="assets">
+	<div class="toolbar">
+		<ul>
+			<li v-for="asset in assets">
+				<button @click="addAsset(asset)" title="{{asset.name}}">{{asset.name}}</button>
+			</li>
+		</ul>
+	</div>
+</drop-down> 

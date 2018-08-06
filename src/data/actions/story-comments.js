@@ -9,10 +9,7 @@ const { setPref } = require('./pref');
 
 const actions = module.exports = {
 	createComment({ dispatch }, id, comment) {
-		dispatch('CREATE_COMMENT', id, comment);
-	},
 
-	loadComments(store, name, version) {
-		console.log ("TODO: load comments");
+		dispatch('CREATE_COMMENT', id, comment );
 	}
 };

@@ -10,6 +10,8 @@ const { prompt } = require('../../../dialogs/prompt');
 const locale = require('../../../locale');
 const { publishStoryWithFormat } = require('../../../data/publish');
 const save = require('../../../file/save');
+const store = require('../../../data/store');
+const {linkLesson} = require('../../../data/actions/class');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -147,9 +149,40 @@ module.exports = Vue.extend({
 				blankTextError:
 					locale.say('Please enter a comment.')
 			})
-				.then(comment => {
+				.then(text => {
+
+					const comment = {
+						content: text
+					};
+
 					this.createComment(this.story.id, comment);
 				});
+		},
+		assignToClass() {
+			prompt({
+				message: locale.say(
+					'קשר כיתה למערך שיעור'
+				),
+				buttonLabel: '<i class="fa"> ' + locale.say('קשר'),
+				fields: [
+					{
+						label: 'כיתה',
+						type: 'select',
+						name: 'class',
+						options: store.state.class.classes
+					}
+				],
+				validator: schoolClass => {
+					if (schoolClass.class) {
+						return true;
+					}
+
+					return 'אנא בחר כיתה';
+				}
+			}).then(data => {
+				const linkLessonData = {class: data.class, lessonId: this.story.id};
+				this.linkLesson(linkLessonData);
+			});
 		}
 	},
 
@@ -159,7 +192,8 @@ module.exports = Vue.extend({
 			duplicateStory,
 			loadFormat,
 			updateStory,
-			createComment
+			createComment,
+			linkLesson
 		},
 
 		getters: {

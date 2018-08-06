@@ -12,8 +12,14 @@
 		<p class="prompt" v-else>
 			<ul v-el:response_fields>
 				<li v-for="(index, field) in fields">
-					<input type="{{field.type}}" id="field{{index}}" class="block" required v-model="response[field.name]">
-					<label for="field{{index}}">{{field.label}}</label>
+					<label v-if="field.type !== 'select'" for="field{{index}}">{{field.label}}</label>
+					<input v-if="field.type !== 'select'" type="{{field.type}}" id="field{{index}}" class="block" required v-model="response[field.name]">
+					<select v-else v-model="response[field.name]">
+						<option value="" selected>בחר כיתה</option>
+						<option v-for="schoolClass in field.options" :value="schoolClass">
+							{{schoolClass.school + ' ' + schoolClass.class + ' ' + schoolClass.town}}
+						</option>
+					</select>
 				</li>
 			</ul>
 		</p>

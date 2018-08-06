@@ -1,5 +1,15 @@
 const uuid = require('tiny-uuid');
 
+function getClassById(state, id) {
+	let schoolClass = state.classes.find(schoolClass => schoolClass.id === id);
+
+	if (!schoolClass) {
+		throw new Error(`No class exists with id ${id}`);
+	}
+
+	return schoolClass;
+}
+
 const classStore = module.exports ={
 	state: {
 		classes: []
@@ -15,6 +25,12 @@ const classStore = module.exports ={
 			);
 
 			state.classes.push(schoolClass);
+		},
+		UPDATE_CLASS(state, id, props) {
+			const schoolClass = getClassById(state, id);
+
+			Object.assign(schoolClass, props);
+			schoolClass.lastUpdate = new Date();
 		}
 	}
 };

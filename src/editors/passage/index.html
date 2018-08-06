@@ -4,6 +4,7 @@
 	</span>
 
 	<tag-editor :passage="passage" :story-id="storyId"></tag-editor>
+	<asset-editor :passage="passage" :story-id="storyId"></asset-editor>
 
 	<p class="error" v-if="!userPassageNameValid">
 		{{ 'A passage already exists with this name.' | say }}
