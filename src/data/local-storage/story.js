@@ -37,7 +37,7 @@ const story = module.exports = {
 		if (!story.id) {
 			throw new Error('Story has no id');
 		}
-		
+
 		transaction.storyIds = commaList.addUnique(
 			transaction.storyIds,
 			story.id
@@ -47,6 +47,10 @@ const story = module.exports = {
 		We have to remove the passages property before serializing the story,
 		as those are serialized under separate keys.
 		*/
+
+		if (story.script.indexOf(':passagerender') === -1) {
+			story.script += `$(document).on(':passagerender', (e) => console.log(1));`;
+		}
 
 		window.localStorage.setItem(
 			'twine-stories-' + story.id,
@@ -65,7 +69,7 @@ const story = module.exports = {
 		if (!story.id) {
 			throw new Error('Story has no id');
 		}
-		
+
 		transaction.storyIds = commaList.remove(transaction.storyIds, story.id);
 		window.localStorage.removeItem('twine-stories-' + story.id);
 	},
@@ -76,7 +80,7 @@ const story = module.exports = {
 		if (!passage.id) {
 			throw new Error('Passage has no id');
 		}
-		
+
 		transaction.passageIds = commaList.addUnique(
 			transaction.passageIds,
 			passage.id
@@ -134,9 +138,9 @@ const story = module.exports = {
 						newStory[key] = storyDefaults[key];
 					}
 				});
-				
+
 				/* Coerce the lastUpdate property to a date. */
-				
+
 				if (newStory.lastUpdate) {
 					newStory.lastUpdate = new Date(
 						Date.parse(newStory.lastUpdate)
@@ -145,7 +149,7 @@ const story = module.exports = {
 				else {
 					newStory.lastUpdate = new Date();
 				}
-				
+
 				/*
 				Force the passages property to be an empty array -- we'll
 				populate it when we load passages below.

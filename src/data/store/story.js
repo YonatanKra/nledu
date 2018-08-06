@@ -20,7 +20,7 @@ function getStoryById(state, id) {
 
 function getPassageInStory(story, id) {
 	let passage = story.passages.find(passage => passage.id === id);
-	
+
 	if (!passage) {
 		throw new Error(`No passage exists in this story with id ${id}`);
 	}
