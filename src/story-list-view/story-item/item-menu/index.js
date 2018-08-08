@@ -161,12 +161,12 @@ module.exports = Vue.extend({
 		assignToClass() {
 			prompt({
 				message: locale.say(
-					'קשר כיתה למערך שיעור'
+					'Connect to Class'
 				),
-				buttonLabel: '<i class="fa"> ' + locale.say('קשר'),
+				buttonLabel: '<i class="fa"> ' + locale.say('Connect'),
 				fields: [
 					{
-						label: 'כיתה',
+						label: 'Class',
 						type: 'select',
 						name: 'class',
 						options: store.state.class.classes
@@ -177,7 +177,7 @@ module.exports = Vue.extend({
 						return true;
 					}
 
-					return 'אנא בחר כיתה';
+					return 'Please select a class';
 				}
 			}).then(data => {
 				const linkLessonData = {class: data.class, lessonId: this.story.id};

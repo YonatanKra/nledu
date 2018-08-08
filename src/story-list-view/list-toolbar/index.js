@@ -56,20 +56,20 @@ module.exports = Vue.extend({
 		createStudentPrompt(e) {
 			prompt({
 				message: locale.say(
-					'תלמיד חדש'
+					'New Student'
 				),
-				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
+				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('Add'),
 				buttonClass: 'create',
 				origin: e.target,
-				customClass: 'rtl',
+				customClass: '',
 				fields: [
 					{
-						label: 'שם',
+						label: 'Name',
 						type: 'text',
 						name: 'name'
 					},
 					{
-						label: 'כיתה',
+						label: 'Class',
 						type: 'select',
 						name: 'class',
 						options: store.state.class.classes
@@ -96,25 +96,25 @@ module.exports = Vue.extend({
 		createClassPrompt(e) {
 			prompt({
 				message: locale.say(
-					'כיתה חדשה'
+					'New Class'
 				),
-				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('הוסף'),
+				buttonLabel: '<i class="fa fa-plus"> ' + locale.say('Add'),
 				buttonClass: 'create',
 				origin: e.target,
-				customClass: 'rtl',
+				customClass: '',
 				fields: [
 					{
-						label: 'בית ספר',
+						label: 'School',
 						type: 'text',
 						name: 'school'
 					},
 					{
-						label: 'שכבת גיל',
+						label: 'Grade',
 						type: 'text',
 						name: 'class'
 					},
 					{
-						label: 'יישוב',
+						label: 'City',
 						type: 'text',
 						name: 'town'
 					}

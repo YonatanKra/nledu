@@ -48,8 +48,8 @@ const story = module.exports = {
 		as those are serialized under separate keys.
 		*/
 
-		if (story.script.indexOf(':passagerender') === -1) {
-			story.script += `$(document).on(':passagerender', (e) => console.log(1));`;
+		if (story.script.indexOf(':passageinit') === -1) {
+			story.script += `$(document).on(':passageinit', (e) => console.log(1));`;
 		}
 
 		window.localStorage.setItem(
