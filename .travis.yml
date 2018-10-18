@@ -14,3 +14,12 @@ install:
   - npm install -g firebase-tools
 after_success:
   - firebase deploy --token "$FIREBASE_TOKEN"
+notifications:
+  webhooks:
+    urls:
+      - http://ycc.co.il/travis
+    on_success: always # default: always
+    on_failure: always # default: always
+    on_start: always   # default: never
+    on_cancel: always # default: always
+    on_error: always # default: always
