@@ -17,7 +17,7 @@ after_success:
 notifications:
   webhooks:
     urls:
-      - http://ycc.co.il/travis.php
+      - http://yonatankra.com/travis.php
     on_success: always # default: always
     on_failure: always # default: always
     on_start: always   # default: never
