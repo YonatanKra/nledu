@@ -92,7 +92,6 @@ module.exports = Vue.extend({
 				this.createStudent(studentData);
 			});
 		},
-
 		createClassPrompt(e) {
 			prompt({
 				message: locale.say(
