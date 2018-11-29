@@ -26,6 +26,7 @@ exports.saveStory = functions.https.onRequest((req, res) => {
 		return res.send(  'OK');
 		//return snapshot.exportVal();
 	});
+	
 });
 
 
