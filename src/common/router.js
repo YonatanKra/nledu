@@ -6,12 +6,20 @@ const LocaleView = require('../locale/view');
 const StoryEditView = require('../story-edit-view');
 const StoryListView = require('../story-list-view');
 const WelcomeView = require('../welcome');
+const HomeView = require('../home');
 const { loadFormat } = require('../data/actions/story-format');
 const { publishStoryWithFormat } = require('../data/publish');
 const replaceUI = require('../ui/replace');
 const store = require('../data/store');
 
 Vue.use(VueRouter);
+
+const PersonsManager = require('../components/tools/persons');
+const AssetsManager = require('../components/tools/assets');
+
+
+const UserProfile = { template: '<div>Profile</div>' }
+const UserPosts = { template: '<div>Posts</div>' }
 
 let TwineRouter = new VueRouter();
 
@@ -24,6 +32,21 @@ TwineRouter.map({
 
 	'/welcome': {
 		component: WelcomeView
+	},
+
+	'/home': {
+		component: HomeView,
+		subRoutes: {
+			'/':{
+				component: UserProfile
+			},
+			'/assets': {
+				component: AssetsManager
+			  },
+			  '/persons': {
+				component: PersonsManager
+			  },
+		}
 	},
 
 	/*
@@ -163,7 +186,7 @@ TwineRouter.map({
 /* By default, show the story list. */
 
 TwineRouter.redirect({
-	'*': '/stories'
+	'*': '/home'
 });
 
 TwineRouter.beforeEach(transition => {

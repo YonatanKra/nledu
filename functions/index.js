@@ -1,7 +1,27 @@
 const functions = require('firebase-functions');
 
 const cors = require('cors')({origin: true});
-
+const { Pool, Client } = require('pg')
+/*
+const pool = new Pool({
+  user: 'ztuqhnkbhhwcgl',
+  host: 'ec2-54-228-243-238.eu-west-1.compute.amazonaws.com',
+  database: 'd3lhr997fs4s47',
+  password: '76bbecf6b927b8c80c00b0701f1b18b5a7cc9af29da5796945629ea230a243ad',
+  port: 5432,
+  ssl: true
+})
+*/
+const clientConne = 
+{
+	user: 'ztuqhnkbhhwcgl',
+	host: 'ec2-54-228-243-238.eu-west-1.compute.amazonaws.com',
+	database: 'd3lhr997fs4s47',
+	password: '76bbecf6b927b8c80c00b0701f1b18b5a7cc9af29da5796945629ea230a243ad',
+	port: 5432,
+	ssl: true
+  }
+  ;
 
 const admin = require('firebase-admin');
 admin.initializeApp();
@@ -92,6 +112,59 @@ exports.getStories = functions.https.onRequest((req, res) => {
 		//return snapshot.exportVal();
 	});
 });
+
+const dbQueryGet = (query,delegate)=>{
+const client = new Client(clientConne);
+
+client.connect()
+return client.query(query)
+	.then(result => delegate(result))
+	.catch(e => console.error(e.stack))
+	.then(() => client.end());
+}
+
+exports.getAssets =  functions.https.onRequest((req, res) => {
+	dbQueryGet('SELECT * FROM public.tbl_assets', (result=>{
+		cors(req, res, () => {});
+
+		res.send(result.rows);
+	}));	
+});
+
+exports.getStatuses =  functions.https.onRequest((req, res) => {
+	dbQueryGet('SELECT * FROM public.lov_statuses', (result=>{
+		cors(req, res, () => {});
+		let statuses = {};
+
+		result.rows.forEach(status => {
+			statuses[status.id] = status.name;
+		});
+
+		res.send(statuses);
+	}));	
+});
+
+exports.getRoles =  functions.https.onRequest((req, res) => {
+	dbQueryGet('SELECT * FROM public.lov_roles', (result=>{
+		cors(req, res, () => {});
+		let roles = {};
+
+		result.rows.forEach(role => {
+			roles[role.id] = role.name;
+		});
+
+		res.send(roles);
+	}));	
+});
+
+exports.getStudents =  functions.https.onRequest((req, res) => {
+	dbQueryGet('SELECT * FROM public.tbl_persons', (result=>{
+		cors(req, res, () => {});
+
+		res.send(result.rows);
+	}));	
+});
+
 
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 	.onCreate((snapshot, context) => {

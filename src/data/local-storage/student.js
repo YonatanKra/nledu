@@ -1,5 +1,6 @@
 let commaList = require('./comma-list');
-let { createStudent } = require('../actions/student');
+let { createStudent, loadStudents } = require('../actions/student');
+const axios = require('axios');
 
 const student = module.exports = {
 	update(func) {
@@ -29,6 +30,15 @@ const student = module.exports = {
 		);
 	},
 	load(store) {
+
+		axios
+		.get('http://localhost:5000/none-linear-education/us-central1/getStudents')
+		.then(r => r.data)
+		.then(students => {
+			
+			loadStudents(store, students);
+		})
+
 		const students = {};
 		const serializedStudents = window.localStorage.getItem('twine-students');
 

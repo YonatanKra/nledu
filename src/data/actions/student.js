@@ -1,7 +1,13 @@
 const actions = module.exports = {
-	createStudent(store, props) {
-		const normalizedProps = Object.assign({}, props);
+	loadStudents(store, props) {
 
-		store.dispatch('CREATE_STUDENT', normalizedProps);
-	}
+		const normalizedProps = Object.assign({}, props.data || props);
+
+		store.dispatch('SET_STUDENTS', normalizedProps)
+	},
+	createClass(store, props) {
+		const normalizedProps = Object.assign({}, props.data || props);
+
+		store.dispatch('CREATE_CLASS', normalizedProps);
+	},
 };

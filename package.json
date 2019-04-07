@@ -30,6 +30,7 @@
     "watch": "webpack -d --progress --watch"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "blob-polyfill": "^1.0.20150320",
     "browser-saveas": "^1.0.0",
     "codemirror": "^5.5.0",

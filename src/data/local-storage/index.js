@@ -13,6 +13,8 @@ const pref = require('./pref');
 const story = require('./story');
 const storyFormat = require('./story-format');
 const student = require('./student');
+const role = require('./role');
+const status = require('./status');
 const schoolClass = require('./class');
 const storyComments = require ('./story-comments');
 
@@ -25,6 +27,8 @@ module.exports = store => {
 	story.load(store);
 	storyFormat.load(store);
 	storyComments.load(store);
+	status.load(store);
+	role.load(store);
 	student.load(store);
 	schoolClass.load(store);
 	previousStories = store.state.story.stories;
@@ -47,6 +51,12 @@ module.exports = store => {
 				});
 				break;
 
+				case 'SET_STUDENTS':
+				break;
+				case 'SET_ROLES':
+				break;
+				case 'SET_STATUSES':
+				break;
 			case 'CREATE_STUDENT':
 				student.update(transaction => {
 					student.saveStudent(
