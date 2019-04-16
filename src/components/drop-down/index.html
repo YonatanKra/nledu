@@ -1,0 +1,11 @@
+<div class="drop-down-container">
+	<button id="{{componentId}}" class="mdl-button mdl-js-button">
+		<i class="material-icons">more_vert</i>
+		{{selectedItem[itemName]}}
+	</button>
+
+	<ul class="mdl-menu mdl-menu--{{position}} mdl-js-menu mdl-js-ripple-effect" for="{{componentId}}">
+		<li v-on:click="select(item,$event)" v-for="item in items" data-item-value={{item[itemValue]}}
+			class="mdl-menu__item">{{item[itemName]}}</li>
+	</ul>
+</div

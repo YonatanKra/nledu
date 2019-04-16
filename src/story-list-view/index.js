@@ -11,6 +11,8 @@ const locale = require('../locale');
 const { check: checkForAppUpdate } = require('../dialogs/app-update');
 const { check: checkForDonation } = require('../dialogs/app-donation');
 const ImportDialog = require('../dialogs/story-import');
+const { createStory } = require('../data/actions/story');
+
 
 require('./index.less');
 
@@ -36,7 +38,15 @@ module.exports = Vue.extend({
 
 		storyOrder: 'name',
 		storyOrderDir: 'asc',
-	    filterTerm: ''
+		filterTerm: '', 
+		
+
+		insert_sub_subject : {},
+		insert_story_name : '',
+		insert_story_description: '',
+		insert_story_tags : '',
+		insert_story_status :4
+
 	}),
 
 	computed: {
@@ -164,6 +174,18 @@ module.exports = Vue.extend({
 			}
 
 			this.storyOrder = 'name';
+		},
+
+		saveNewStory(){
+			this.createStory({
+				name: this.insert_story_name,
+				sub_subject: this.insert_sub_subject.sub_subject_id,
+				path: 'pathhhh',
+				tags: this.insert_story_tags,
+				description: this.insert_story_description,
+				status : this.insert_story_status,
+						isNew : true
+			});
 		}
 	},
 
@@ -171,6 +193,12 @@ module.exports = Vue.extend({
 		'story-item': require('./story-item'),
 		'list-toolbar': require('./list-toolbar'),
 		'file-drag-n-drop': require('../ui/file-drag-n-drop'),
+		'slide-panel' : require('../components/slide-panel'),
+		'subjects-selector' : require('../components/subjects-selector'),
+		'lessons-list' : require('../components/lessons-list'),
+		'tags-selector' : require('../components/tags-selector'),
+		'status-selector' : require('../components/status-selector'),
+
 	},
 
 	events: {
@@ -196,6 +224,11 @@ module.exports = Vue.extend({
 	},
 
 	vuex: {
+		actions: {
+			createStory,
+			
+			
+		},
 		getters: {
 			stories: state => state.story.stories
 		}

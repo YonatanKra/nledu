@@ -1,0 +1,17 @@
+<div class="expanding-card">
+	<div class="container"> 
+		<span class="button" v-on:click="expandCard">✖</span>
+		<div class="content">
+			<div class="head">
+				<h3>{{cardTitle}}</h3>
+				<p class="sub">{{cardSubTitle}}</p>
+			</div>
+			<div class="body">
+				<slot name="card-body"> </slot>
+				<div class="action-bar">
+					<slot name="card-action"> </slot>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

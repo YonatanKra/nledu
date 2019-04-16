@@ -1,30 +1,55 @@
+.list-container{
+
+	display: grid;
+	grid-template-columns:  50% 50%;
+	grid-gap: 10px;
+	
 .demo-card-wide.mdl-card {
-    width: 512px;
-    min-height: 0;
-    margin-bottom:  5px;
-  }
-  .demo-card-wide {
+	width: 512px;
+	min-height: 0;
+	margin-bottom: 5px;
+}
 
-    .hidden{
-        display: none;
-    }
+.demo-card-wide {
 
-    .mdl-card__title {
-        color: #fff;
-        -webkit-transition: height 0.5s;
-        transition: height 0.5s ;
-        height: auto;
-        background: url('https://www.elegantthemes.com/blog/wp-content/uploads/2017/12/Featured-Image-WordPress-User-Roles.png') center / cover;
-   
-    }
+	.hidden {
+		display: none;
 
-    .mdl-card__title.expand{
-        height: 176px;
+		.avatar_image{
+			opacity: 0;
+			width: 0px;
+			-webkit-transition: width 0.5s;
+			transition: width 0.5s;
 
-    }
+		}
+	}
+
+	.avatar_image {
+		width: 33%;
+		position: absolute;
+		left: 33%;
+		top: 30px;
+		opacity: 1;
+	}
+
+	.mdl-card__title {
+		color: #fff;
+		-webkit-transition: height 0.5s;
+		transition: height 0.5s;
+		height: 60px;
+		background: url('https://www.elegantthemes.com/blog/wp-content/uploads/2017/12/Featured-Image-WordPress-User-Roles.png') center / cover;
+
+	}
+
+	.mdl-card__title.expand {
+		height: 176px;
+
+	}
 
 
-    .mdl-card__menu {
-        color: #fff;
-      }
-  }
+	.mdl-card__menu {
+		color: #fff;
+	}
+}
+
+}

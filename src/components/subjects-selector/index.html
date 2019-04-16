@@ -1,0 +1,15 @@
+<div>
+	<div>
+		<span class="mdl-chip mdl-chip--contact" v-on:click="selectSubject(subject.subject_id)"
+			v-for="subject in subjects">
+			<img class="mdl-chip__contact" src="https://getmdl.io/templates/dashboard/images/user.jpg"></img>
+			<span class="mdl-chip__text">{{subject.name}}</span>
+		</span>
+	</div>
+	<div>
+		<button v-on:click="selectSubSubject(sub_subject)" v-for="sub_subject in subSubjects" type="button"
+			class="mdl-chip" data-city-name="{{sub_subject.sub_subject_name}}">
+			<span class="mdl-chip__text">{{sub_subject.sub_subject_name}}</span>
+		</button>
+	</div>
+</div>

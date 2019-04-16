@@ -1,8 +1,6 @@
 const actions = module.exports = {
 	createClass(store, props) {
-		const normalizedProps = Object.assign({}, props.data || props);
-
-		store.dispatch('CREATE_CLASS', normalizedProps);
+		store.dispatch('CREATE_CLASS', props.data || props);
 	},
 	linkLesson(store, props) {
 		const normalizedProps = Object.assign({}, props.class);
@@ -15,5 +13,8 @@ const actions = module.exports = {
 		}
 
 		store.dispatch('UPDATE_CLASS', normalizedProps.id, normalizedProps);
-	}
+	},
+	loadClasses(store, props) {
+		store.dispatch('SET_CLASSES', props.data || props)
+	},
 };

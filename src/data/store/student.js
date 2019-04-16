@@ -10,15 +10,9 @@ const studentStore = module.exports ={
 		  },
 
 		CREATE_STUDENT(state, props) {
-			const student = Object.assign(
-				{
-					id: uuid(),
-					lastUpdate: new Date()
-				},
-				props
-			);
-
-			state.students.push(student);
+			if(props && props.id){
+				state.students.push(props);
+			}
 		}
 	}
 };

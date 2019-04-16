@@ -14,9 +14,12 @@ const story = require('./story');
 const storyFormat = require('./story-format');
 const student = require('./student');
 const role = require('./role');
+const city = require('./city');
 const status = require('./status');
+const subject = require('./subject');
 const schoolClass = require('./class');
 const storyComments = require ('./story-comments');
+const syncer = require ('../data-sync');
 
 let enabled = true;
 let previousStories;
@@ -29,11 +32,14 @@ module.exports = store => {
 	storyComments.load(store);
 	status.load(store);
 	role.load(store);
+	city.load(store);
 	student.load(store);
+	subject.load(store);
 	schoolClass.load(store);
 	previousStories = store.state.story.stories;
 	enabled = true;
-
+	syncer.startSync();
+	
 	store.subscribe((mutation, state) => {
 		if (!enabled) {
 			return;
@@ -42,12 +48,24 @@ module.exports = store => {
 		switch (mutation.type) {
 			case 'CREATE_STORY':
 				story.update(transaction => {
+
+					const storyToSave = state.story.stories.find(
+						s => s.name === mutation.payload[0].name
+					);
+
 					story.saveStory(
 						transaction,
-						state.story.stories.find(
-							s => s.name === mutation.payload[0].name
-						)
+						storyToSave
 					);
+
+					story.saveStoryMetaData({
+						id : storyToSave.id,
+						name: storyToSave.name,
+						sub_subject : mutation.payload[0].sub_subject,
+						path : mutation.payload[0].path,
+						tags : mutation.payload[0].tags,
+						description : mutation.payload[0].description
+					})
 				});
 				break;
 
@@ -57,19 +75,20 @@ module.exports = store => {
 				break;
 				case 'SET_STATUSES':
 				break;
+				case 'SET_CITIES':
+				break;
+				case 'SET_SUBJECTS':
+				break;
+				case 'SET_CLASSES':
+				break;
 			case 'CREATE_STUDENT':
-				student.update(transaction => {
-					student.saveStudent(
-						transaction,
-						state.student.students.find(
-							s => s.email === mutation.payload[0].email
-						)
-					);
-				});
+			student.createStudent(store, mutation.payload[0])
+		
 				break;
 
 			case 'CREATE_CLASS':
-				schoolClass.update(transaction => {
+schoolClass.create(store, mutation.payload[0])
+			/*	schoolClass.update(transaction => {
 					schoolClass.saveClass(
 						transaction,
 						state.class.classes.find(
@@ -78,7 +97,7 @@ module.exports = store => {
 								s.town === mutation.payload[0].town
 						)
 					);
-				});
+				});*/
 				break;
 
 			case 'UPDATE_STORY':

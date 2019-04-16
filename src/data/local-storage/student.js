@@ -3,6 +3,19 @@ let { createStudent, loadStudents } = require('../actions/student');
 const axios = require('axios');
 
 const student = module.exports = {
+	createStudent(store, student){
+		if (student && !student.id){
+			axios
+			.post('http://localhost:5000/none-linear-education/us-central1/addStudent',student)
+			.then(r => r.data)
+			.then(students => {
+				createStudent(store, students[0]);
+			})
+			.catch(err=>{
+				err.message + " " + err.response.data
+			})
+		}
+	},
 	update(func) {
 		const transaction = {
 			studentIds: window.localStorage.getItem('twine-students') || ''
@@ -38,45 +51,5 @@ const student = module.exports = {
 			
 			loadStudents(store, students);
 		})
-
-		const students = {};
-		const serializedStudents = window.localStorage.getItem('twine-students');
-
-		if (!serializedStudents) {
-			return;
-		}
-
-		serializedStudents.split(',').forEach(id => {
-			const newStudent = JSON.parse(
-				window.localStorage.getItem('twine-students-' + id)
-			);
-
-			if (newStudent) {
-				/* Coerce the lastUpdate property to a date. */
-
-				if (newStudent.lastUpdate) {
-					newStudent.lastUpdate = new Date(
-						Date.parse(newStudent.lastUpdate)
-					);
-				}
-				else {
-					newStudent.lastUpdate = new Date();
-				}
-
-				students[newStudent.id] = newStudent;
-			}
-			else {
-				console.warn(
-					`Could not parse student ${id}, skipping`,
-					window.localStorage.getItem('twine-students-' + id)
-				);
-			}
-		});
-
-		/* Finally, we dispatch actions to add the students to the store. */
-
-		Object.keys(students).forEach(id => {
-			createStudent(store, students[id]);
-		});
 	}
 };

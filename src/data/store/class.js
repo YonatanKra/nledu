@@ -16,7 +16,10 @@ const classStore = module.exports ={
 	},
 	mutations: {
 		CREATE_CLASS(state, props) {
-			const schoolClass = Object.assign(
+			if(props && props.id){
+				state.classes.push(props);
+			}
+			/*const schoolClass = Object.assign(
 				{
 					id: uuid(),
 					lastUpdate: new Date()
@@ -24,13 +27,21 @@ const classStore = module.exports ={
 				props
 			);
 
-			state.classes.push(schoolClass);
+			state.classes.push(schoolClass);*/
+		
 		},
 		UPDATE_CLASS(state, id, props) {
 			const schoolClass = getClassById(state, id);
 
 			Object.assign(schoolClass, props);
 			schoolClass.lastUpdate = new Date();
-		}
+		},
+		SET_CLASSES (state, classes) {
+			state.classes = classes;
+		
+			/*classes && classes.forEach(cls => {
+				state.classes.push(cls) ;
+			});*/
+		  },
 	}
 };

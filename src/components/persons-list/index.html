@@ -1,44 +1,99 @@
-<div>
-    sfsdfdsfdsfdsjfndsjkfndsjknskj
+<div class=" list-container">
 
-    <ul class="demo-list-item mdl-list">
-            <li v-for="person in students" class="mdl-list__item">
-              <span class="mdl-list__item-primary-content">
-                    {{ person.first_name }}  {{ person.surname }}
-              </span>
-            </li>
-    </ul>
+	
+	
+<div  v-for="person in students">
 
-  
+<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+	<div class="mdl-card__title" v-on:click="expandCard">
+		<h2 class="mdl-card__title-text"> {{ person.first_name }} {{ person.surname }}</h2>
+	</div>
+	<div class="mdl-card__supporting-text hidden" expandedable>
+		<img class="avatar_image" src="./images/student-avatar.png" />
+
+		<div class="mdl-tabs mdl-js-tabs">
+			<div class="mdl-tabs__tab-bar">
+				<a href="#about-panel" class="mdl-tabs__tab is-active">About</a>
+				<a href="#education-panel" class="mdl-tabs__tab">Education</a>
+				<a href="#targaryens-panel" class="mdl-tabs__tab">Commounication</a>
+			</div>
+
+			<div class="mdl-tabs__panel is-active" id="about-panel">
+
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="person_birth_date"
+								value="{{person.birth_date | moment}}" disabled>
+							<label class="mdl-textfield__label" for="person_birth_date">Birth Date</label>
+						</div>
+					</div>
+
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="person_created_date"
+								value="{{person.created_date | moment}}" disabled>
+							<label class="mdl-textfield__label" for="person_created_date">Created Date</label>
+						</div>
+					</div>
+
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="person_last_modified"
+								value="{{person.last_modified | moment}}" disabled>
+							<label class="mdl-textfield__label" for="person_last_modified">Update Date</label>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--8-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="person_email" value="{{person.email}}" disabled>
+							<label class="mdl-textfield__label" for="person_email">Email</label>
+						</div>
+					</div>
+
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="person_phone" value="{{person.phone}}" disabled>
+							<label class="mdl-textfield__label" for="person_phone">Phone Number</label>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="mdl-tabs__panel" id="education-panel">
+
+				<span class="mdl-chip">
+					<span class="mdl-chip__text">
+						<class-row v-bind:class-id="person.class">
+
+						</class-row>
+					</span>
+				</span>
+
+			</div>
+			<div class="mdl-tabs__panel" id="targaryens-panel">
+				{{roles[person.role]}}
+				{{statuses[person.status]}}
+			</div>
+		</div>
+
+
+	</div>
+	<div class="mdl-card__actions mdl-card--border hidden" expandedable>
+		<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+			Get Started
+		</a>
+	</div>
+	<div class="mdl-card__menu">
+		<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+			<i class="material-icons">share</i>
+		</button>
+	</div>
 </div>
-
-    <div v-for="person in students" class="demo-card-wide mdl-card mdl-shadow--2dp">
-      <div class="mdl-card__title"  v-on:click="expandCard" >
-        <h2 class="mdl-card__title-text"> {{ person.first_name }}  {{ person.surname }}</h2>
-      </div>
-      <div class="mdl-card__supporting-text hidden" expandedable>
-        
-        {{person.role}}
-      
-        {{person.birth_date}}
-        {{person.created_date}}
-        {{person.last_modified}}
-
-        {{roles[person.role]}}
-        {{statuses[person.status]}}
-
-      
-          
-
-      </div>
-      <div class="mdl-card__actions mdl-card--border hidden" expandedable>
-        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-          Get Started
-        </a>
-      </div>
-      <div class="mdl-card__menu">
-        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-          <i class="material-icons">share</i>
-        </button>
-      </div>
-    </div>
+	
+</div>
+</div>

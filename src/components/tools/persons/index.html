@@ -1,6 +1,89 @@
 <div id="persons-tool-view">
-Persons:
+	<!-- Left aligned menu below button -->
 
-<persons-list></persons-list>
+	<expanding-card card-title="Create person">
+		<div slot="card-body">
+			<form id="createClass">
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="insert_first_name" name="first_name"
+								v-model="insert_first_name">
+							<label class="mdl-textfield__label" for="insert_first_name">First Name</label>
+						</div>
+					</div>
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="insert_surname" name="surname"
+								v-model="insert_surname">
+							<label class="mdl-textfield__label" for="insert_surname">Surname</label>
+						</div>
+					</div>
+					<div class="mdl-cell mdl-cell--4-col">
+						<drop-down v-bind:items="rolesList" item-name="value" item-value="key"
+							v-bind:selected.sync="insert_role"></drop-down>
+
+					</div>
+				</div>
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="insert_email" name="email"
+								v-model="insert_email">
+							<label class="mdl-textfield__label" for="insert_email">Email Adress</label>
+						</div>
+					</div>
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="insert_phone" name="phone"
+								v-model="insert_phone">
+							<label class="mdl-textfield__label" for="insert_phone">Phone Number</label>
+						</div>
+					</div>
+					<div class="mdl-cell mdl-cell--4-col">
+						<drop-down v-bind:items="classesList" item-name="value" item-value="key"
+							v-bind:selected.sync="insert_class"></drop-down>
+
+					</div>
+				</div>
+
+				<div class="mdl-grid">
+					<div class="mdl-cell mdl-cell--4-col">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="insert_birth_date" name="birth_date"
+								v-model="insert_birth_date" placeholder="dd/mm/yyyy">
+							<label class="mdl-textfield__label" for="insert_birth_date">Birhdate</label>
+						</div>
+
+					</div>
+					<div class="mdl-cell mdl-cell--8-col">
+						<Label
+							class="input-custom-file mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+							ADD FILE
+							<input type="file" v-on:change="selectImage" name="insert_profile_img"
+								id="insert_profile_img" accept="image/png, image/jpeg">
+						</label>
+					</div>
+				</div>
+
+
+			</form>
+		</div>
+		<div slot="card-action">
+			<div class="mdl-grid">
+				<div class="mdl-layout-spacer"></div>
+				<div class="mdl-cell mdl-cell--4-col">
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+						v-on:click="createStudentDelegate">
+						Save
+					</button>
+				</div>
+				<div class="mdl-layout-spacer"></div>
+			</div>
+
+		</div>
+	</expanding-card>
+
+	<persons-list></persons-list>
 
 </div>

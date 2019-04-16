@@ -20,29 +20,35 @@ const initTools = ()=>{
 		icon: 'home',
 		path: '/'
 	});
-
+/*
 	tools.push({
 		name: 'Inbox',
 		order: 2,
 		icon: 'inbox',
 		path: '/inbox'
 	});
-
+*/
 	tools.push({
-		name: 'Delete',
+		name: 'Classes',
 		order: 2,
 		icon: 'delete',
-		path: '/delete'
+		path: '#!/home/classes'
 	});
 
 
 	tools.push({
-		name: 'Report',
+		name: 'Persons',
 		order: 2,
 		icon: 'report',
-		path: 'persons'
+		path: '#!/home/persons'
 	});
 
+	tools.push({
+		name: 'Lessons',
+		order: 2,
+		icon: 'report',
+		path: '#!/home/lessons'
+	});
 
 }
 initTools();
@@ -55,6 +61,12 @@ module.exports = Vue.extend({
 		tools : tools
 	}),
 
+	ready() {
+		componentHandler.upgradeDom();
+	},
+	filters: {
+		
+	},
 	methods: {
 
 	},

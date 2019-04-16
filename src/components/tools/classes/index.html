@@ -1,0 +1,70 @@
+<div id="classes-tool-view">
+
+    Classes dfgdfgdfgfd
+    <h1>dfds</h1>
+
+<expanding-card card-title="יצירת כיתה" card-sub-title="יצירת כיתה חדשה">
+	<div slot="card-body">
+		<form action="#" id="createClass">
+
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="insert_grade" name="grade"  v-model="insert_grade">
+                            <label class="mdl-textfield__label" for="insert_grade">כיתה</label>
+                  </div>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="insert_school" name="school"  v-model="insert_school">
+                    <label class="mdl-textfield__label" for="insert_school">בית ספר</label>
+                  </div>
+            </div>
+          </div>
+
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_city" name="city" v-model="insert_city">
+				<label class="mdl-textfield__label" for="insert_city">ישוב</label>
+      </div>
+      <div>
+          <button v-on:click="selectCityDelegate" v-for="city in filteredCities" type="button" class="mdl-chip" data-city-name="{{city.name}}">
+              <span class="mdl-chip__text">{{city.name}}</span>
+          </button>
+      </div>
+		</form>
+	</div>
+	<div slot="card-action">
+      <div class="mdl-grid">
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-cell mdl-cell--4-col">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" v-on:click="createClassDelegate">
+                  save
+                </button>
+          </div>
+          <div class="mdl-layout-spacer"></div>
+      </div>
+            
+	</div>
+</expanding-card>
+
+    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">בית ספר</th>
+                <th>כיתה</th>
+                <th>ישוב</th>
+                <th>תאריך עדכון</th>
+                <th> סטטוס</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="class in classes">
+                <td class="mdl-data-table__cell--non-numeric">{{class.school}}</td>
+                <td>{{class.grade}}</td>
+                <td>{{class.city}}</td>
+                <td>{{class.last_modified | moment}}</td>
+                <td>{{statuses[class.status]}}</td>
+              </tr>
+            </tbody>
+          </table>
+</div>

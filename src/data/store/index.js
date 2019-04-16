@@ -14,7 +14,9 @@ module.exports = new Vuex.Store({
 		student: require('./student'),
 		role: require('./role'),
 		status: require('./status'),
+		city: require('./city'),
 		class: require('./class'),
+		subject: require('./subject'),
 		storyComments: require('./story-comments')
 	},
 

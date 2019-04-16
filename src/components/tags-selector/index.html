@@ -1,0 +1,11 @@
+<div>
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="sample1" v-on:keypress.enter="addTags" v-model="input_tag">
+		<label class="mdl-textfield__label" for="sample1">Enter Tag...</label>
+	</div>
+	<span class="mdl-chip mdl-chip--deletable" v-for="tag in tagsList">
+		<span class="mdl-chip__text">{{tag}}</span>
+		<button v-on:click="removeTags(tag)" type="button" class="mdl-chip__action"><i
+				class="material-icons">cancel</i></button>
+	</span>
+</div>

@@ -1,5 +1,6 @@
 let commaList = require('./comma-list');
-let { createClass } = require('../actions/class');
+let { createClass, loadClasses } = require('../actions/class');
+const axios = require('axios');
 
 const schoolClass = module.exports = {
 	update(func) {
@@ -28,7 +29,33 @@ const schoolClass = module.exports = {
 			)
 		);
 	},
+	create(store, schoolClass) {
+		if (schoolClass && !schoolClass.id){
+			axios
+			.post('http://localhost:5000/none-linear-education/us-central1/addClass',schoolClass)
+			.then(r => r.data)
+			.then(classes => {
+				createClass(store, classes[0]);
+			})
+			.catch(err=>{
+				err.message + " " + err.response.data
+			})
+		}
+
+	
+	},
 	load(store) {
+		axios
+		.get('http://localhost:5000/none-linear-education/us-central1/getClasses')
+		.then(r => r.data)
+		.then(classes => {
+			
+			loadClasses(store, classes);
+		})
+		.catch(err=>{
+			err.message + " " + err.response.data
+		})
+/*
 		const classes = {};
 		const serializedClasses = window.localStorage.getItem('twine-classes');
 
@@ -42,7 +69,7 @@ const schoolClass = module.exports = {
 			);
 
 			if (newClass) {
-				/* Coerce the lastUpdate property to a date. */
+				/* Coerce the lastUpdate property to a date. 
 
 				if (newClass.lastUpdate) {
 					newClass.lastUpdate = new Date(
@@ -63,10 +90,10 @@ const schoolClass = module.exports = {
 			}
 		});
 
-		/* Finally, we dispatch actions to add the classes to the store. */
+		/* Finally, we dispatch actions to add the classes to the store. 
 
 		Object.keys(classes).forEach(id => {
 			createClass(store, classes[id]);
-		});
+		});*/
 	}
 };

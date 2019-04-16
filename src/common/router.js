@@ -16,6 +16,7 @@ Vue.use(VueRouter);
 
 const PersonsManager = require('../components/tools/persons');
 const AssetsManager = require('../components/tools/assets');
+const ClassesManager = require('../components/tools/classes');
 
 
 const UserProfile = { template: '<div>Profile</div>' }
@@ -46,6 +47,24 @@ TwineRouter.map({
 			  '/persons': {
 				component: PersonsManager
 			  },
+			  '/classes': {
+				component: ClassesManager
+			  },
+			  '/lessons': {
+				component: {
+					template: '<div><story-list ' +
+						':previously-editing="previouslyEditing"></story-list></div>',
+		
+					components: { 'story-list': StoryListView },
+		
+					data() {
+						return {
+							previouslyEditing: this.$route.params ?
+								this.$route.params.previouslyEditing : ''
+						};
+					},
+				}
+			},
 		}
 	},
 
@@ -186,7 +205,7 @@ TwineRouter.map({
 /* By default, show the story list. */
 
 TwineRouter.redirect({
-	'*': '/home'
+	'*': '/home/persons'
 });
 
 TwineRouter.beforeEach(transition => {
