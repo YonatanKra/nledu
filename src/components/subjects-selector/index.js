@@ -16,7 +16,7 @@ module.exports = Vue.extend({
 			this.selectedSubject = this.subjects[subject_id];
 		},
 		selectSubSubject(sub_subject) {
-			this.selectedSubSubject = sub_subject
+			this.selectedSubSubject = sub_subject;
 		}
 	},
 	computed: {

@@ -18,8 +18,10 @@ const city = require('./city');
 const status = require('./status');
 const subject = require('./subject');
 const schoolClass = require('./class');
-const storyComments = require ('./story-comments');
-const syncer = require ('../data-sync');
+const lesson = require('./lessons');
+const goal = require('./goal');
+const storyComments = require('./story-comments');
+const syncer = require('../data-sync');
 
 let enabled = true;
 let previousStories;
@@ -36,10 +38,12 @@ module.exports = store => {
 	student.load(store);
 	subject.load(store);
 	schoolClass.load(store);
+	lesson.load(store);
+	goal.load(store);
 	previousStories = store.state.story.stories;
 	enabled = true;
 	syncer.startSync();
-	
+
 	store.subscribe((mutation, state) => {
 		if (!enabled) {
 			return;
@@ -53,60 +57,84 @@ module.exports = store => {
 						s => s.name === mutation.payload[0].name
 					);
 
+					
+					if (mutation.payload[0].isNew) {
+						delete mutation.payload[0].isNew ;
+						 delete storyToSave.isNew;
+debugger;
+						story.saveStoryMetaData({
+							id: storyToSave.id,
+							name: storyToSave.name,
+							sub_subject: mutation.payload[0].sub_subject,
+							path: mutation.payload[0].path,
+							tags: mutation.payload[0].tags,
+							description: mutation.payload[0].description,
+						})
+					}
+
 					story.saveStory(
 						transaction,
 						storyToSave
 					);
 
-					story.saveStoryMetaData({
-						id : storyToSave.id,
-						name: storyToSave.name,
-						sub_subject : mutation.payload[0].sub_subject,
-						path : mutation.payload[0].path,
-						tags : mutation.payload[0].tags,
-						description : mutation.payload[0].description
-					})
 				});
 				break;
 
-				case 'SET_STUDENTS':
+			case 'SET_STUDENTS':
 				break;
-				case 'SET_ROLES':
+			case 'SET_ROLES':
 				break;
-				case 'SET_STATUSES':
+			case 'SET_STATUSES':
 				break;
-				case 'SET_CITIES':
+			case 'SET_CITIES':
 				break;
-				case 'SET_SUBJECTS':
+			case 'SET_SUBJECTS':
 				break;
-				case 'SET_CLASSES':
+			case 'SET_CLASSES':
+				break;
+			case 'SET_LESSONS':
+				break;
+				case 'SET_GOALS':
 				break;
 			case 'CREATE_STUDENT':
-			student.createStudent(store, mutation.payload[0])
-		
+				student.createStudent(store, mutation.payload[0])
+
 				break;
 
 			case 'CREATE_CLASS':
-schoolClass.create(store, mutation.payload[0])
-			/*	schoolClass.update(transaction => {
-					schoolClass.saveClass(
-						transaction,
-						state.class.classes.find(
-							s => s.school === mutation.payload[0].school &&
-								s.class === mutation.payload[0].class &&
-								s.town === mutation.payload[0].town
-						)
-					);
-				});*/
+				schoolClass.create(store, mutation.payload[0])
+				/*	schoolClass.update(transaction => {
+						schoolClass.saveClass(
+							transaction,
+							state.class.classes.find(
+								s => s.school === mutation.payload[0].school &&
+									s.class === mutation.payload[0].class &&
+									s.town === mutation.payload[0].town
+							)
+						);
+					});*/
 				break;
 
 			case 'UPDATE_STORY':
 				story.update(transaction => {
+debugger;
+
+const storyToSave = 	state.story.stories.find(
+	s => s.id === mutation.payload[0]
+)
+					story.updateStoryMetaData({
+						id: storyToSave.id,
+						name: storyToSave.name,
+						sub_subject: mutation.payload[1].sub_subject,
+						path: mutation.payload[1].path,
+						tags: mutation.payload[1].tags,
+						description: mutation.payload[1].description,
+						status :  mutation.payload[1].status
+					})
+
 					story.saveStory(
 						transaction,
-						state.story.stories.find(
-							s => s.id === mutation.payload[0]
-						)
+						storyToSave
 					);
 				});
 				break;
@@ -150,90 +178,94 @@ schoolClass.create(store, mutation.payload[0])
 				});
 				break;
 
-			case 'DELETE_STORY': {
-				/*
-				We have to use our last copy of the stories array, because
-				by now the deleted story is gone from the state.
-				*/
-
-				const toDelete = previousStories.find(
-					s => s.id === mutation.payload[0]
-				);
-
-				story.update(transaction => {
+			case 'DELETE_STORY':
+				{
 					/*
-					It's our responsibility to delete child passages first.
+					We have to use our last copy of the stories array, because
+					by now the deleted story is gone from the state.
 					*/
 
-					toDelete.passages.forEach(
-						passage => story.deletePassage(transaction, passage)
+					const toDelete = previousStories.find(
+						s => s.id === mutation.payload[0]
 					);
 
-					story.deleteStory(transaction, toDelete);
-				});
-				break;
-			}
+					story.update(transaction => {
+						/*
+						It's our responsibility to delete child passages first.
+						*/
+
+						toDelete.passages.forEach(
+							passage => story.deletePassage(transaction, passage)
+						);
+
+						story.deleteStory(transaction, toDelete);
+					});
+					break;
+				}
 
 			case 'COMMENT_STORY':
 				storyComments.save(store);
 				break;
 
-			/*
-			When saving a passage, we have to make sure to save its parent
-			story too, since its lastUpdate property has changed.
-			*/
+				/*
+				When saving a passage, we have to make sure to save its parent
+				story too, since its lastUpdate property has changed.
+				*/
 
-			case 'CREATE_PASSAGE_IN_STORY': {
-				const parentStory = state.story.stories.find(
-					s => s.id === mutation.payload[0]
-				);
-				const passage = parentStory.passages.find(
-					p => p.name === mutation.payload[1].name
-				);
-
-				story.update(transaction => {
-					story.saveStory(transaction, parentStory);
-					story.savePassage(transaction, passage);
-				});
-				break;
-			}
-
-			case 'UPDATE_PASSAGE_IN_STORY': {
-				/* Is this a significant update? */
-
-				if (Object.keys(mutation.payload[2]).some(key => key !== 'selected')) {
+			case 'CREATE_PASSAGE_IN_STORY':
+				{
 					const parentStory = state.story.stories.find(
 						s => s.id === mutation.payload[0]
 					);
 					const passage = parentStory.passages.find(
-						p => p.id === mutation.payload[1]
+						p => p.name === mutation.payload[1].name
 					);
 
 					story.update(transaction => {
 						story.saveStory(transaction, parentStory);
 						story.savePassage(transaction, passage);
 					});
+					break;
 				}
-				break;
-			}
 
-			case 'DELETE_PASSAGE_IN_STORY': {
-				const parentStory = state.story.stories.find(
-					s => s.id === mutation.payload[0]
-				);
+			case 'UPDATE_PASSAGE_IN_STORY':
+				{
+					/* Is this a significant update? */
 
-				/*
-				We can't dig up the passage in question right now, because
-				previousStories is only a shallow copy, and it's gone there at
-				this point in time.
-				*/
+					if (Object.keys(mutation.payload[2]).some(key => key !== 'selected')) {
+						const parentStory = state.story.stories.find(
+							s => s.id === mutation.payload[0]
+						);
+						const passage = parentStory.passages.find(
+							p => p.id === mutation.payload[1]
+						);
 
-				story.update(transaction => {
-					story.saveStory(transaction, parentStory);
-					story.deletePassageById(transaction, mutation.payload[1]);
-				});
-				break;
-			}
+						story.update(transaction => {
+							story.saveStory(transaction, parentStory);
+							story.savePassage(transaction, passage);
+						});
+					}
+					break;
+				}
+
+			case 'DELETE_PASSAGE_IN_STORY':
+				{
+					const parentStory = state.story.stories.find(
+						s => s.id === mutation.payload[0]
+					);
+
+					/*
+					We can't dig up the passage in question right now, because
+					previousStories is only a shallow copy, and it's gone there at
+					this point in time.
+					*/
+
+					story.update(transaction => {
+						story.saveStory(transaction, parentStory);
+						story.deletePassageById(transaction, mutation.payload[1]);
+					});
+					break;
+				}
 
 			case 'UPDATE_PREF':
 				pref.save(store);

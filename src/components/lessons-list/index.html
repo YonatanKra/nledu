@@ -1,18 +1,26 @@
-<div>
-   
-                
-                <div class="demo-card-square mdl-card mdl-shadow--2dp" v-for="lesson in lessons">
-                  <div class="mdl-card__title mdl-card--expand">
-                    <h2 class="mdl-card__title-text">{{lesson.name}}</h2>
-                  </div>
-                  <div class="mdl-card__supporting-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenan convallis.
-                  </div>
-                  <div class="mdl-card__actions mdl-card--border">
-                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                      View Updates
-                    </a>
-                  </div>
-                </div>
+<div class="lesson-list">
+	<div class="demo-card-square mdl-card mdl-shadow--2dp" v-for="lesson in lessons">
+		<div class="mdl-card__title mdl-card--expand">
+      <h2 class="mdl-card__title-text">{{lesson.name}}</h2>
+      <div class="mdl-card__title-text-text">
+        <h6>
+            Number of stories {{lesson.stories.length}}  
+        </h6>
+        <h6>
+          {{lesson.goals | extractGoals}}  
+        </h6>
+        <h6>
+          {{lesson.stories | extractSubjects}}
+        </h6>
+      </div>
+		</div>
+		<div class="mdl-card__supporting-text">
+			{{lesson.description}}
+		</div>
+		<div class="mdl-card__actions mdl-card--border">
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+				View Updates
+			</a>
+		</div>
+	</div>
 </div>

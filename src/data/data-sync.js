@@ -12,9 +12,9 @@ const startSync = () => {
 	
 	if (loop === null) {
 		loop = setInterval(() => {
-       //    sync();
+          sync();
 
-		}, 1000*5);
+		}, 1000*10);
 	}
 }
 

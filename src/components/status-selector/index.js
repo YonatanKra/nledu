@@ -8,19 +8,15 @@ module.exports = Vue.extend({
 	props: {
 		statusesFilter: '',
 		selectedStatus: Number,
+		selectedStatusStr: String,
 	},
 	data: {
 
 	},
 	methods: {
 		selectStatus(status, $event) {
-			$event.srcElement.parentElement.parentElement.querySelectorAll('.mdl-button')
-				.forEach(element => {
-					element.classList.remove('mdl-button--colored')
-				});
-
-			$event.srcElement.parentElement.classList.add('mdl-button--colored');
 			this.selectedStatus = parseInt(status.key);
+			this.selectedStatusStr = status.key;
 		}
 	},
 	computed: {
@@ -29,7 +25,6 @@ module.exports = Vue.extend({
 				key,
 				value: this.statuses[key]
 			}));
-
 		}
 	},
 	filters: {
@@ -39,10 +34,8 @@ module.exports = Vue.extend({
 		}
 	},
 	ready() {
-		if(this.selectedStatus){
-			const element = this.$el.querySelector('.mdl-button[data-key="'+parseInt(this.selectedStatus)+'"]')
-			element.classList.add('mdl-button--colored');
-		}
+		this.selectedStatus = this.selectedStatus || 6;
+		this.selectedStatusStr = '' + this.selectedStatus;
 	},
 
 	vuex: {

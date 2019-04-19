@@ -117,6 +117,10 @@ module.exports = Vue.extend({
 			.then(name => this.updateStory(this.story.id, { name }));
 		},
 
+		edit() {
+			FormModelStoryAPI.toggle(this.story);
+		},
+		
 		/**
 		 Prompts the user for a name, then creates a duplicate version of this
 		 story accordingly.

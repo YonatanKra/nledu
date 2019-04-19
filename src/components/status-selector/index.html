@@ -1,5 +1,7 @@
 <div class="statuses-list">
-	<button v-for="status in statusList | filterStatus" data-key="{{status.key}}" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" 
+	<button v-for="status in statusList | filterStatus" data-key="{{status.key}}" 
+	class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" 
+	v-bind:class="{ selected: status.key===selectedStatusStr }"
 	v-on:click="selectStatus(status, $event)" >
 		{{status.value}}
 	</button>

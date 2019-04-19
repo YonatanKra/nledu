@@ -199,8 +199,56 @@ exports.getRoles = functions.https.onRequest((req, res) => {
 	}));
 });
 
+exports.getLessons = functions.https.onRequest((req, res) => {
+
+	const query = `
+	select row_to_json(t) lesson
+	from (
+	  select lessons_json.*,
+		(
+		  select array_to_json(array_agg(row_to_json(stories_json)))
+		  from (
+			select ls.story_id, ls.order
+			from public.rel_lessons_stories ls
+			where ls.lesson_id=lessons_json.id
+			order by ls.order asc
+		  ) stories_json
+		) as stories,
+		
+		(
+		  select array_to_json(array_agg(row_to_json(goals_json)))
+		  from (
+			select lg.goal_id
+			from public.rel_lessons_goals lg
+			where lg.lesson_id=lessons_json.id
+		  ) goals_json
+		) as goals
+		
+	  from public.tbl_lessons lessons_json
+	) t
+	`;
+
+
+	dbQueryGet(query, (result => {
+		cors(req, res, () => {});
+
+		res.send(result.rows.map(lesson=>{
+			return lesson.lesson;
+		}));
+	}));
+});
+
+
 exports.getStudents = functions.https.onRequest((req, res) => {
 	dbQueryGet('SELECT * FROM public.tbl_persons', (result => {
+		cors(req, res, () => {});
+
+		res.send(result.rows);
+	}));
+});
+
+exports.getGoals = functions.https.onRequest((req, res) => {
+	dbQueryGet('SELECT * FROM public.lov_goals', (result => {
 		cors(req, res, () => {});
 
 		res.send(result.rows);
@@ -289,8 +337,8 @@ exports.updateStoryMetaData = functions.https.onRequest((req, res) => {
 
 	if (validateStoryMetaDataObj(req.body)) {
 		const query = {
-			text: 'UPDATE public.tbl_stories SET(name, sub_subject, path, tags, description) = ($2, $3, $4, $5, $6) WHERE id = $1 RETURNING *',
-			values: [req.body.id, req.body.name, req.body.sub_subject, req.body.path, req.body.tags, req.body.description]
+			text: 'UPDATE public.tbl_stories SET(name, sub_subject, path, tags, description, status) = ($2, $3, $4, $5, $6,$7) WHERE id = $1 RETURNING *',
+			values: [req.body.id, req.body.name, req.body.sub_subject, req.body.path, req.body.tags, req.body.description, req.body.status]
 		}
 		dbQueryGet(query, result => res.send(result.rows), err => res.status(500).send(err));
 	} else {
@@ -341,12 +389,31 @@ exports.getData = functions.https.onRequest((req, res) => {
 	return admin.database().ref('/stories').once("value", (stories) => {
 		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
 		return admin.database().ref('/passages').once("value", (passages) => {
-		cors(req, res, () => {});
 
-		return res.send({
-			stories : stories.val(),
-			passages : passages.val()}
-			);
+			return dbQueryGet("SELECT * from public.tbl_stories", result => {
+				result.rows.forEach(story=>{
+					Object.assign(stories.val()[story.id],{
+						name : story.name,
+						sub_subject : story.sub_subject,
+						path : story.path,
+						tags : story.tags,
+						description : story.description,
+						status : story.status,
+					})
+						
+
+				});
+				cors(req, res, () => {});
+
+				return res.send({
+					stories : stories.val(),
+					passages : passages.val()}
+					);
+
+			}, err => res.status(500).send(err));
+
+
+	
 	
 	});
 	});

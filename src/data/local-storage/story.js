@@ -39,12 +39,7 @@ const story = module.exports = {
 			throw new Error('Story has no id');
 		}
 
-
-if(story.isNew){
-	debugger;
-delete story.isNew;
-
-	axios
+		axios
 	.post('http://localhost:5000/none-linear-education/us-central1/addStoryMetaData',story)
 	.then(r => r.data)
 	.then(story => {
@@ -53,12 +48,26 @@ delete story.isNew;
 	.catch(err=>{
 		debugger;
 		err.message + " " + err.response.data
-	})
-}
-			
+	})			
 		
 	},
+	updateStoryMetaData(story){
+		if (!story.id) {
+			throw new Error('Story has no id');
+		}
 
+		axios
+	.post('http://localhost:5000/none-linear-education/us-central1/updateStoryMetaData',story)
+	.then(r => r.data)
+	.then(story => {
+		debugger;
+	})
+	.catch(err=>{
+		debugger;
+		err.message + " " + err.response.data
+	})			
+		
+	},
 	saveStory(transaction, story) {
 		if (!story.id) {
 			throw new Error('Story has no id');
@@ -142,15 +151,15 @@ delete story.isNew;
 			.get('http://localhost:5000/none-linear-education/us-central1/getData')
 			.then(r => r.data)
 			.then(data => {
-				window.localStorage.setItem('twine-stories',  Object.keys(data.stories).join(','));
+				window.localStorage.setItem('twine-stories',  Object.keys(data.stories||[]).join(','));
 				
-				Object.keys(data.stories).forEach(s=> {
+				Object.keys(data.stories|| []).forEach(s=> {
 					window.localStorage.setItem('twine-stories-' + s, JSON.stringify(data.stories[s]))
 				});
 
-				window.localStorage.setItem('twine-passages',  Object.keys(data.passages).join(','));
+				window.localStorage.setItem('twine-passages',  Object.keys(data.passages||[]).join(','));
 				
-				Object.keys(data.passages).forEach(s=> {
+				Object.keys(data.passages||[]).forEach(s=> {
 					window.localStorage.setItem('twine-passages-' + s, JSON.stringify(data.passages[s]))
 				});
 
