@@ -1,11 +1,11 @@
-<div style="width: 100%; display: table;">
+<div style="width: 100%; display: table; position: absolute; left: 0;">
 	<div style="display: table-row">
-		<div style="width: 30%; display: table-cell; margin-bottom: 10px;">
+		<!--<div style="width: 30%; display: table-cell; margin-bottom: 10px;">
 			<div style="margin-left: 10px; margin-top: 10px; margin-bottom: 10px;"><strong>Comments</strong></div>
 			<div class="story-comments" style="">
 				<comment-item v-for="comment in storyComments.comments" :comment="comment"></comment-item>
 			</div>
-		</div>
+		</div>-->
 		<div style="display: table-cell;">
 			<div id="storyEditView" :style="cssDimensions" class="{{ 'zoom-' + zoomDesc }}" @webkitmouseforcedown="onMouseForceDown" @wheel="onWheel" v-mouse-scrolling>
 				<div class="passages">

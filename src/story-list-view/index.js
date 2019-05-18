@@ -11,6 +11,11 @@ const locale = require('../locale');
 const { check: checkForAppUpdate } = require('../dialogs/app-update');
 const { check: checkForDonation } = require('../dialogs/app-donation');
 const ImportDialog = require('../dialogs/story-import');
+const { prompt } = require('../components/slide-panel-prompt');
+const {
+	createStory
+} = require('../data/actions/story');
+
 
 require('./index.less');
 
@@ -168,8 +173,28 @@ module.exports = Vue.extend({
 			this.storyOrder = 'name';
 		},
 		addStory(){
-			
-			window.FormModelStoryAPI.toggle();
+			prompt({
+				panelComponent : 'story-panel',
+				title : 'Add new Story',
+				panelSize: 'large',
+				componentObject : ()=>{
+					return require('./story-form')
+				}
+			},			this)
+			.then(data => {
+				if (data ){
+					const newStory = data.data.obj;
+
+					
+					newStory.sub_subject = data.data.subject.sub_subject_id
+					newStory.isNew = true;
+					newStory.path = 'sdds';
+					delete newStory.id;
+					this.createStory(newStory);
+				}
+			}).catch(err=>{
+				debugger;
+			});
 		}
 	},
 
@@ -179,8 +204,9 @@ module.exports = Vue.extend({
 		'file-drag-n-drop': require('../ui/file-drag-n-drop'),
 		'slide-panel' : require('../components/slide-panel'),
 		'lessons-list' : require('../components/lessons-list'),
-		'story-form' : require('./story-form')
-
+		'asset-form' : require('../components/asset-form'),
+		'quilljs' : require('../components/quilljs'),
+		'assets-list' : require('../components/assets-list')
 	},
 
 	events: {
@@ -206,7 +232,12 @@ module.exports = Vue.extend({
 	},
 
 	vuex: {
-		
+		actions: {
+			createStory,
+			
+
+
+		},
 		getters: {
 			stories: state => state.story.stories
 		}

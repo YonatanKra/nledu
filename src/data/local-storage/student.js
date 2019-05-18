@@ -1,19 +1,44 @@
 let commaList = require('./comma-list');
 let { createStudent, loadStudents } = require('../actions/student');
 const axios = require('axios');
+const {person} = require('../../common/servicePathes');
+const {signUpWithEmailAndPassword} = require('../../common/auth');
+const {showMessage} = require('../../components/snackbar/snackbar');
+const {uploadImage} = require('../../common/fileUploader');
 
 const student = module.exports = {
-	createStudent(store, student){
+	async updateStudent(store, student){
+		debugger;
+		if (student && student.id){
+			try {
+				if(student.profile_img==='image' && student.imageDataURL){
+					await uploadImage('images/persons/' + student.id +'.png', student.imageDataURL);
+				}
+
+				const res = await axios.post(person.updatePerson,student);
+				const data = await res.data;
+				
+				showMessage("User data saved")
+			} catch (error) {
+				showMessage(error)
+			}
+		}
+	},
+	async createStudent(store, student){
+		debugger;
 		if (student && !student.id){
-			axios
-			.post('http://localhost:5000/none-linear-education/us-central1/addStudent',student)
-			.then(r => r.data)
-			.then(students => {
-				createStudent(store, students[0]);
-			})
-			.catch(err=>{
-				err.message + " " + err.response.data
-			})
+			try {
+				const user = await signUpWithEmailAndPassword(student.email, student.password)
+
+				student.id = user.uid;
+
+				const res = await axios.post(person.addPerson,student);
+				const data = await res.data;
+				
+				createStudent(store, data);
+			} catch (error) {
+				showMessage(error)
+			}
 		}
 	},
 	update(func) {
@@ -45,11 +70,11 @@ const student = module.exports = {
 	load(store) {
 
 		axios
-		.get('http://localhost:5000/none-linear-education/us-central1/getStudents')
+		.get(person.getPersons)
 		.then(r => r.data)
 		.then(students => {
 			
 			loadStudents(store, students);
 		})
-	}
+	},
 };

@@ -19,7 +19,7 @@ module.exports = {
 			Inline any resurces below 10k in size.
 			*/
 			{
-				test: /\.(eot|png|svg|ttf|woff|woff2)(\?.*)?$/,
+				test: /\.(eot|png|svg|ttf|woff|woff2|gif)(\?.*)?$/,
 				loader: 'url-loader',
 				options: {
 					limit: 10000,
@@ -40,7 +40,7 @@ module.exports = {
 				loader: 'html-loader'
 			},
 			{
-				test: /\.less$/,
+				test: /\.less|css$/,
 				loader: ExtractTextPlugin.extract({
 					use: [
 						'css-loader',

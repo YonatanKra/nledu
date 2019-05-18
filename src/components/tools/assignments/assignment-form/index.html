@@ -1,0 +1,29 @@
+<div class="assignment-form">
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--6-col">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" id="insert_assignment_due_date"
+						name="insert_assignment_due_date" v-model="obj.due_date" placeholder="dd/mm/yyyy">
+					<label class="mdl-textfield__label" for="insert_assignment_due_date">Due Date</label>
+				</div>
+			</div>
+		<div class="mdl-cell mdl-cell--6-col">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_assignment_comment"
+					name="insert_assignment_comment" v-model="obj.comment">
+				<label class="mdl-textfield__label" for="insert_assignment_comment">Comment</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--6-col">
+			<h6>Assigned Lessons</h6>
+			<lesson-small-list v-bind:selected-lessons.sync="obj.lessons"></lesson-small-list>
+		</div>
+		<div class="mdl-cell mdl-cell--6-col">
+				<h6>Assigned Students</h6>
+			<persons-small-list v-bind:selected-students.sync="obj.students"></persons-small-list>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+<div class="lesson-form">
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--6-col">
+
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_lesson_name" name="lesson_name"
+					v-model="obj.name">
+				<label class="mdl-textfield__label" for="insert_lesson_name">Lesson Name</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_lesson_description" name="lesson_description"
+					v-model="obj.description">
+				<label class="mdl-textfield__label" for="insert_lesson_description">Lesson Description</label>
+			</div>
+			<img class="upload-story-image" v-on:click="uploadImage" />
+
+			<input accept="image/*" class="upload-story-image-file" type='file' v-on:change="uploadImageChange"
+				style="display: none;" />
+
+			<goals-list v-bind:checked-goals.sync="obj.goals"></goals-list>
+		</div>
+		<div class="mdl-cell mdl-cell--6-col">
+			<stories-list-builder :stories="obj.stories"></stories-list-builder>
+			<status-selector style="position: absolute; top: 0; left: 15%;" v-show="obj.id"
+				v-bind:selected-status.sync="obj.status" statuses-filter="1,2,4,6"></status-selector>
+
+		</div>
+	</div>
+</div>

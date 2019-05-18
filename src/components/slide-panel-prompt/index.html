@@ -1,0 +1,15 @@
+<slide-panel  v-bind:panel-title.sync="title"  v-bind:panel-size="panelSize">
+		<div slot="panel-body">
+
+			<div class="panel-body-holder"></div>
+            <!--<story-form v-if='sholdLoad("story-panel")'></story-form>-->
+
+		</div>
+
+		<div slot="panel-actions">
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="accept">
+				Save
+			</a>
+		</div>
+
+	</slide-panel>

@@ -1,0 +1,17 @@
+<div class="assets-list">
+	<span id="{{'asset_' + asset.id}}" class="mdl-chip mdl-chip--contact" v-on:click="selectAsset(asset)"
+		v-for="asset in filteredAssets">
+		<span class="mdl-chip__contact mdl-color--teal"><i
+				class="material-icons">{{assetTypes[asset.type].icon}}</i></span>
+		<span class="mdl-chip__text">{{asset.name}}</span>
+
+		<div class="mdl-tooltip" data-mdl-for="{{'asset_' + asset.id}}">
+			{{asset.description}}
+		</div>
+    </span>
+    
+    <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="filterAssetInput" name="asset" v-model="filterAsset">
+            <label class="mdl-textfield__label" for="filterAssetInput">Search Asset</label>
+  </div>
+</div>

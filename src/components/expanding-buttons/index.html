@@ -1,0 +1,9 @@
+<div class="expanding-buttons">
+    <div class="navbar-inner">
+            <ul class="nav">
+                    <li id="nav-home" v-for="item in items" v-bind:class="{ active: item.id===selectedItem.id }" v-on:click="selectItem(item, $event)" >
+                      <a href=""><span data-hover="{{item.name}}"><i class="material-icons">{{item.icon}}</i></span></a>
+                    </li>
+                  </ul>
+    </div>
+    </div>

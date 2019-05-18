@@ -14,12 +14,18 @@ module.exports = new Vuex.Store({
 		student: require('./student'),
 		role: require('./role'),
 		status: require('./status'),
+		asset: require('./asset'),
+		assetType: require('./assetType'),
 		city: require('./city'),
 		class: require('./class'),
 		goal: require('./goal'),
 		lesson: require('./lesson'),
 		subject: require('./subject'),
-		storyComments: require('./story-comments')
+		auth: require('./auth'),
+		loading: require('./loading'),
+		storyComments: require('./story-comments'),
+		message : require('./message'),
+		assignment: require('./assignment')
 	},
 
 	plugins: [

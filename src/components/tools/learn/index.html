@@ -1,0 +1,9 @@
+<div class="learn-view">
+ <learn-tasks></learn-tasks>
+    <div class="subejct-list">
+            <div v-for="subject in subjects" class="btn ">
+                    <subject-image class="wow zoomIn" v-bind:image-src.sync="subject.image" image-class="learn-subject"></subject-image>
+            </div>
+    </dv>
+  
+</div>

@@ -36,15 +36,12 @@
 		<story-item v-for="story in sortedStories" :story="story" transition="grow-in-out" track-by="id"></story-item>
 	</div>
 
-	<div class="lessons-list">
-		<lessons-list></lessons-list>
-	</div>
-
+	
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-item" v-on:click="addStory">
 			<i class="material-icons">add</i>
 	</button>
 
-	<story-form ></story-form>
+
 
 </div> <!-- .main -->
 </div> <!-- #storyListView -->

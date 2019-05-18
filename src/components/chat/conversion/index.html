@@ -1,0 +1,31 @@
+<div class="conversion">
+	<div v-if="(messages||[]).length===0" class="empty-list"></div>
+	<ul v-if="(messages||[]).length>0">
+		<li class="clearfix" v-for="message in messages">
+			<div v-if="message.from===currentUser.uid">
+				<div class="message-data">
+					<span class="message-data-name"><i class="fa fa-circle online"></i>
+						{{ personsDict[message.from].first_name }} {{ personsDict[message.from].surname }}</span>
+					<span class="message-data-time">{{message.timeSpan | momentFormat}}</span>
+				</div>
+				<div class="message my-message">
+					{{message.content}}
+					<!--<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{message.id}}">
+						<input type="checkbox" id="list-checkbox-{{message.id}}" value="{{message.id}}"
+							class="mdl-checkbox__input" v-model="message.isDone" />
+					</label>-->
+				</div>
+			</div>
+			<div v-else>
+				<div class="message-data align-right">
+					<span class="message-data-time">{{message.timeSpan | momentFormat}}</span> &nbsp; &nbsp;
+					<span class="message-data-name"> {{ personsDict[message.from].first_name }}
+						{{ personsDict[message.from].surname }}</span> <i class="fa fa-circle me"></i>
+				</div>
+				<div class="message other-message float-right">
+					{{message.content}}
+				</div>
+			</div>
+
+	</ul>
+</div>

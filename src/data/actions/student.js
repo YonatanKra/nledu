@@ -5,4 +5,7 @@ const actions = module.exports = {
 	createStudent(store, props) {
 		store.dispatch('CREATE_STUDENT', props.data || props);
 	},
+	updateStudent(store, props){
+		store.dispatch('UPDATE_STUDENT', props.data || props);		
+	}
 };

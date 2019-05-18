@@ -1,0 +1,28 @@
+<div class="class-form">
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--6-col">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_grade" name="grade" v-model="obj.grade">
+				<label class="mdl-textfield__label" for="insert_grade">כיתה</label>
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--6-col">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="insert_school" name="school"
+					v-model="obj.school">
+				<label class="mdl-textfield__label" for="insert_school">בית ספר</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+		<input class="mdl-textfield__input" type="text" id="insert_city" name="city" v-model="obj.city">
+		<label class="mdl-textfield__label" for="insert_city">ישוב</label>
+	</div>
+	<div>
+		<button v-on:click="selectCityDelegate" v-for="city in filteredCities" type="button" class="mdl-chip"
+			data-city-name="{{city.name}}">
+			<span class="mdl-chip__text">{{city.name}}</span>
+		</button>
+	</div>
+</div>

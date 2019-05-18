@@ -2,7 +2,7 @@
 	<div class="subjects_list">
 		<span class="mdl-chip mdl-chip--contact" v-on:click="selectSubject(subject.subject_id)" v-bind:class="{ selected: subject.subject_id===selectedSubject.subject_id }"
 			v-for="subject in subjects" data-key="{{subject.subject_id}}">
-			<img class="mdl-chip__contact" src="https://getmdl.io/templates/dashboard/images/user.jpg"></img>
+			<subject-image v-bind:image-src.sync="subject.image" image-class="mdl-chip__contact"></subject-image>
 			<span class="mdl-chip__text">{{subject.name}}</span>
 		</span>
 	</div>

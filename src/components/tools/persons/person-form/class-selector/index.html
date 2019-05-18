@@ -1,0 +1,6 @@
+<div class="class-selector">
+	<span class="mdl-chip" v-on:click="selectClass(cls.key)"
+		v-bind:class="{ selected: cls.key===selectedClass }" v-for="cls in classesList">
+		<span class="mdl-chip__text">{{cls.value}}</span>
+	</span>
+</div>

@@ -1,0 +1,55 @@
+<div class="person-view">
+	<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		<person-image image-class="img-avatar" :person="person"></person-image>
+		<h2>{{person.first_name}} {{person.surname}} </h2>
+		<ul class="demo-list-item mdl-list">
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+					<strong>Email</strong>{{person.email}}
+				</span>
+			</li>
+
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+					<strong>Phone</strong>{{person.phone}}
+				</span>
+			</li>
+			<li class="mdl-list__item" v-if="person.class">
+				<span class="mdl-list__item-primary-content">
+					<strong>School</strong>{{classesDict[person.class].school}}
+					<strong>Grade</strong>{{classesDict[person.class].grade}}
+					<strong>City</strong>{{classesDict[person.class].city}}
+				</span>
+			</li>
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+					<strong>Birth Date</strong>{{person.birth_date | moment}}
+				</span>
+			</li>
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+					<strong>Created Date</strong>{{person.created_date | moment}}
+				</span>
+			</li>
+			<li class="mdl-list__item">
+				<span class="mdl-list__item-primary-content">
+					<strong>Last Update Date</strong>{{person.last_modified | moment}}
+				</span>
+			</li>
+
+		</ul>
+	</div>
+
+
+	<!--
+	<td class="mdl-data-table__cell--non-numeric">{{ person.role }}</td>
+	<td class="mdl-data-table__cell--non-numeric"><i class="material-icons">
+			{{person.status |statusIcon }}</i></td>
+
+    -->
+
+	<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-item"
+		v-on:click="editPersonDelegate">
+		<i class="material-icons">edit</i>
+	</button>
+</div>

@@ -36,14 +36,14 @@ module.exports = Vue.extend({
 
 		test() {
 			window.open(
-				'#stories/' + this.story.id + '/test',
+				'#/home/stories/' + this.story.id + '/test',
 				'twinestory_test_' + this.story.id
 			);
 		},
 
 		play() {
 			window.open(
-				'#stories/' + this.story.id + '/play',
+				'#/home/stories/' + this.story.id + '/play',
 				'twinestory_play_' + this.story.id
 			);
 		},

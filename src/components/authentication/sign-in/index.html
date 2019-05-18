@@ -1,0 +1,35 @@
+<div class="sign-in">
+
+	<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">Sign In</h2>
+		</div>
+		<div class="mdl-card__supporting-text">
+
+
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" id="insert_sign_up_email" name="email"
+							v-model="email">
+						<label class="mdl-textfield__label" for="insert_sign_up_email">Email</label>
+					</div>
+				</div>
+			</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--12-col">
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" id="insert_sign_up_password" name="password"
+							v-model="password">
+						<label class="mdl-textfield__label" for="insert_sign_up_password">Password</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mdl-card__actions mdl-card--border">
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="signInDelegate">
+				Sign In
+			</a>
+		</div>
+	</div>
+</div>

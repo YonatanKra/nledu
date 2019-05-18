@@ -8,15 +8,9 @@ module.exports = Vue.extend({
 	props: {	},
 	methods: {	},
 	ready() {
-
+		window['counter'] = 0;
     }
 });
 
 
-window['counter'] = 0;
 
-var snackbarContainer = document.querySelector('#demo-toast-example');
-
-
-var data = {message: 'Example Message # ' + ++counter};
-snackbarContainer.MaterialSnackbar.showSnackbar(data);

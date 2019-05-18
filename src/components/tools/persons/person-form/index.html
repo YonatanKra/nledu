@@ -1,0 +1,63 @@
+<div class="person-form">
+
+	<div class="mdl-grid">
+		<div class="mdl-cell mdl-cell--8-col">
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--6-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="insert_first_name" name="first_name"
+							v-model="obj.first_name">
+						<label class="mdl-textfield__label" for="insert_first_name">First Name</label>
+					</div>
+				</div>
+				<div class="mdl-cell mdl-cell--6-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="insert_surname" name="surname"
+							v-model="obj.surname">
+						<label class="mdl-textfield__label" for="insert_surname">Surname</label>
+					</div>
+				</div>
+			</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--6-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="insert_email" name="email"
+							v-model="obj.email">
+						<label class="mdl-textfield__label" for="insert_email">Email Adress</label>
+					</div>
+				</div>
+				<div class="mdl-cell mdl-cell--6-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="insert_phone" name="phone"
+							v-model="obj.phone">
+						<label class="mdl-textfield__label" for="insert_phone">Phone Number</label>
+					</div>
+				</div>
+			</div>
+			<div class="mdl-grid">
+				<div class="mdl-cell mdl-cell--4-col">
+					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+						<input class="mdl-textfield__input" type="text" id="obj.birth_date" name="birth_date"
+							v-model="insert_birth_date" placeholder="dd/mm/yyyy">
+						<label class="mdl-textfield__label" for="insert_birth_date">Birhdate</label>
+					</div>
+
+				</div>
+				<div class="mdl-cell mdl-cell--8-col">
+					<input accept="image/*" id="upload-person-image-file-form" type='file'
+						v-on:change="uploadPersonImageChange" style="display: none;" />
+					<person-image v-on:click="selectImage" id="upload-person-image-form"
+						:person="obj" image-class="demo-avatar"></person-image>
+
+				</div>
+			</div>
+		</div>
+		<div class="mdl-cell mdl-cell--4-col">
+			<h6>Role:</h6>
+			<role-selector v-bind:selected-role.sync="obj.role"> </role-selector>
+			<h6>Class:</h6>
+			<class-selector v-bind:selected-class.sync="obj.class"> </class-selector>
+		</div>
+	</div>
+
+</div>

@@ -1,7 +1,18 @@
 .lesson-list{
+  /*grid-template-columns: 33.3% 33.3% 33.3%;
+  grid-template-rows: 80px auto 80px;
+  grid-column-gap: 10px;
+  grid-row-gap: 15px;
+  display: grid;*/
+
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: repeat(auto-fit, 320px);
+
   .demo-card-square.mdl-card {
-    width: 100%;
+   // width: 100%;
     height: 320px;
+   //display: inline-block;
   }
   
   .demo-card-square>.mdl-card__title {
@@ -9,11 +20,20 @@
     background:
       url('https://getmdl.io/assets/demos/dog.png') bottom right 15% no-repeat #46B6AC;
   }
-  
-  .mdl-card__title {
-    flex-direction: column;
-    align-self: flex-start;
+
+
+
+.mdl-list{
+  .mdl-list__item{
+
+    &.active, &:hover{
+      background-color: #eee;
+    } 
   }
+}
+
+
+  /*
   
   .mdl-card__title-text {
     transition: 0.5s all;
@@ -29,6 +49,6 @@
     .mdl-card__title-text-text {
       opacity: 1;
     }
-  }
+  }*/
   
 }

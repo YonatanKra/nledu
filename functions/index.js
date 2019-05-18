@@ -1,4 +1,15 @@
 const functions = require('firebase-functions');
+const story = require('./repositories/story');
+const asset = require('./repositories/asset');
+const person = require('./repositories/person');
+const assetType = require('./repositories/assetType');
+const lesson = require('./repositories/lesson');
+const lessonStories = require('./repositories/lessonStories');
+const goal = require('./repositories/goal');
+const lessonGoals = require('./repositories/lessonGoals');
+const assignment = require('./repositories/assignment');
+const assignmentLessons = require('./repositories/assignmentLessons');
+
 
 const cors = require('cors')({
 	origin: true
@@ -137,11 +148,24 @@ const dbQueryGet = (query, delegate, error) => {
 }
 
 exports.getAssets = functions.https.onRequest((req, res) => {
-	dbQueryGet('SELECT * FROM public.tbl_assets', (result => {
-		cors(req, res, () => {});
+	cors(req, res, () => {});
 
-		res.send(result.rows);
-	}));
+	return asset.getAll().then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.addAsset = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return asset.add(req.body).then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+
 });
 
 exports.getSubjects = functions.https.onRequest((req, res) => {
@@ -232,45 +256,86 @@ exports.getLessons = functions.https.onRequest((req, res) => {
 	dbQueryGet(query, (result => {
 		cors(req, res, () => {});
 
-		res.send(result.rows.map(lesson=>{
+		res.send(result.rows.map(lesson => {
 			return lesson.lesson;
 		}));
 	}));
 });
 
 
-exports.getStudents = functions.https.onRequest((req, res) => {
-	dbQueryGet('SELECT * FROM public.tbl_persons', (result => {
-		cors(req, res, () => {});
+exports.getPersons = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
 
-		res.send(result.rows);
-	}));
+	return person.getAll().then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.updatePerson = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return person.update(req.body.id, req.body).then(() => {
+		return res.send('success');
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
 });
 
 exports.getGoals = functions.https.onRequest((req, res) => {
-	dbQueryGet('SELECT * FROM public.lov_goals', (result => {
-		cors(req, res, () => {});
+	cors(req, res, () => {});
 
-		res.send(result.rows);
-	}));
+	return goal.getAll().then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.addGoal = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return goal.add(req.body).then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
 });
 
 const validateStudentObj = obj => {
 	return obj && obj.first_name && obj.surname && obj.birth_date && obj.email && obj.phone && obj.class && obj.role;
 }
 
+
+exports.addPerson = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return person.add(req.body).then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.deletePerson = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return person.destroy({
+		where: {
+			id: req.body.id
+		}
+	}).then(() => {
+		return res.send('Done');
+	}).catch(err => {
+		return res.status(500).send(err);
+	})
+});
+
 exports.addStudent = functions.https.onRequest((req, res) => {
 	cors(req, res, () => {});
 
 	if (validateStudentObj(req.body)) {
-
-		var message = req.body.profile_img;
-		var storageRef = storage.ref();
-
-		storageRef.child('profile_images/mountains.jpg').putString(message, 'data_url').then(function (snapshot) {
-			console.log('Uploaded a data_url string!');
-		});
-
 
 		const query = {
 			text: 'INSERT INTO public.tbl_persons(first_name,surname,birth_date,role,email, phone,class,profile_img) ' +
@@ -362,6 +427,73 @@ exports.updateClass = functions.https.onRequest((req, res) => {
 	}
 });
 
+exports.getAssetTypes = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	assetType.getAll().then(data => {
+		const assetTypes = data.reduce((a, b) => {
+			a[b.id] = b;
+			return a
+		}, {});
+
+		res.send(assetTypes);
+	}).catch(err => {
+		res.status(500).send(err);
+	});
+});
+
+
+exports.addLesson = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return lesson.add(req.body).then(newLesson => {
+		var lessonId = newLesson.id;
+
+		return lessonStories.remove(lessonId).then(data => {
+			return lessonStories.addMany(lessonId, req.body.stories).then(ls => {
+				return lessonGoals.remove(lessonId).then(data => {
+					return lessonGoals.addMany(lessonId, req.body.goals).then(goals => {
+						return res.send({
+							lesson: newLesson,
+							rels_stories: ls,
+							rels_goals: goals
+						});
+					});
+				});
+			})
+		})
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.updateLesson = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	var lessonId = req.body.id;
+	return lesson.update(lessonId, req.body).then(() => {
+		return lesson.get(lessonId).then(data => {
+			var updatedLesson = data[0];
+
+			return lessonStories.remove(lessonId).then(data => {
+				return lessonStories.addMany(lessonId, req.body.stories).then(ls => {
+					return lessonGoals.remove(lessonId).then(data => {
+						return lessonGoals.addMany(lessonId, req.body.goals).then(goals => {
+							return res.send({
+								lesson: updatedLesson,
+								rels_stories: ls,
+								rels_goals: goals
+							});
+						});
+					});
+				})
+			})
+		});
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
 
 exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 	.onCreate((snapshot, context) => {
@@ -390,32 +522,30 @@ exports.getData = functions.https.onRequest((req, res) => {
 		// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
 		return admin.database().ref('/passages').once("value", (passages) => {
 
-			return dbQueryGet("SELECT * from public.tbl_stories", result => {
-				result.rows.forEach(story=>{
-					Object.assign(stories.val()[story.id],{
-						name : story.name,
-						sub_subject : story.sub_subject,
-						path : story.path,
-						tags : story.tags,
-						description : story.description,
-						status : story.status,
-					})
-						
+			return story.getAll().then(result => {
+				const results = result.reduce((a, story) => {
+					a[story.id] = Object.assign(stories.val()[story.id], {
+						name: story.name,
+						sub_subject: story.sub_subject,
+						path: story.path,
+						tags: story.tags,
+						description: story.description,
+						status: story.status,
+					});
+					return a;
 
-				});
+				}, {});
+
 				cors(req, res, () => {});
 
 				return res.send({
-					stories : stories.val(),
-					passages : passages.val()}
-					);
+					stories: results || [],
+					passages: passages.val() || []
+				});
 
 			}, err => res.status(500).send(err));
 
-
-	
-	
-	});
+		});
 	});
 });
 
@@ -433,20 +563,102 @@ exports.syncData = functions.https.onRequest((req, res) => {
 	}, {});
 
 
-	return admin.database().ref('/stories').update(stories).then((a,b,c) => {
-		return admin.database().ref('/passages').update(passages).then((d,e,f) => {
+	return admin.database().ref('/stories').update(stories).then((a, b, c) => {
+		return admin.database().ref('/passages').update(passages).then((d, e, f) => {
 			// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
 			cors(req, res, () => {});
 
-			return res.send({
-				a:a,
-				b:b,
-				c:c,
-				d:d,
-				e:e,
-				f:f
-			});
+			return res.send('success');
 			//return snapshot.exportVal();
 		});
 	});
+});
+
+const validMessage = message => {
+	return message.from && message.to && message.content && message.timeSpan;
+};
+
+exports.postMessage = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	var message = req.body;
+
+	if (validMessage(message)) {
+		var item = {};
+		item[message.id] = message;
+
+		return admin.database().ref('/messages').update(item).then(() => {
+			return res.send( 'success');
+		})
+	} else {
+		res.status(422).send('Missing fields');
+	}
+});
+
+exports.getAllMessages = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return admin.database().ref('/messages').once("value", messages => {
+		return res.send(messages.val());
+	});
+});
+
+exports.getAssignments = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+	const assignmentList = [];
+
+	return assignment.getAll().then(assignments => {
+		return assignmentLessons.getAll().then(assignmentLessons => {
+
+			var m = assignments.map(s=>Object.assign(
+				{},
+				{assignment : s},
+				{lessons : assignmentLessons.filter(al=>al.assignment_id===s.id)}
+			))
+
+			return res.send(m);
+		});
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.addAssignment = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+	const promises = [];
+
+	const createAssignmentForStudent = (student, assignmentObj) => {
+		return new Promise((resolve, reject) => {
+			const assignmentToAdd = Object.assign({}, assignmentObj, {
+				assignee: student
+			});
+
+			return assignment.add(assignmentToAdd).then(newAssignment => {
+				var assignmentId = newAssignment.id;
+
+				return assignmentLessons.remove(assignmentId).then(data => {
+					return assignmentLessons.addMany(assignmentId, assignmentToAdd.lessons).then(ls => {
+						return resolve({
+							lessons: ls,
+							assignment: newAssignment,
+						});
+					})
+				})
+			}).catch(err => {
+				return reject(err);
+			});
+		})
+	}
+	req.body.students.forEach(student => {
+		promises.push(createAssignmentForStudent(student, req.body))
+	});
+
+
+
+	return Promise.all(promises).then(values => {
+		return res.send(values);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+
 });

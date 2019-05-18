@@ -66,7 +66,7 @@ module.exports = Vue.extend({
 
 		test() {
 			window.open(
-				'#stories/' + this.parentStory.id + '/test/' + this.passage.id,
+				'#/home/stories/' + this.parentStory.id + '/test/' + this.passage.id,
 				'twinestory_test_' + this.parentStory.id
 			);
 		},

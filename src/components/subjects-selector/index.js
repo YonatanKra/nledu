@@ -27,6 +27,9 @@ module.exports = Vue.extend({
 	},
 	filters: {},
 	ready() {},
+	components: {
+		'subject-image': require('../subject-image')
+	},
 
 	vuex: {
 		actions: {},

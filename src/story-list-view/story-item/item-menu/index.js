@@ -12,6 +12,8 @@ const { publishStoryWithFormat } = require('../../../data/publish');
 const save = require('../../../file/save');
 const store = require('../../../data/store');
 const {linkLesson} = require('../../../data/actions/class');
+const promptPanel  = require('../../../components/slide-panel-prompt').prompt;
+
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
@@ -36,7 +38,7 @@ module.exports = Vue.extend({
 
 		play() {
 			window.open(
-				'#stories/' + this.story.id + '/play',
+				'#/home/stories/' + this.story.id + '/play',
 				'twinestory_play_' + this.story.id
 			);
 		},
@@ -49,7 +51,7 @@ module.exports = Vue.extend({
 
 		test() {
 			window.open(
-				'#stories/' + this.story.id + '/test',
+				'#/home/stories/' + this.story.id + '/test',
 				'twinestory_test_' + this.story.id
 			);
 		},
@@ -118,7 +120,36 @@ module.exports = Vue.extend({
 		},
 
 		edit() {
-			FormModelStoryAPI.toggle(this.story);
+
+const sub_subject = Object.values(this.subjects).map(x=>x.sub_subjects).flat()
+.filter(x=>x.sub_subject_id===this.story.sub_subject)[0];
+
+const obj = Object.assign({}, this.story, {isNew : false});
+
+promptPanel({
+				panelComponent : 'story-panel',
+				title : 'Update Story - ' + this.story.name,
+				obj : obj,
+				subject: {
+					sub_subject_id: this.story.sub_subject
+				},
+				sbj : this.subjects[sub_subject.subject_id],
+				componentObject : ()=>{
+					return require('../../story-form')
+				}
+			},			this)
+			.then(data => {
+				if (data ){
+					const storyToUpdate = data.data.obj;
+
+					
+					storyToUpdate.sub_subject = data.data.subject.sub_subject_id
+					this.updateStory(storyToUpdate.id, storyToUpdate);
+				}
+				
+			}).catch(err=>{
+				debugger;
+			});
 		},
 		
 		/**
@@ -198,12 +229,14 @@ module.exports = Vue.extend({
 			updateStory,
 			createComment,
 			linkLesson
+			
 		},
 
 		getters: {
 			allFormats: state => state.storyFormat.formats,
 			appInfo: state => state.appInfo,
 			defaultFormat: state => state.pref.defaultFormat,
+			subjects: state => state.subject.subjects,
 		}
 	}
 });

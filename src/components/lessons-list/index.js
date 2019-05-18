@@ -1,61 +1,79 @@
-/*
-Draws connector lines between passages.
-*/
 const Vue = require('vue');
 const vuex = require('vuex');
+const promptPanel = require('../slide-panel-prompt').prompt;
+const {updateLesson} = require('../../data/actions/lesson');
+const storagePath = require('../../common/servicePathes').storage;
 
 require('./index.less');
 
 module.exports = Vue.extend({
 	template: require('./index.html'),
 
-	props: {
-		classId: String,
-		classGrade: String,
-		classSchool: String,
-		classCity: String,
-
-	},
+	props: {	},
 	data: {
-
+		
 	},
 	methods: {
+		getStyle(lesson){
+			if(lesson.path){
+				const path = 'images/lessons/' + lesson.id + '/' + lesson.path + '.png';
+				const fullPath =  storagePath.storageURL +  encodeURIComponent(path) + storagePath.imageSuffix;
+				return  'url(' + fullPath + ') bottom right 15% no-repeat #46B6AC;'
+				;
+			}
+		},
+		view(id) {
+			window.location.hash += '/' + id
+		},
+		edit(id, $event) {
+			event.stopPropagation();
+			const lesson = this.lessons.find(les => les.id === id);
+			const obj = Object.assign({}, lesson, {
+				isNew: false,
+				goals : (lesson.goals||[]).map(goal=>goal.goal_id + '')
+			});
 
+			promptPanel({
+					panelComponent: 'lesson-panel',
+					panelSize: 'large',
+					title: 'Update Story - ' + obj.name,
+					obj: obj,
+					componentObject: () => {
+						return require('../tools/lessons/lesson-form')
+					}
+				}, this)
+				.then(data => {
+					if (data) {
+						debugger;
+						const lessonToUpdate = data.data.obj;
+
+						lessonToUpdate.goals= (lessonToUpdate.goals||[]).map(goal=>Object.assign({goal_id : goal}));
+
+						this.updateLesson(lessonToUpdate.id, lessonToUpdate);
+					}
+
+				}).catch(err => {
+					debugger;
+				});
+		},
 	},
 	computed: {
-		subSubjects(){
-		return	Object.keys(this.subjects).map(x=>this.subjects[x].sub_subjects).flat().reduce((a,b)=>{
-				a[b.sub_subject_id] = b.sub_subject_name;
-				return a;
-				},{})
-		}
+
 
 	},
 	filters: {
-		join(arr){
-			return arr.join(',')
-		},
-		extractSubjects(story){
-			const relatedStories =this.stories.filter(s=>(story||[]).map(s=>s.story_id).indexOf(s.id)==-1) || [];
 
-			return relatedStories.map(s=>this.subSubjects[s.sub_subject]).join(', ');		
-		},
-		extractGoals(str){
-			if (this.goals.length){
-				return str.map(g=>this.goals[g.goal_id].name).join(', ');	
-			}
-
-			return '';
-			
-		}
 	},
 	ready() {
-	
+
+
 
 	},
 
 	vuex: {
-		actions: {},
+		actions: {
+			updateLesson
+		},
 
 		getters: {
 			lessons: function (state) {

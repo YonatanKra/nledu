@@ -1,0 +1,15 @@
+<div class="lessons-small-list">
+	<ul class="demo-list-control mdl-list">
+		<li class="mdl-list__item" v-for="lesson in lessons">
+			<span class="mdl-list__item-primary-content">
+				{{lesson.name}}
+			</span>
+			<span class="mdl-list__item-secondary-action">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{lesson.id}}">
+					<input type="checkbox" id="list-checkbox-{{lesson.id}}" value="{{lesson.id}}"
+						class="mdl-checkbox__input" v-model="selectedLessons" />
+				</label>
+			</span>
+		</li>
+	</ul>
+</div>

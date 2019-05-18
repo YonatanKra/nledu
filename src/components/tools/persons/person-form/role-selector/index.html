@@ -1,0 +1,8 @@
+<div class="role-selector">
+        <span class="mdl-chip mdl-chip--contact" v-on:click="selectRole(role.key)"
+         v-bind:class="{ selected: role.key===selectedRole }"
+        v-for="role in rolesList">
+        <img class="mdl-chip__contact" v-bind:src="role.key | imageSource"></img>
+        <span class="mdl-chip__text">{{role.value}}</span>
+    </span>
+</div>

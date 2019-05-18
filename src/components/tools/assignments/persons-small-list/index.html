@@ -1,0 +1,15 @@
+<div class="persons-small-list">
+	<ul class="demo-list-control mdl-list">
+		<li class="mdl-list__item" v-for="student in students">
+			<span class="mdl-list__item-primary-content">
+				{{student.first_name}} 	{{student.surname}}
+			</span>
+			<span class="mdl-list__item-secondary-action">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{student.id}}">
+					<input type="checkbox" id="list-checkbox-{{student.id}}" value="{{student.id}}"
+						class="mdl-checkbox__input" v-model="selectedStudents" />
+				</label>
+			</span>
+		</li>
+	</ul>
+</div>

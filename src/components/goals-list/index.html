@@ -1,0 +1,22 @@
+<div class="goals-list">
+	<ul class="demo-list-control mdl-list">
+		<li class="mdl-list__item" v-for="goal in goals">
+			<span class="mdl-list__item-primary-content">
+				{{goal.name}}
+			</span>
+			<span class="mdl-list__item-secondary-action">
+				<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-{{goal.id}}">
+					<input type="checkbox" id="list-checkbox-{{goal.id}}" value="{{goal.id}}"
+						class="mdl-checkbox__input" v-model="checkedGoals" />
+				</label>
+			</span>
+		</li>
+	</ul>
+
+	<div class="mdl-textfield mdl-js-textfield">
+		<input class="mdl-textfield__input" type="text" id="add_goal_text" v-on:keypress.enter="addGoal"
+			v-model="input_goal">
+
+		<label class="mdl-textfield__label" for="add_goal_text">Enter Goal and press enter</label>
+	</div>
+</div>

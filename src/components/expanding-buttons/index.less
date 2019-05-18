@@ -1,0 +1,113 @@
+.expanding-buttons {
+
+	@buttons-size: 40px;
+	@buttons-expand-width: 90px;
+	@buttons-color: #dedede;
+	@buttons-color-hover: #3f51b5;
+
+	/* Bootstrap Overrides */
+	.nav>li>a {
+		padding: 0;
+
+		&:focus,
+		&:hover {
+			background-color: transparent;
+		}
+    }
+    
+    position: relative;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+
+	/* Navbar */
+	.navbar-inner {
+		padding: 20px 0;
+	
+		text-align: center;
+
+		.nav {
+            display: inline-block;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+            overflow: hidden;
+		}
+	}
+
+	/* Navbar Elements*/
+	.nav li {
+		height: @buttons-size;
+		width: @buttons-size;
+		background: @buttons-color;
+		margin-right: 15px;
+		float: left;
+		-webkit-border-radius: @buttons-size;
+		-moz-border-radius: @buttons-size;
+		border-radius: @buttons-size;
+		-webkit-transition: width 0.3s;
+		-moz-transition: width 0.3s;
+		transition: width 0.3s;
+
+		a {
+			color: #ffffff;
+			font-size: 16px;
+			overflow: hidden;
+
+			span {
+				display: inline-block;
+				transition: opacity 0.3s ease 0s, transform 0.5s ease 0s;
+				-webkit-transition: opacity 0.3s ease 0s, -webkit-transform 0.5s ease 0s;
+				-moz-transition: opacity 0.3s ease 0s, -moz-transform 0.5s ease 0s;
+				line-height: @buttons-size;
+				font-size: 14px;
+                width: 100%;
+                .material-icons{
+                    line-height: 1.7;
+                }
+
+				&:before {
+					width: 100%;
+					position: absolute;
+					left: 0px;
+					top: 200%;
+					opacity: 0;
+					content: attr(data-hover);
+					-webkit-transform: translate3d(0, 0, 0);
+					-moz-transform: translate3d(0, 0, 0);
+					transform: translate3d(0, 0, 0);
+				}
+			}
+		}
+	}
+
+	/* Hover State */
+	.nav li:hover {
+		width: @buttons-expand-width;
+		background: @buttons-color-hover;
+
+		a {
+			color: #ffffff;
+
+			span {
+				-webkit-transform: translateY(-200%);
+				-moz-transform: translateY(-200%);
+				transform: translateY(-200%);
+
+				&:before {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	/* Active Class */
+	.nav li.active {
+		background: @buttons-color-hover;
+
+		a {
+			color: #f0f0f0;
+		}
+	}
+
+}

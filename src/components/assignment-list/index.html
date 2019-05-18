@@ -1,0 +1,39 @@
+<div class="assignment-list">
+    
+        <table class="mdl-data-table mdl-js-data-table">
+                <thead>
+                    <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Assignee</th>
+                        <th class="mdl-data-table__cell--non-numeric">Assigner</th>
+                        <th class="mdl-data-table__cell--non-numeric">Comment</th>
+                        <th class="mdl-data-table__cell--non-numeric">Created Date</th>
+                        <th class="mdl-data-table__cell--non-numeric">Due Date</th>
+                        <th class="mdl-data-table__cell--non-numeric">End Date</th>
+                        <th class="mdl-data-table__cell--non-numeric">Progress</th>
+                        <th class="mdl-data-table__cell--non-numeric">Grade</th>
+                        <th class="mdl-data-table__cell--non-numeric">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="assignment in flatList">
+                        <td class="mdl-data-table__cell--non-numeric">{{ assignment.assignee_name }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ assignment.assigner_name }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ assignment.comment }}</td>
+                        
+                        <td class="mdl-data-table__cell--non-numeric">{{assignment.created_date | moment}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{assignment.due_date | moment}}</td>
+                        <td class="mdl-data-table__cell--non-numeric">{{assignment.end_date | moment}}</td>
+
+                        <td class="mdl-data-table__cell--non-numeric">
+                            <progress-story-indicator :lessons="assignment.lessons"></progress-story-indicator>
+                        </td>
+                        <td class="mdl-data-table__cell--non-numeric">{{ assignment.grade }}</td>
+                        <td class="mdl-data-table__cell--non-numeric">
+                                <i class="material-icons">
+                                        {{assignment.status_name |statusIcon }}</i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+</div>
+

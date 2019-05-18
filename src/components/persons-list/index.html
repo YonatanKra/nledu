@@ -1,8 +1,61 @@
 <div class=" list-container">
+	<div class="group-by-buttons">
+		<button v-for="field in availableGroupFields" v-bind:class="{ selected: field===groupByField }"
+			v-on:click="setGroupByField(field)" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+			{{field}}
+		</button>
+	</div>
 
-	
-	
-<div  v-for="person in students">
+	<div class="demo-card-wide mdl-card mdl-shadow--2dp" v-for="(groupValue, groupName) in groupByList">
+		<h6 class="group-header">{{groupByField}} : {{groupValue}} ({{groupName.length}})</h6>
+
+		<table class="mdl-data-table mdl-js-data-table">
+			<thead>
+				<tr>
+					<th class="mdl-data-table__cell--non-numeric"></th>
+					<th class="mdl-data-table__cell--non-numeric">Role</th>
+					<th class="mdl-data-table__cell--non-numeric">Status</th>
+					<th class="mdl-data-table__cell--non-numeric">First Name</th>
+					<th class="mdl-data-table__cell--non-numeric">Surname</th>
+					<th class="mdl-data-table__cell--non-numeric">Email</th>
+					<th class="mdl-data-table__cell--non-numeric">Phone</th>
+					<th class="mdl-data-table__cell--non-numeric">School</th>
+					<th class="mdl-data-table__cell--non-numeric">Class</th>
+					<th class="mdl-data-table__cell--non-numeric">City</th>
+					<th class="mdl-data-table__cell--non-numeric">Birth Date</th>
+					<th class="mdl-data-table__cell--non-numeric">Created Date</th>
+					<th class="mdl-data-table__cell--non-numeric">Update Date</th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="person in groupName" v-on:click="openPersonDelegate(person.id, person)">
+					<td class="mdl-data-table__cell--non-numeric">
+						<person-image image-class="img-avatar" :person="person"></person-image>
+					</td>
+					<td class="mdl-data-table__cell--non-numeric">{{ person.role }}</td>
+					<td class="mdl-data-table__cell--non-numeric"><i class="material-icons">
+							{{person.status |statusIcon }}</i></td>
+					<td class="mdl-data-table__cell--non-numeric">{{ person.first_name }}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{ person.surname }}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.email}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.phone}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.school}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.grade}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.city}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.birth_date | moment}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.created_date | moment}}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{person.last_modified | moment}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+
+
+	<!--	
+<div   v-for="person in students">
 
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
 	<div class="mdl-card__title" v-on:click="expandCard">
@@ -95,5 +148,5 @@
 	</div>
 </div>
 	
-</div>
+</div>-->
 </div>

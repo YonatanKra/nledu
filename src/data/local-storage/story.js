@@ -5,8 +5,22 @@ time. As a result, saving requires that you start and end a transaction
 manually. This minimizes the number of writes to local storage.
 */
 
-let { createStory } = require('../actions/story');
-let { passageDefaults, storyDefaults } = require('../store/story');
+let {
+	createStory
+} = require('../actions/story');
+let {
+	passageDefaults,
+	storyDefaults
+} = require('../store/story');
+let {
+	incrementSemaphore,
+	decrementSemaphore
+} = require('../actions/loader');
+const {
+	showMessage
+} = require('../../components/snackbar/snackbar');
+const storyPath = require('../../common/servicePathes').story;
+
 let commaList = require('./comma-list');
 const axios = require('axios');
 
@@ -34,39 +48,36 @@ const story = module.exports = {
 	/*
 	Saves a story to local storage. This does *not* affect any child passages.
 	*/
-	saveStoryMetaData(story){
+	async saveStoryMetaData(story) {
 		if (!story.id) {
 			throw new Error('Story has no id');
 		}
 
-		axios
-	.post('http://localhost:5000/none-linear-education/us-central1/addStoryMetaData',story)
-	.then(r => r.data)
-	.then(story => {
-		debugger;
-	})
-	.catch(err=>{
-		debugger;
-		err.message + " " + err.response.data
-	})			
-		
+		try {
+			const res = axios.post(storyPath.addStoryMetaData, story);
+			const data = await res.data;
+
+			showMessage("Story saved succesfully");
+
+		} catch (error) {
+			showMessage('Error saving story: ' + err.message + " " + err.response.data);
+		}
 	},
-	updateStoryMetaData(story){
+	async updateStoryMetaData(story) {
 		if (!story.id) {
 			throw new Error('Story has no id');
 		}
 
-		axios
-	.post('http://localhost:5000/none-linear-education/us-central1/updateStoryMetaData',story)
-	.then(r => r.data)
-	.then(story => {
-		debugger;
-	})
-	.catch(err=>{
-		debugger;
-		err.message + " " + err.response.data
-	})			
-		
+		try {
+			const res = axios.post(storyPath.updateStoryMetaData, story);
+			const data = await res.data;
+
+			showMessage("Story updated succesfully");
+
+		} catch (error) {
+			showMessage('Error saving story: ' + err.message + " " + err.response.data);
+		}
+
 	},
 	saveStory(transaction, story) {
 		if (!story.id) {
@@ -90,7 +101,9 @@ const story = module.exports = {
 		window.localStorage.setItem(
 			'twine-stories-' + story.id,
 			JSON.stringify(
-				Object.assign({}, story, { passages: undefined })
+				Object.assign({}, story, {
+					passages: undefined
+				})
 			)
 		);
 	},
@@ -147,19 +160,20 @@ const story = module.exports = {
 		window.localStorage.removeItem('twine-passages-' + id);
 	},
 	load(store) {
+		incrementSemaphore(store);
 		axios
-			.get('http://localhost:5000/none-linear-education/us-central1/getData')
+			.get(storyPath.getData)
 			.then(r => r.data)
 			.then(data => {
-				window.localStorage.setItem('twine-stories',  Object.keys(data.stories||[]).join(','));
-				
-				Object.keys(data.stories|| []).forEach(s=> {
+				window.localStorage.setItem('twine-stories', Object.keys(data.stories || []).join(','));
+
+				Object.keys(data.stories || []).forEach(s => {
 					window.localStorage.setItem('twine-stories-' + s, JSON.stringify(data.stories[s]))
 				});
 
-				window.localStorage.setItem('twine-passages',  Object.keys(data.passages||[]).join(','));
-				
-				Object.keys(data.passages||[]).forEach(s=> {
+				window.localStorage.setItem('twine-passages', Object.keys(data.passages || []).join(','));
+
+				Object.keys(data.passages || []).forEach(s => {
 					window.localStorage.setItem('twine-passages-' + s, JSON.stringify(data.passages[s]))
 				});
 
@@ -266,12 +280,12 @@ const story = module.exports = {
 					createStory(store, stories[id]);
 				});
 
+				decrementSemaphore(store)
+
 			})
 			.catch(err => {
 				debugger;
 				err.message + " " + err.response.data
 			})
-
-
 	}
 };

@@ -1,16 +1,24 @@
-<modal-dialog id="passageEditModal" class="editor" :can-close="canClose" :can-widen="true" :origin="origin" @destroyed="dialogDestroyed" v-ref:modal>
-	<span slot="title">
-		<input type="text" id="passageName" placeholder="{{ 'Passage Name' | say }}" v-model="userPassageName">
-	</span>
+<slide-panel id="passageEditModal" class="editor" :can-close="canClose" :can-widen="true" :origin="origin"
+	@destroyed="dialogDestroyed" v-ref:modal panel-size="large" :panel-title="userPassageName">
 
-	<tag-editor :passage="passage" :story-id="storyId"></tag-editor>
-	<asset-editor :passage="passage" :story-id="storyId"></asset-editor>
+	<div slot="panel-body">
+		<span slot="title">
+			<input type="text" id="passageName" placeholder="{{ 'Passage Name' | say }}" v-model="userPassageName">
+		</span>
 
-	<p class="error" v-if="!userPassageNameValid">
-		{{ 'A passage already exists with this name.' | say }}
-	</p>
+		<p class="error" v-if="!userPassageNameValid">
+				{{ 'A passage already exists with this name.' | say }}
+			</p>
+			<div class="expand">
+			<froala :options="fOptions" :text="passage.text" @f-change="saveText"></froala>
+				<!--<tags-selector></tags-selector>-->
+				
+					<!--	<code-mirror :options="cmOptions" :text="passage.text" @cm-change="saveText" v-ref:codemirror></code-mirror>-->
+				
+				</div> <!-- .fullEdit -->
 
-	<div class="expand">
-		<code-mirror :options="cmOptions" :text="passage.text" @cm-change="saveText" v-ref:codemirror></code-mirror>
-	</div> <!-- .fullEdit -->
-</modal-dialog>
+	</div>
+
+	
+		<div slot="panel-actions"></div>
+</slide-panel>

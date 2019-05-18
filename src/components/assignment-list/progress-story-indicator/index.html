@@ -1,0 +1,8 @@
+<div class="progress-story-indicator">
+    <span v-for="les in lessons" id="{{les.lesson_id}}_{{les.assignment_id}}">
+        <i class="material-icons" :class="{ green: les.progress===100 , red :les.progress===0}">{{les.progress | getIcon}}</i>
+        <div class="mdl-tooltip" data-mdl-for="{{les.lesson_id}}_{{les.assignment_id}}">
+                {{lessonsDict[les.lesson_id].name}}
+                </div>
+    </span>
+</div>

@@ -69,7 +69,7 @@ module.exports = Vue.extend({
 
 		proofStory() {
 			window.open(
-				'#!/stories/' + this.story.id + '/proof',
+				'#!/home/stories/' + this.story.id + '/proof',
 				'twinestory_proof_' + this.story.id
 			);
 		},
