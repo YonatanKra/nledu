@@ -1,4 +1,22 @@
 <div class="home-view">
+	<div class=" mdl-grid">
+
+	
+		<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--8-col  mdl-grid">
+			<word-cloud :items.sync="tagsList"></word-cloud>
+		</div>
+
+		<div class="demo-options mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-grid mdl-card mdl-color--deep-purple-500">
+		
+				<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+			<tasks-list></tasks-list>
+			</div>
+			</div>
+		</div>
+		<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+				<lessons-progress></lessons-progress>
+		</div>
+
 	<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
 		<svg fill="currentColor" width="200px" height="200px" viewBox="0 0 1 1"
 			class="demo-chart mdl-cell mdl-cell--4-col mdl-cell--3-col-desktop">
@@ -50,7 +68,8 @@
 		<div
 			class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
 			<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-				<h3>View options</h3>
+
+				<!--<h3>View options</h3>
 				<ul>
 					<li>
 						<label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
@@ -76,7 +95,7 @@
 							<span class="mdl-checkbox__label">Objects viewed</span>
 						</label>
 					</li>
-				</ul>
+				</ul>-->
 			</div>
 			<div class="mdl-card__actions mdl-card--border">
 				<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--blue-grey-50">Change

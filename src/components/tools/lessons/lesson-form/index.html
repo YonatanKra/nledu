@@ -5,12 +5,12 @@
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" type="text" id="insert_lesson_name" name="lesson_name"
 					v-model="obj.name">
-				<label class="mdl-textfield__label" for="insert_lesson_name">Lesson Name</label>
+				<label class="mdl-textfield__label" for="insert_lesson_name">{{'Name' : say}}</label>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 				<input class="mdl-textfield__input" type="text" id="insert_lesson_description" name="lesson_description"
 					v-model="obj.description">
-				<label class="mdl-textfield__label" for="insert_lesson_description">Lesson Description</label>
+				<label class="mdl-textfield__label" for="insert_lesson_description">{{'Description' | say}}</label>
 			</div>
 			<img class="upload-story-image" v-on:click="uploadImage" />
 

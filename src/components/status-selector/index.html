@@ -3,6 +3,6 @@
 	class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" 
 	v-bind:class="{ selected: status.key===selectedStatusStr }"
 	v-on:click="selectStatus(status, $event)" >
-		{{status.value}}
+		{{status.value | say}}
 	</button>
 </div>

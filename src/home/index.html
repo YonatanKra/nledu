@@ -55,7 +55,7 @@
 
           <a href="{{tool.path}}" v-for="tool in tools" class="mdl-navigation__link">
             <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">{{ tool.icon }}</i>
-            {{ tool.name }}
+            {{ tool.name | say }}
           </a>
 
           <div class="mdl-layout-spacer"></div>

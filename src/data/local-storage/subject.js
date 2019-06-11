@@ -1,13 +1,12 @@
 let { loadSubjects } = require('../actions/subject');
 const axios = require('axios');
+const subjectPath = require('../../common/servicePathes').subject;
 
-const role = module.exports = {
-	load(store) {
-		axios
-		.get('http://localhost:5000/none-linear-education/us-central1/getSubjects')
-		.then(r => r.data)
-		.then(subjects => {
-			loadSubjects(store, subjects);
-		})
+const subject = module.exports = {
+	async load(store) {
+		const res = await axios.get(subjectPath.getSubjects);
+		const data = await res.data;
+
+		loadSubjects(store, data);
 	}
 };

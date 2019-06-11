@@ -1,13 +1,12 @@
 let { loadRoles } = require('../actions/role');
 const axios = require('axios');
+const rolePath = require('../../common/servicePathes').role;
 
 const role = module.exports = {
-	load(store) {
-		axios
-		.get('http://localhost:5000/none-linear-education/us-central1/getRoles')
-		.then(r => r.data)
-		.then(roles => {
-			loadRoles(store, roles);
-		})
+	async load(store) {
+		const res = await axios.get(rolePath.getRoles);
+		const data = await res.data;
+
+		loadRoles(store, data);
 	}
 };

@@ -81,8 +81,8 @@ module.exports = Vue.extend({
 			},
 			stories: state => state.story.stories,
 			subjects: state => state.subject.subjects,
-			goals: state => state.goal.goals
-
+			goals: state => state.goal.goals,
+			statuses: state => state.status.statuses
 		}
 	}
 

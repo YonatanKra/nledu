@@ -21,6 +21,7 @@ module.exports = Vue.extend({
 		storyId: '',
 		oldWindowTitle: '',
 		userPassageName: '',
+		userPassageDuration : 0,
 		saveError: '',
 		origin: null
 	}),
@@ -86,7 +87,7 @@ module.exports = Vue.extend({
 					this.updatePassage(
 						this.parentStory.id,
 						this.passage.id,
-						{ name: this.userPassageName }
+						{ name: this.userPassageName, min_duration : this.userPassageDuration }
 					);
 				}
 
@@ -99,6 +100,7 @@ module.exports = Vue.extend({
 
 	ready() {
 		this.userPassageName = this.passage.name;
+		this.userPassageDuration = this.passage.min_duration;
 
 		/* Update the window title. */
 

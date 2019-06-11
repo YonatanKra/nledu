@@ -12,14 +12,14 @@
 					<div class="mdl-cell mdl-cell--6-col">
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" type="text" id="insert_asset_name" name="name" v-model="obj.name">
-									<label class="mdl-textfield__label" for="insert_asset_name">Name</label>
+									<label class="mdl-textfield__label" for="insert_asset_name">{{'Name' | say}}</label>
 								</div>
 					</div>
 					<div class="mdl-cell mdl-cell--6-col">
 							<div class="mdl-textfield mdl-js-textfield">
 									<input class="mdl-textfield__input" type="text" id="insert_asset_description" name="description"
 										v-model="obj.description">
-									<label class="mdl-textfield__label" for="insert_asset_description">Description</label>
+									<label class="mdl-textfield__label" for="insert_asset_description">{{'Description' | say}}</label>
 								</div>
 						</div>
 			</div>
@@ -29,7 +29,7 @@
 		
 			<div class="mdl-textfield mdl-js-textfield">
 				<input class="mdl-textfield__input" type="text" id="insert_asset_path" name="path" v-model="obj.path">
-				<label class="mdl-textfield__label" for="insert_asset_path">Path</label>
+				<label class="mdl-textfield__label" for="insert_asset_path">{{'Path' | path}}</label>
 			</div>
 			<tags-selector v-bind:tags.sync="obj.tags"></tags-selector>
 		</div>

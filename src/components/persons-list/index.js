@@ -6,6 +6,7 @@ const Vue = require('vue');
 const vuex = require('vuex');
 const moment = require('moment');
 
+
 const groupBy = key => array =>
 	array.reduce((objectsByKeyValue, obj) => {
 		const value = obj[key];
@@ -18,8 +19,8 @@ require('./index.less');
 module.exports = Vue.extend({
 	template: require('./index.html'),
 
-	props: {
 
+	props: {
 	},
 	data: () => ({
 		groupByField: '',
@@ -71,6 +72,7 @@ module.exports = Vue.extend({
 			return groupBy(this.groupByField)(this.flatStudentsList);
 		}
 	},
+	
 	filters: {
 		moment: function (date) {
 			return moment(date).format('DD/MM/YYYY');

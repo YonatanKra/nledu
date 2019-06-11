@@ -1,3 +1,4 @@
+//const serviceURL = 'https://us-central1-none-linear-education.cloudfunctions.net/';
 const serviceURL = 'http://localhost:5000/none-linear-education/us-central1/';
 
 const storageURL = 'https://firebasestorage.googleapis.com/v0/b/none-linear-education.appspot.com/o/';
@@ -13,7 +14,8 @@ const assetsPath = {
 }
 
 const dataPath = {
-	syncData: serviceURL + 'syncData'
+	syncData: serviceURL + 'syncData',
+	syncProgressData : serviceURL  + 'syncProgressData'
 }
 
 const upload = {
@@ -44,16 +46,34 @@ const story = {
 	getData : serviceURL + 'getData'
 }
 
+const classes = {
+	addClass : serviceURL + 'addClass',
+	getClasses : serviceURL + 'getClasses'
+}
+
 const message = {
 	getAllMessages : serviceURL + 'getAllMessages', 
 	postMessage : serviceURL + 'postMessage', 
 	updateMessage : serviceURL + 'updateMessage', 
 }
 
+const subject = {
+	getSubjects : serviceURL + 'getSubjects'
+}
+
 const assignment = {
 	getAssignments : serviceURL + 'getAssignments',
 	addAssignment : serviceURL + 'addAssignment'
 }
+
+const role = {
+	getRoles : serviceURL + 'getRoles'
+}
+
+const status ={
+	getStatuses : serviceURL + 'getStatuses'
+}
+
 
 module.exports = {
 	assetsPath,
@@ -65,5 +85,9 @@ module.exports = {
 	story,
 	storage,
 	message,
-	assignment
+	assignment,
+	classes,
+	subject,
+	role,
+	status
 }

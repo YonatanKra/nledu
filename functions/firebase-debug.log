@@ -1,0 +1,61 @@
+[debug] [2019-05-12T19:59:05.778Z] ----------------------------------------------------------------------
+[debug] [2019-05-12T19:59:05.782Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
+[debug] [2019-05-12T19:59:05.782Z] CLI Version:   6.1.2
+[debug] [2019-05-12T19:59:05.782Z] Platform:      win32
+[debug] [2019-05-12T19:59:05.782Z] Node Version:  v8.9.4
+[debug] [2019-05-12T19:59:05.782Z] Time:          Sun May 12 2019 22:59:05 GMT+0300 (Jerusalem Daylight Time)
+[debug] [2019-05-12T19:59:05.782Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-05-12T19:59:05.805Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-05-12T19:59:05.805Z] > authorizing via signed-in user
+[debug] [2019-05-12T19:59:05.805Z] [iam] checking project none-linear-education for permissions ["firebase.projects.get"]
+[debug] [2019-05-12T19:59:05.809Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-05-12T19:59:05.809Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-05-12T19:59:06.302Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-12T19:59:06.314Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/none-linear-education:testIamPermissions  
+
+[debug] [2019-05-12T19:59:07.354Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-12T19:59:07.358Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/none-linear-education  
+ 
+[debug] [2019-05-12T19:59:08.238Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\private\nledu'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-05-12T19:59:10.974Z] Fetching environment
+[debug] [2019-05-12T19:59:10.978Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/890714670008:getServerAppConfig  
+ 
+[debug] [2019-05-12T19:59:11.566Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-12T19:59:11.566Z] Starting @google-cloud/functions-emulator
+[debug] [2019-05-12T19:59:14.642Z] Parsing function triggers
+[info] +  functions: postMessage: http://localhost:5000/none-linear-education/us-central1/postMessage
+[info] +  functions: getAllMessages: http://localhost:5000/none-linear-education/us-central1/getAllMessages
+[info] +  functions: addGoal: http://localhost:5000/none-linear-education/us-central1/addGoal
+[info] +  functions: saveStory: http://localhost:5000/none-linear-education/us-central1/saveStory
+[info] +  functions: addMessage: http://localhost:5000/none-linear-education/us-central1/addMessage
+[info] +  functions: getRoles: http://localhost:5000/none-linear-education/us-central1/getRoles
+[info] +  functions: getStories: http://localhost:5000/none-linear-education/us-central1/getStories
+[info] +  functions: addPerson: http://localhost:5000/none-linear-education/us-central1/addPerson
+[info] +  functions: getPersons: http://localhost:5000/none-linear-education/us-central1/getPersons
+[info] +  functions: saveStories: http://localhost:5000/none-linear-education/us-central1/saveStories
+[info] +  functions: savePassages: http://localhost:5000/none-linear-education/us-central1/savePassages
+[info] +  functions: getStory: http://localhost:5000/none-linear-education/us-central1/getStory
+[info] +  functions: getAssets: http://localhost:5000/none-linear-education/us-central1/getAssets
+[info] +  functions: getStatuses: http://localhost:5000/none-linear-education/us-central1/getStatuses
+[info] +  functions: getLessons: http://localhost:5000/none-linear-education/us-central1/getLessons
+[info] +  functions: getGoals: http://localhost:5000/none-linear-education/us-central1/getGoals
+[info] +  functions: addStudent: http://localhost:5000/none-linear-education/us-central1/addStudent
+[info] +  functions: getSubjects: http://localhost:5000/none-linear-education/us-central1/getSubjects
+[info] +  functions: updateStoryMetaData: http://localhost:5000/none-linear-education/us-central1/updateStoryMetaData
+[info] +  functions: updateClass: http://localhost:5000/none-linear-education/us-central1/updateClass
+[info] +  functions: getAssetTypes: http://localhost:5000/none-linear-education/us-central1/getAssetTypes
+[info] +  functions: addLesson: http://localhost:5000/none-linear-education/us-central1/addLesson
+[info] +  functions: updateLesson: http://localhost:5000/none-linear-education/us-central1/updateLesson
+[info] +  functions: getData: http://localhost:5000/none-linear-education/us-central1/getData
+[info] +  functions: syncData: http://localhost:5000/none-linear-education/us-central1/syncData
+[info] +  functions: addAsset: http://localhost:5000/none-linear-education/us-central1/addAsset
+[info] +  functions: deletePerson: http://localhost:5000/none-linear-education/us-central1/deletePerson
+[info] +  functions: getClasses: http://localhost:5000/none-linear-education/us-central1/getClasses
+[info] +  functions: addClass: http://localhost:5000/none-linear-education/us-central1/addClass
+[info] +  functions: addStoryMetaData: http://localhost:5000/none-linear-education/us-central1/addStoryMetaData

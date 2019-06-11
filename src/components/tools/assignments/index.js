@@ -3,6 +3,7 @@ Draws connector lines between passages.
 */
 const Vue = require('vue');
 const vuex = require('vuex');
+const moment = require('moment');
 const {
 	prompt
 } = require('../../slide-panel-prompt');
@@ -71,7 +72,7 @@ module.exports = Vue.extend({
 
 	components: {
 
-		'assignment-list': require('../../assignment-list'),
+		'assignment-list': require('../../assignment/assignment-list'),
 
 	},
 

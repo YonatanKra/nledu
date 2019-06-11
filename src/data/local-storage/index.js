@@ -28,6 +28,7 @@ const goal = require('./goal');
 const asset = require('./asset');
 const storyComments = require('./story-comments');
 const syncer = require('../data-sync');
+const progress = require('./progress');
 
 let enabled = true;
 let previousStories;
@@ -50,12 +51,12 @@ module.exports = store => {
 	schoolClass.load(store);
 	lesson.load(store);
 	goal.load(store);
-
+	progress.load(store);
 
 
 	previousStories = store.state.story.stories;
 	enabled = true;
-	syncer.startSync();
+	syncer.startSync(store);
 
 
 	store.subscribe((mutation, state) => {
@@ -93,7 +94,16 @@ module.exports = store => {
 
 				});
 				break;
-
+		case 'INIT_PROGRESS':
+		debugger;
+		progress.updateProgress(store,  mutation.payload[0].storyId, mutation.payload[0].passageId , 1);
+		break;
+		case 'INCREMENT_PROGRESS':
+		progress.updateProgress(store,  mutation.payload[0].storyId, mutation.payload[0].passageId,
+			 store.state.progress.progress[ mutation.payload[0].storyId][ mutation.payload[0].passageId]+1 );
+		break;
+					case 'SET_PROGRESS':
+					break;
 			case 'SET_STUDENTS':
 				break;
 			case 'SET_ROLES':

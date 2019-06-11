@@ -1,16 +1,18 @@
 <slide-panel id="passageEditModal" class="editor" :can-close="canClose" :can-widen="true" :origin="origin"
-	@destroyed="dialogDestroyed" v-ref:modal panel-size="large" :panel-title="userPassageName">
+	@destroyed="dialogDestroyed" v-ref:modal panel-size="huge" :panel-title="userPassageName">
 
 	<div slot="panel-body">
 		<span slot="title">
 			<input type="text" id="passageName" placeholder="{{ 'Passage Name' | say }}" v-model="userPassageName">
+
+			<input type="text" id="passageDuration" placeholder="{{ 'Passage Duration' | say }}" v-model="userPassageDuration">
 		</span>
 
 		<p class="error" v-if="!userPassageNameValid">
 				{{ 'A passage already exists with this name.' | say }}
 			</p>
 			<div class="expand">
-			<froala :options="fOptions" :text="passage.text" @f-change="saveText"></froala>
+			<froala :options="fOptions" :identifier="passage.id" :text="passage.text" @f-change="saveText"></froala>
 				<!--<tags-selector></tags-selector>-->
 				
 					<!--	<code-mirror :options="cmOptions" :text="passage.text" @cm-change="saveText" v-ref:codemirror></code-mirror>-->

@@ -1,6 +1,6 @@
 <div class="contact-list">
 	<div class="search">
-		<input type="text" placeholder="search" v-model="contantSearch"/>
+		<input type="text" placeholder="{{'search' | say}}" v-model="contantSearch"/>
 		<i class="fa fa-search"></i>
 	</div>
 	<ul class="list" style="overflow: auto; height: calc(500px - 105px);">
@@ -11,7 +11,7 @@
 			<div class="about">
 				<div class="name">{{ person.first_name }} {{ person.surname }}</div>
 				<div class="status">
-					<i class="fa fa-circle online"></i> {{roles[person.role]}}
+					<i class="fa fa-circle online"></i> {{roles[person.role] | say}}
 				</div>
 			</div>
 		</li>

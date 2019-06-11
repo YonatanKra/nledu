@@ -25,7 +25,8 @@ module.exports = new Vuex.Store({
 		loading: require('./loading'),
 		storyComments: require('./story-comments'),
 		message : require('./message'),
-		assignment: require('./assignment')
+		assignment: require('./assignment'),
+		progress: require('./progress')
 	},
 
 	plugins: [

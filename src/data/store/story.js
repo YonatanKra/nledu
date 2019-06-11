@@ -205,6 +205,7 @@ const storyStore = module.exports = {
 		width: 100,
 		height: 100,
 		tags: [],
+		min_duration : 0,
 		name: locale.say('Untitled Passage'),
 		selected: false,
 

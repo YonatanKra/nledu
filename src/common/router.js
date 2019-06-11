@@ -27,7 +27,9 @@ const LearnManager = require('../components/tools/learn');
 const LessonsManager = require('../components/tools/lessons');
 const LessonView = require('../components/tools/lessons/lesson');
 const AssignmentView = require('../components/tools/assignments');
-const HomeManager = require('../components/tools/home')
+const HomeManager = require('../components/tools/home');
+
+const {startTrack} = require('./sessionTracker');
 
 const UserProfile = {
 	template: '<div>Profile</div>'
@@ -139,7 +141,7 @@ TwineRouter.map({
 			'/stories/:id/play': {
 				component: {
 					ready() {
-						debugger;
+					
 						const state = this.$store.state;
 						const story = state.story.stories.find(
 							story => story.id === this.$route.params.id
@@ -155,6 +157,7 @@ TwineRouter.map({
 								story,
 								format
 							));
+							startTrack(this.$store, this.$route.params.id);
 						});
 					}
 				}

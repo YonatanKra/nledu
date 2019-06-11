@@ -1,0 +1,11 @@
+<div class="tasks-list">
+        <h3 style="color: white">{{'Tasks List' | say }}</h3>
+        <ul style="padding-left: 3px;">
+            <li v-for="task in tasks">
+                <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="height: auto !important;">
+                    <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">{{task.comment}}</span>
+                </label>
+            </li>
+        </ul>
+    </div>

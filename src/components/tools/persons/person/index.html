@@ -5,41 +5,40 @@
 		<ul class="demo-list-item mdl-list">
 			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
-					<strong>Email</strong>{{person.email}}
+					<strong>{{'Email' | say}}</strong>{{person.email}}
 				</span>
 			</li>
 
 			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
-					<strong>Phone</strong>{{person.phone}}
+					<strong>{{'Phone' | say}}</strong>{{person.phone}}
 				</span>
 			</li>
 			<li class="mdl-list__item" v-if="person.class">
 				<span class="mdl-list__item-primary-content">
-					<strong>School</strong>{{classesDict[person.class].school}}
-					<strong>Grade</strong>{{classesDict[person.class].grade}}
-					<strong>City</strong>{{classesDict[person.class].city}}
+					<strong>{{'School' | say}}</strong>{{classesDict[person.class].school}}
+					<strong>{{'Grade' | say}}</strong>{{classesDict[person.class].grade}}
+					<strong>{{'City' | say}}</strong>{{classesDict[person.class].city}}
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
-					<strong>Birth Date</strong>{{person.birth_date | moment}}
+					<strong>{{'Birth Date' | say}}</strong>{{person.birth_date | moment}}
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
-					<strong>Created Date</strong>{{person.created_date | moment}}
+					<strong>{{'Created Date' | say}}</strong>{{person.created_date | moment}}
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<span class="mdl-list__item-primary-content">
-					<strong>Last Update Date</strong>{{person.last_modified | moment}}
+					<strong>{{'Update Date' | say}}</strong>{{person.last_modified | moment}}
 				</span>
 			</li>
 
 		</ul>
 	</div>
-
 
 	<!--
 	<td class="mdl-data-table__cell--non-numeric">{{ person.role }}</td>

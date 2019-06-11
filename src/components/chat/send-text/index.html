@@ -1,9 +1,9 @@
 <div class="send-text"><!--v-on:keypress.enter="sendMessage"-->
 	<textarea name="message-to-send"  v-model="inputMessage" id="message-to-send"
-		placeholder="Type your message to  {{ selectedContact.first_name }} {{ selectedContact.surname }}" rows="3"></textarea>
+		placeholder="{{'Type your message to' | say}}  {{ selectedContact.first_name }} {{ selectedContact.surname }}" rows="3"></textarea>
 		<div class="buttons">
-			<button v-on:click="sendMessage(false)">Send</button>
-			<button v-on:click="sendMessage(true)">Assign</button>
+			<button v-on:click="sendMessage(false)">{{'Send' | say}}</button>
+			<button v-on:click="sendMessage(true)">{{'Assign' | say}}</button>
 		</div>
 
 </div>

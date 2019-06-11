@@ -1,8 +1,8 @@
 <div class="conversion-header">
 		<person-image :person="selectedContact"></person-image>
 	<div class="chat-about">
-		<div class="chat-with">Chat with {{ selectedContact.first_name }} {{ selectedContact.surname }}</div>
-		<div class="chat-num-messages">already {{messages.length}} messages</div>
+		<div class="chat-with">{{'Chat with' | say}} {{ selectedContact.first_name }} {{ selectedContact.surname }}</div>
+		<div class="chat-num-messages"> {{messages.length}} {{'messages' | say}}</div>
 	</div>
 	<i class="fa fa-star"></i>
 </div>

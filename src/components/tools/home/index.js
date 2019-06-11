@@ -13,25 +13,31 @@ module.exports = Vue.extend({
 
 	},
 	data: () => ({
-	
+	//	tagsList : []
 	}),
 	methods: {
 	
 		
 	},
 	computed: {
-
+		tagsList: function () {
+		
+			return this.stories.map(s=>s.tags).join(',').split(',').filter(x=>x.length);
+		}
 	
 	},
 	filters: {
 
 	},
 	ready() {
+		
 	
 	},
 
 	components: {
-		//'drop-down': require('../../../drop-down'),
+		'lessons-progress': require('../learn/lessons-progress'),
+		'word-cloud': require('../../word-cloud'),
+		'tasks-list': require('../../assignment/tasks-list')
 		
 	
 	},

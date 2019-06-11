@@ -1,6 +1,7 @@
 let commaList = require('./comma-list');
 let { createClass, loadClasses } = require('../actions/class');
 const axios = require('axios');
+const classesPath = require('../../common/servicePathes').classes;
 
 const schoolClass = module.exports = {
 	update(func) {
@@ -32,7 +33,7 @@ const schoolClass = module.exports = {
 	create(store, schoolClass) {
 		if (schoolClass && !schoolClass.id){
 			axios
-			.post('http://localhost:5000/none-linear-education/us-central1/addClass',schoolClass)
+			.post(classesPath.addClass,schoolClass)
 			.then(r => r.data)
 			.then(classes => {
 				createClass(store, classes[0]);
@@ -46,7 +47,7 @@ const schoolClass = module.exports = {
 	},
 	load(store) {
 		axios
-		.get('http://localhost:5000/none-linear-education/us-central1/getClasses')
+		.get(classesPath.getClasses)
 		.then(r => r.data)
 		.then(classes => {
 			
@@ -55,45 +56,5 @@ const schoolClass = module.exports = {
 		.catch(err=>{
 			err.message + " " + err.response.data
 		})
-/*
-		const classes = {};
-		const serializedClasses = window.localStorage.getItem('twine-classes');
-
-		if (!serializedClasses) {
-			return;
-		}
-
-		serializedClasses.split(',').forEach(id => {
-			const newClass = JSON.parse(
-				window.localStorage.getItem('twine-classes-' + id)
-			);
-
-			if (newClass) {
-				/* Coerce the lastUpdate property to a date. 
-
-				if (newClass.lastUpdate) {
-					newClass.lastUpdate = new Date(
-						Date.parse(newClass.lastUpdate)
-					);
-				}
-				else {
-					newClass.lastUpdate = new Date();
-				}
-
-				classes[newClass.id] = newClass;
-			}
-			else {
-				console.warn(
-					`Could not parse class ${id}, skipping`,
-					window.localStorage.getItem('twine-classes-' + id)
-				);
-			}
-		});
-
-		/* Finally, we dispatch actions to add the classes to the store. 
-
-		Object.keys(classes).forEach(id => {
-			createClass(store, classes[id]);
-		});*/
 	}
 };

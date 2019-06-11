@@ -1,7 +1,7 @@
 <div class="stories-list">
 	<ul class="demo-list-two mdl-list"  >
 		<li class="mdl-list__item mdl-list__item--two-line" v-for="story in stories | storiesInLesson | excludedStories | orderBy order"
-		data-story-id="{{story.id}}" data-order="{{story.order}}">
+		data-story-id="{{story.id}}" data-order="{{story.order}}"  @click="play(story)">
 			<span class="mdl-list__item-primary-content">
 				<span>{{story.name}}</span>
 				<span class="mdl-list__item-sub-title">{{story.description}}</span>

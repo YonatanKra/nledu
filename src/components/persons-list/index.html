@@ -2,7 +2,7 @@
 	<div class="group-by-buttons">
 		<button v-for="field in availableGroupFields" v-bind:class="{ selected: field===groupByField }"
 			v-on:click="setGroupByField(field)" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-			{{field}}
+			{{field | say }}
 		</button>
 	</div>
 
@@ -13,18 +13,18 @@
 			<thead>
 				<tr>
 					<th class="mdl-data-table__cell--non-numeric"></th>
-					<th class="mdl-data-table__cell--non-numeric">Role</th>
-					<th class="mdl-data-table__cell--non-numeric">Status</th>
-					<th class="mdl-data-table__cell--non-numeric">First Name</th>
-					<th class="mdl-data-table__cell--non-numeric">Surname</th>
-					<th class="mdl-data-table__cell--non-numeric">Email</th>
-					<th class="mdl-data-table__cell--non-numeric">Phone</th>
-					<th class="mdl-data-table__cell--non-numeric">School</th>
-					<th class="mdl-data-table__cell--non-numeric">Class</th>
-					<th class="mdl-data-table__cell--non-numeric">City</th>
-					<th class="mdl-data-table__cell--non-numeric">Birth Date</th>
-					<th class="mdl-data-table__cell--non-numeric">Created Date</th>
-					<th class="mdl-data-table__cell--non-numeric">Update Date</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Role' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Status' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'First Name' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Surname' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Email' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Phone' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'School' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Class' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'City' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Birth Date' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Created Date' | say}}</th>
+					<th class="mdl-data-table__cell--non-numeric">{{'Update Date' | say}}</th>
 
 				</tr>
 			</thead>
@@ -33,7 +33,7 @@
 					<td class="mdl-data-table__cell--non-numeric">
 						<person-image image-class="img-avatar" :person="person"></person-image>
 					</td>
-					<td class="mdl-data-table__cell--non-numeric">{{ person.role }}</td>
+					<td class="mdl-data-table__cell--non-numeric">{{ person.role | say }}</td>
 					<td class="mdl-data-table__cell--non-numeric"><i class="material-icons">
 							{{person.status |statusIcon }}</i></td>
 					<td class="mdl-data-table__cell--non-numeric">{{ person.first_name }}</td>

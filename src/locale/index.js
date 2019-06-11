@@ -76,7 +76,6 @@ module.exports = {
 					@property i18nData
 					@type {Object}
 					**/
-
 					this.i18nData = data;
 					this.i18n = new Jed(this.i18nData);
 					callback();

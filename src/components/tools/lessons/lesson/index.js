@@ -3,6 +3,7 @@ Draws connector lines between passages.
 */
 const Vue = require('vue');
 const vuex = require('vuex');
+const storagePath = require('../../../../common/servicePathes').storage;
 
 require('./index.less');
 
@@ -20,7 +21,14 @@ module.exports = Vue.extend({
 
 	},
 	methods: {
-
+		getStyle(lesson){
+			if(lesson.path){
+				const path = 'images/lessons/' + lesson.id + '/' + lesson.path + '.png';
+				const fullPath =  storagePath.storageURL +  encodeURIComponent(path) + storagePath.imageSuffix;
+				return  'url(' + fullPath + ')  no-repeat #46B6AC;'
+				;
+			}
+		},
 	},
 	components: {
 		'stories-list': require('../../../stories-list'),

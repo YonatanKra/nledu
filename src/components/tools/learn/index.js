@@ -36,8 +36,8 @@ module.exports = Vue.extend({
 	components: {
 
 		'subject-image': require('../../subject-image'),
-		'learn-tasks' : require('./learrn-tasks')
-
+		'learn-tasks' : require('./learrn-tasks'),
+		'assignment-small-list' : require('../../../components/assignment/assignment-small-list')
 	},
 
 	vuex: {

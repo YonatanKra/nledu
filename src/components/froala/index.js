@@ -5,6 +5,10 @@ const Vue = require('vue');
 const vuex = require('vuex');
 const $ = require('jquery');
 const {upload} = require('../../common/servicePathes');
+const {uploadImage} = require('../../common/fileUploader');
+const uuid = require('tiny-uuid');
+
+ 
 
 require('./froala_editor.min.js');
 require('./froala_editor.min.less');
@@ -74,7 +78,7 @@ const TOOLBAR_BUTTONS = ["fullscreen", "bold", "italic", "underline", "strikeThr
 module.exports = Vue.extend({
 	template: require('./index.html'),
 
-	props: ['options', 'text'],
+	props: ['options', 'text', 'identifier'],
 
 	data: {
 
@@ -109,7 +113,6 @@ module.exports = Vue.extend({
 
 	},
 	ready() {
-
 		this.$froala = $('.wysiwyg textarea');
 		this.$froala.froalaEditor({
 			toolbarButtons: TOOLBAR_BUTTONS
@@ -152,9 +155,25 @@ module.exports = Vue.extend({
 				// Allow to upload PNG and JPG.
 				imageAllowedTypes: ['jpeg', 'jpg', 'png']
 			})
-			.on('froalaEditor.image.beforeUpload', function (e, editor, images) {
-                debugger;
-                return true;
+			.on('froalaEditor.image.beforeUpload',  (e, editor, images)=> {
+				const reader = new FileReader();
+				const image = images[0];
+				const identifier = this.identifier;
+				
+				reader.onloadend = async () => {
+					const imageDataURL = reader.result;
+					const fileType = image.type.split('/')[1];
+					const path = 'images/stories/' + (identifier? (identifier + '/'):'') + uuid() + '.' + fileType;
+
+					const result = await uploadImage(path, imageDataURL);
+
+					const newPath  = 'https://firebasestorage.googleapis.com/v0' + result.metadata.ref.location.fullServerUrl()+'?alt=media';
+					editor.image.insert(newPath);
+				}
+
+				reader.readAsDataURL(image); //reads the data as a URL
+
+                return false;
 				// Return false if you want to stop the image upload.
 			})
 			.on('froalaEditor.image.uploaded', function (e, editor, response) {

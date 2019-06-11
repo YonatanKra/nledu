@@ -1,0 +1,36 @@
+<div class="lessons-progress">
+	<table class="mdl-data-table mdl-js-data-table">
+		<thead>
+			<tr>
+					<th class="mdl-data-table__cell--non-numeric"></th>
+				<th class="mdl-data-table__cell--non-numeric">{{'Name' | say }}</th>
+				<th class="mdl-data-table__cell--non-numeric">{{'Progress' | say }}</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="lesson in assignedLessonsFlat" >
+			
+					<td class="mdl-data-table__cell--non-numeric" @click="view(lesson)">
+						<img class="lesson-avatar" :src="lesson.imagePath">
+					</td>
+				<td id="{{lesson.id}}" class="mdl-data-table__cell--non-numeric">{{ lesson.name }}
+						<div class="mdl-tooltip" data-mdl-for="{{lesson.id}}">
+								{{lesson.description}}
+								</div>
+
+				</td>
+				<td class="mdl-data-table__cell--non-numeric">
+					<lesson-progress :progress-value="lesson.progress" style="margin-bottom: 3px;"></lesson-progress>
+					<div v-for="story in lesson.flatStories" class="progress-row"  @click="play(story)">
+						<h6> {{story.name}}</h6>
+						<percentage-circle :progress-value="story.progressPercentage"></percentage-circle>
+					</div>
+				</td>
+
+		
+
+			</tr>
+		</tbody>
+	</table>
+</div>

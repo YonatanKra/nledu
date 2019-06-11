@@ -14,13 +14,22 @@ module.exports = Vue.extend({
 		storiesList: [],
 		listType: '',
 		excludedStoriesList: [],
-		allowDrag: false
+		allowDrag: false,
+		allowClick: false
 	},
 	data: {
 
 	},
 	methods: {
-
+		play(story) {
+			if(this.allowClick){
+				window.open(
+					'#/home/stories/' + story.id + '/play',
+					'twinestory_play_' + story.id
+				);
+			}
+		
+		},
 	},
 	computed: {
 

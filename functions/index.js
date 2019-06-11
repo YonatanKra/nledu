@@ -565,12 +565,18 @@ exports.syncData = functions.https.onRequest((req, res) => {
 
 	return admin.database().ref('/stories').update(stories).then((a, b, c) => {
 		return admin.database().ref('/passages').update(passages).then((d, e, f) => {
-			// Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
-			cors(req, res, () => {});
 
 			return res.send('success');
 			//return snapshot.exportVal();
 		});
+	});
+});
+
+exports.syncProgressData = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return admin.database().ref('/progress/' + req.body.userId).update(req.body.progress).then((a, b, c) => {
+			return res.send('success');
 	});
 });
 
@@ -605,18 +611,25 @@ exports.getAllMessages = functions.https.onRequest((req, res) => {
 
 exports.getAssignments = functions.https.onRequest((req, res) => {
 	cors(req, res, () => {});
-	const assignmentList = [];
 
 	return assignment.getAll().then(assignments => {
 		return assignmentLessons.getAll().then(assignmentLessons => {
-
 			var m = assignments.map(s=>Object.assign(
 				{},
 				{assignment : s},
 				{lessons : assignmentLessons.filter(al=>al.assignment_id===s.id)}
 			))
 
-			return res.send(m);
+			return admin.database().ref('/progress').once("value", (progressData) => {
+				var progress = progressData.val();
+
+				m.forEach(as=>{
+					
+				})
+				return res.send(m);
+			})
+
+		
 		});
 	}).catch(err => {
 		return res.status(500).send(err);
