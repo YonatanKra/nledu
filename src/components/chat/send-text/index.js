@@ -5,6 +5,10 @@ const {
 	postMessage
 } = require('../../../data/actions/message');
 
+const {
+	createAssignment
+} = require('../../../data/actions/assignment');
+
 
 require('./index.less');
 
@@ -12,7 +16,7 @@ module.exports = Vue.extend({
 	template: require('./index.html'),
 
 	props: {
-		selectedContact : {}
+		selectedContact: {}
 	},
 	data: () => ({
 		inputMessage: '',
@@ -26,9 +30,19 @@ module.exports = Vue.extend({
 				from: this.currentUser.uid,
 				content: this.inputMessage,
 				timeSpan: new Date(),
-				isTask : isTask,
-				isDone : false
+				isTask: isTask,
+				isDone: false
 			};
+
+			if (isTask) {
+				const assignment = {
+					"comment": messageObj.content,
+					"lessons": [],
+					"students": [messageObj.to],
+					"assigner": messageObj.from
+				};
+				this.createAssignment(assignment);
+			}
 
 			this.postMessage(messageObj);
 		}
@@ -56,7 +70,8 @@ module.exports = Vue.extend({
 
 	vuex: {
 		actions: {
-			postMessage
+			postMessage,
+			createAssignment
 		},
 
 		getters: {

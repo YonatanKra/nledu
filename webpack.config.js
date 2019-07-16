@@ -19,7 +19,7 @@ module.exports = {
 			Inline any resurces below 10k in size.
 			*/
 			{
-				test: /\.(eot|png|svg|ttf|woff|woff2|gif)(\?.*)?$/,
+				test: /\.(eot|png|svg|jpg|ttf|woff|woff2|gif)(\?.*)?$/,
 				loader: 'url-loader',
 				options: {
 					limit: 10000,

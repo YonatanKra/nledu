@@ -19,7 +19,7 @@ cacheItems[PASSAGES_PREFIX] = {};
 cacheItems[PROGRESS_KEY_NAME] = {};
 
 const startSync = store => {
-	if(!store.state.auth.currentUser){
+	if (!store.state.auth.currentUser) {
 		return;
 	}
 	let user = store.state.auth.currentUser.uid;
@@ -44,12 +44,22 @@ const sync = (user) => {
 
 	const dataDiffs = {
 		stories: itemDiffsGetter(data.stories, STORIES_PREFIX),
-		passages: itemDiffsGetter(data.passages, PASSAGES_PREFIX)
+		passages: itemDiffsGetter(data.passages, PASSAGES_PREFIX),
+		deletedPassages: getDeletedPassages(data.passages, PASSAGES_PREFIX)
 	}
 
-	if (dataDiffs.passages.length || dataDiffs.stories.length) {
+	if (dataDiffs.passages.length || dataDiffs.stories.length || dataDiffs.deletedPassages.length) {
+		debugger;
 		syncData(dataDiffs, user);
 	}
+}
+
+const getDeletedPassages = (items, name) => {
+	const res =  Object.keys(cacheItems[name]).filter(item => item !=="undefined" && items.find(t => JSON.parse(t).id === item) === undefined);
+	res.forEach(d=>delete cacheItems[name][d]);
+
+	return res;
+
 }
 
 const syncData = (data, user) => {

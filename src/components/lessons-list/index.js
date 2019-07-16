@@ -58,7 +58,10 @@ module.exports = Vue.extend({
 		},
 	},
 	computed: {
+		lessonsList: function () {
+			return this.lessons.filter(m=>m.status!==2)
 
+		},
 
 	},
 	filters: {

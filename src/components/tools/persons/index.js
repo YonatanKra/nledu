@@ -107,7 +107,8 @@ module.exports = Vue.extend({
 	components: {
 		'persons-list': require('../../persons-list'),
 		'expanding-card': require('../../expanding-card'),
-		'drop-down': require('../../drop-down')
+		'drop-down': require('../../drop-down'),
+		'org-chart': require('../../org-chart')
 	},
 	vuex: {
 		actions: {

@@ -3,7 +3,7 @@
 		placeholder="{{'Type your message to' | say}}  {{ selectedContact.first_name }} {{ selectedContact.surname }}" rows="3"></textarea>
 		<div class="buttons">
 			<button v-on:click="sendMessage(false)">{{'Send' | say}}</button>
-			<button v-on:click="sendMessage(true)">{{'Assign' | say}}</button>
+			<button v-if="personsDict[currentUser.uid].role!==4" v-on:click="sendMessage(true)">{{'Assign' | say}}</button>
 		</div>
 
 </div>

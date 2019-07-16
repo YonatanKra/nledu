@@ -536,11 +536,21 @@ exports.getData = functions.https.onRequest((req, res) => {
 
 				}, {});
 
+				const passagesVal = passages.val();
+				let passagesResponse = {};
+				for( passage in passagesVal){
+					if(passage.IsDeleted !==true){
+						passagesResponse[passage] =passage;
+					}
+				}
+
+				
+
 				cors(req, res, () => {});
 
 				return res.send({
 					stories: results || [],
-					passages: passages.val() || []
+					passages: passagesVal|| []
 				});
 
 			}, err => res.status(500).send(err));
@@ -561,6 +571,10 @@ exports.syncData = functions.https.onRequest((req, res) => {
 		a[b.id] = b;
 		return a
 	}, {});
+
+	(req.body.deletedPassages||[]).forEach(p=>{
+		passages[p] = {IsDeleted : true}
+	});
 
 
 	return admin.database().ref('/stories').update(stories).then((a, b, c) => {
