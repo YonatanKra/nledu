@@ -46,4 +46,20 @@ const assignment = module.exports = {
 			}
 		}
 	},
+	async updateAssignment(store, assignmentObject) {
+		if (!assignmentObject.id) {
+			throw new Error('assignment has no id');
+		}
+			try {
+				debugger
+				const res = await axios.post(assignmentPath.updateAssignment, assignmentObject);
+				const data = await res.data;
+
+			//	createLesson(store, les);
+
+				showMessage('Assignment Saved successfully')
+			} catch (error) {
+				showMessage(error)
+			}
+	}
 };

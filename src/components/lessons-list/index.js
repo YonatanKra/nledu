@@ -3,6 +3,8 @@ const vuex = require('vuex');
 const promptPanel = require('../slide-panel-prompt').prompt;
 const {updateLesson} = require('../../data/actions/lesson');
 const storagePath = require('../../common/servicePathes').storage;
+const {getImagePath} = require('../status-icon/service');
+
 
 require('./index.less');
 
@@ -21,6 +23,9 @@ module.exports = Vue.extend({
 				return  'url(' + fullPath + ') bottom right 15% no-repeat #46B6AC;'
 				;
 			}
+		},
+		getImageSrc(lesson){
+			return getImagePath(lesson.status);
 		},
 		view(id) {
 			window.location.hash += '/' + id
@@ -59,7 +64,7 @@ module.exports = Vue.extend({
 	},
 	computed: {
 		lessonsList: function () {
-			return this.lessons.filter(m=>m.status!==2)
+			return this.lessons; //.filter(m=>m.status!==2)
 
 		},
 

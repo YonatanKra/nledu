@@ -3,7 +3,7 @@
         <ul style="padding-left: 3px;">
             <li v-for="task in tasks">
                 <label for="chkbox1" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" style="height: auto !important;">
-                    <input type="checkbox" id="chkbox1" class="mdl-checkbox__input">
+                    <input type="checkbox" id="chkbox1" class="mdl-checkbox__input" v-model="task.isDone" v-on:click="markAsDone(task, $event)">
                     <span class="mdl-checkbox__label">{{task.comment}}</span>
                 </label>
             </li>

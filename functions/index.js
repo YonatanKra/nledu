@@ -283,6 +283,16 @@ exports.updatePerson = functions.https.onRequest((req, res) => {
 	});
 });
 
+exports.updateAssignment = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return assignment.update(req.body.id, req.body).then(() => {
+		return res.send('success');
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
 exports.getGoals = functions.https.onRequest((req, res) => {
 	cors(req, res, () => {});
 

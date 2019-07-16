@@ -13,7 +13,7 @@ module.exports = Vue.extend({
 	template: require('./index.html'),
 
 	props: {
-
+		personId: String
 
 	},
 	data: {
@@ -38,7 +38,16 @@ module.exports = Vue.extend({
 
 			const list = [];
 
-			this.lessons.filter(s=>s.status!=2).forEach(assignment => {
+			let filterList = this.lessons.filter(s => s.status != 2);
+
+			if (this.personId) {
+				filterList = [...new Set(this.assignments.filter(t => t.assignee === this.personId && t.lessons.length)
+					.map(a => a.lessons).flat()
+					.map(l => l.lesson_id))].map(l=>this.lessons.find(ll=>ll.id ===l));
+
+			}
+
+			filterList.forEach(assignment => {
 				const item = Object.assign({}, assignment);
 
 				item.assignee_name = this.students.filter(s => s.id === assignment.assignee)
@@ -50,16 +59,16 @@ module.exports = Vue.extend({
 				item.status_name = this.statuses[assignment.status];
 
 
-				if(item.path){
+				if (item.path) {
 					const path = 'images/lessons/' + item.id + '/' + item.path + '.png';
-					const fullPath =  storagePath.storageURL +  encodeURIComponent(path) + storagePath.imageSuffix;
-					
+					const fullPath = storagePath.storageURL + encodeURIComponent(path) + storagePath.imageSuffix;
+
 					item.imagePath = fullPath;
 				}
-		
+
 				item.flatStories = item.stories.map(s => {
 					const story = this.stories.find(x => x.id === s.story_id);
-					const totalDuration =  story.passages.reduce((total, num) => {
+					const totalDuration = story.passages.reduce((total, num) => {
 						return total + parseInt(num.min_duration);
 					}, 0);
 
@@ -67,13 +76,13 @@ module.exports = Vue.extend({
 					const progressPercentage = (progress / totalDuration) * 100
 
 					return Object.assign({}, story, {
-						totalDuration :totalDuration,
-						progress : progress,
-						progressPercentage : progressPercentage
+						totalDuration: totalDuration,
+						progress: progress,
+						progressPercentage: progressPercentage
 					})
 				});
-	
-				
+
+
 				item.totalDuration = item.flatStories.reduce((total, num) => {
 					return total + parseInt(num.totalDuration);
 				}, 0);

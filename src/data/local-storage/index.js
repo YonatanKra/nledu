@@ -94,16 +94,16 @@ module.exports = store => {
 
 				});
 				break;
-		case 'INIT_PROGRESS':
-		debugger;
-		progress.updateProgress(store,  mutation.payload[0].storyId, mutation.payload[0].passageId , 1);
-		break;
-		case 'INCREMENT_PROGRESS':
-		progress.updateProgress(store,  mutation.payload[0].storyId, mutation.payload[0].passageId,
-			 store.state.progress.progress[ mutation.payload[0].storyId][ mutation.payload[0].passageId]+1 );
-		break;
-					case 'SET_PROGRESS':
-					break;
+			case 'INIT_PROGRESS':
+				debugger;
+				progress.updateProgress(store, mutation.payload[0].storyId, mutation.payload[0].passageId, 1);
+				break;
+			case 'INCREMENT_PROGRESS':
+				progress.updateProgress(store, mutation.payload[0].storyId, mutation.payload[0].passageId,
+					store.state.progress.progress[mutation.payload[0].storyId][mutation.payload[0].passageId] + 1);
+				break;
+			case 'SET_PROGRESS':
+				break;
 			case 'SET_STUDENTS':
 				break;
 			case 'SET_ROLES':
@@ -118,7 +118,7 @@ module.exports = store => {
 				break;
 			case 'SET_LESSONS':
 				break;
-				case 'SET_ASSIGNMENT':
+			case 'SET_ASSIGNMENT':
 				break;
 			case 'SET_GOALS':
 				break;
@@ -160,7 +160,7 @@ module.exports = store => {
 				lesson.createLesson(store, mutation.payload[0])
 
 				break;
-				case 'CREATE_ASSIGNMENT':
+			case 'CREATE_ASSIGNMENT':
 				assignment.createAssignment(store, mutation.payload[0])
 
 				break;
@@ -227,9 +227,26 @@ module.exports = store => {
 					path: mutation.payload[1].path,
 					imageDataURL: mutation.payload[1].imageDataURL,
 					status: mutation.payload[1].status
-				})
+				});
 
 				break;
+
+
+			case 'UPDATE_ASSIGNMENT':
+
+				const assignmentToSave = state.assignment.assignments.find(
+					s => s.id === mutation.payload[0]
+				);
+
+				assignment.updateAssignment(store, {
+					id: assignmentToSave.id,
+					status: mutation.payload[1].status,
+					end_date: mutation.payload[1].end_date,
+					last_update_date: mutation.payload[1].last_update_date
+				});
+
+				break;
+
 
 			case 'UPDATE_CLASS':
 				schoolClass.update(transaction => {

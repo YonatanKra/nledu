@@ -1,51 +1,56 @@
 <div class="person-view">
-	<div class="demo-card-wide mdl-card mdl-shadow--2dp">
-		<person-image image-class="img-avatar" :person="person"></person-image>
-		<h2>{{person.first_name}} {{person.surname}} </h2>
-		<ul class="demo-list-item mdl-list">
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'Email' | say}}</strong>{{person.email}}
-				</span>
-			</li>
+	<div class=" mdl-grid">
+		<div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col  mdl-grid">
+			<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+				<person-image image-class="img-avatar" :person="person"></person-image>
+				<h2>{{person.first_name}} {{person.surname}} </h2>
+				<ul class="demo-list-item mdl-list">
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'Email' | say}}</strong>{{person.email}}
+						</span>
+					</li>
 
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'Phone' | say}}</strong>{{person.phone}}
-				</span>
-			</li>
-			<li class="mdl-list__item" v-if="person.class">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'School' | say}}</strong>{{classesDict[person.class].school}}
-					<strong>{{'Grade' | say}}</strong>{{classesDict[person.class].grade}}
-					<strong>{{'City' | say}}</strong>{{classesDict[person.class].city}}
-				</span>
-			</li>
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'Birth Date' | say}}</strong>{{person.birth_date | moment}}
-				</span>
-			</li>
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'Created Date' | say}}</strong>{{person.created_date | moment}}
-				</span>
-			</li>
-			<li class="mdl-list__item">
-				<span class="mdl-list__item-primary-content">
-					<strong>{{'Update Date' | say}}</strong>{{person.last_modified | moment}}
-				</span>
-			</li>
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'Phone' | say}}</strong>{{person.phone}}
+						</span>
+					</li>
+					<li class="mdl-list__item" v-if="person.class">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'School' | say}}</strong>{{classesDict[person.class].school}}
+							<strong>{{'Grade' | say}}</strong>{{classesDict[person.class].grade}}
+							<strong>{{'City' | say}}</strong>{{classesDict[person.class].city}}
+						</span>
+					</li>
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'Birth Date' | say}}</strong>{{person.birth_date | moment}}
+						</span>
+					</li>
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'Created Date' | say}}</strong>{{person.created_date | moment}}
+						</span>
+					</li>
+					<li class="mdl-list__item">
+						<span class="mdl-list__item-primary-content">
+							<strong>{{'Update Date' | say}}</strong>{{person.last_modified | moment}}
+						</span>
+					</li>
 
-		</ul>
+				</ul>
+			</div>
+		</div>
+
+		<div class="demo-options mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid mdl-card mdl-color--deep-purple-500">
+			<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+				<tasks-list :person-id="personId"></tasks-list>
+			</div>
+		</div>
 	</div>
 
-	<!--
-	<td class="mdl-data-table__cell--non-numeric">{{ person.role }}</td>
-	<td class="mdl-data-table__cell--non-numeric"><i class="material-icons">
-			{{person.status |statusIcon }}</i></td>
-
-    -->
+	<lessons-progress :person-id="personId"></lessons-progress>
 
 	<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored add-item"
 		v-on:click="editPersonDelegate">

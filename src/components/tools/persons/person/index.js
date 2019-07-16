@@ -48,7 +48,9 @@ module.exports = Vue.extend({
         }
 	},
 	components: {
-        'person-image': require('../../../person-image'),
+		'person-image': require('../../../person-image'),
+		'lessons-progress' : require('../../../tools/learn/lessons-progress'),
+		'tasks-list' : require('../../../assignment/tasks-list')
 	},
 	computed: {
 		person: function () {

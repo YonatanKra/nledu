@@ -70,7 +70,7 @@ const lesson = module.exports = {
 					showMessage('Falied to load image, but the lesson saved');
 				}
 
-				createLesson(store, les);
+				//createLesson(store, les);
 
 				showMessage('Lesson Saved successfully')
 			} catch (error) {

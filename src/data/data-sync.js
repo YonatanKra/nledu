@@ -49,7 +49,7 @@ const sync = (user) => {
 	}
 
 	if (dataDiffs.passages.length || dataDiffs.stories.length || dataDiffs.deletedPassages.length) {
-		debugger;
+		//debugger;
 		syncData(dataDiffs, user);
 	}
 }

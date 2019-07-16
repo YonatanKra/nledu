@@ -63,7 +63,8 @@ const subject = {
 
 const assignment = {
 	getAssignments : serviceURL + 'getAssignments',
-	addAssignment : serviceURL + 'addAssignment'
+	addAssignment : serviceURL + 'addAssignment',
+	updateAssignment : serviceURL + 'updateAssignment'
 }
 
 const role = {
