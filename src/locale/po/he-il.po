@@ -684,6 +684,9 @@ msgstr "מרחב למידה"
 msgid "Assignment"
 msgstr "משימות"
 
+msgid "Insights"
+msgstr "ניתוח"
+
 msgid "Role"
 msgstr "תפקיד"
 

@@ -20,7 +20,8 @@ const Goal = require('./models/lov_goals')(sequelize, Sequelize.DataTypes);
 const LessonGoals = require('./models/rel_lessons_goals')(sequelize, Sequelize.DataTypes);
 const Assignment = require('./models/tbl_assignments')(sequelize, Sequelize.DataTypes);
 const AssignmentLessons = require('./models/rel_assignments_lessons')(sequelize, Sequelize.DataTypes);
+const Edit = require('./models/tbl_edits')(sequelize, Sequelize.DataTypes);
 
 module.exports = {
-    Story,Asset, AssetType, Person, Lesson, LessonStories, Goal, LessonGoals,Assignment,AssignmentLessons
+    Story,Asset, AssetType, Person, Lesson, LessonStories, Goal, LessonGoals,Assignment,AssignmentLessons,Edit
 }

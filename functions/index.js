@@ -9,6 +9,7 @@ const goal = require('./repositories/goal');
 const lessonGoals = require('./repositories/lessonGoals');
 const assignment = require('./repositories/assignment');
 const assignmentLessons = require('./repositories/assignmentLessons');
+const edit = require('./repositories/edit');
 
 
 const cors = require('cors')({
@@ -313,6 +314,46 @@ exports.addGoal = functions.https.onRequest((req, res) => {
 	});
 });
 
+exports.getEdits = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return edit.getAll().then(data => {
+		return res.send(data);
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
+exports.savePassageAsVersion = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return edit.update(req.body.passage, {
+		status: 2
+	}).then(data => {
+		return edit.add(req.body).then(data => {
+			return res.send(data);
+		}).catch(err => {
+			return res.status(500).send(err);
+		});
+	})
+
+});
+
+exports.selectEdit = functions.https.onRequest((req, res) => {
+	cors(req, res, () => {});
+
+	return edit.update(req.body.passage, {
+		status: 2
+	}).then(data => {
+		return edit.updateEdit(req.body.id,{status : 1}).then(data=>{
+			return res.send(data);
+		})
+		
+	}).catch(err => {
+		return res.status(500).send(err);
+	});
+});
+
 const validateStudentObj = obj => {
 	return obj && obj.first_name && obj.surname && obj.birth_date && obj.email && obj.phone && obj.class && obj.role;
 }
@@ -548,19 +589,19 @@ exports.getData = functions.https.onRequest((req, res) => {
 
 				const passagesVal = passages.val();
 				let passagesResponse = {};
-				for( passage in passagesVal){
-					if(passage.IsDeleted !==true){
-						passagesResponse[passage] =passage;
+				for (passage in passagesVal) {
+					if (passage.IsDeleted !== true) {
+						passagesResponse[passage] = passage;
 					}
 				}
 
-				
+
 
 				cors(req, res, () => {});
 
 				return res.send({
 					stories: results || [],
-					passages: passagesVal|| []
+					passages: passagesVal || []
 				});
 
 			}, err => res.status(500).send(err));
@@ -582,8 +623,10 @@ exports.syncData = functions.https.onRequest((req, res) => {
 		return a
 	}, {});
 
-	(req.body.deletedPassages||[]).forEach(p=>{
-		passages[p] = {IsDeleted : true}
+	(req.body.deletedPassages || []).forEach(p => {
+		passages[p] = {
+			IsDeleted: true
+		}
 	});
 
 
@@ -600,7 +643,7 @@ exports.syncProgressData = functions.https.onRequest((req, res) => {
 	cors(req, res, () => {});
 
 	return admin.database().ref('/progress/' + req.body.userId).update(req.body.progress).then((a, b, c) => {
-			return res.send('success');
+		return res.send('success');
 	});
 });
 
@@ -618,7 +661,7 @@ exports.postMessage = functions.https.onRequest((req, res) => {
 		item[message.id] = message;
 
 		return admin.database().ref('/messages').update(item).then(() => {
-			return res.send( 'success');
+			return res.send('success');
 		})
 	} else {
 		res.status(422).send('Missing fields');
@@ -638,22 +681,22 @@ exports.getAssignments = functions.https.onRequest((req, res) => {
 
 	return assignment.getAll().then(assignments => {
 		return assignmentLessons.getAll().then(assignmentLessons => {
-			var m = assignments.map(s=>Object.assign(
-				{},
-				{assignment : s},
-				{lessons : assignmentLessons.filter(al=>al.assignment_id===s.id)}
-			))
+			var m = assignments.map(s => Object.assign({}, {
+				assignment: s
+			}, {
+				lessons: assignmentLessons.filter(al => al.assignment_id === s.id)
+			}))
 
 			return admin.database().ref('/progress').once("value", (progressData) => {
 				var progress = progressData.val();
 
-				m.forEach(as=>{
-					
+				m.forEach(as => {
+
 				})
 				return res.send(m);
 			})
 
-		
+
 		});
 	}).catch(err => {
 		return res.status(500).send(err);

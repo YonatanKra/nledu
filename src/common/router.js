@@ -26,8 +26,10 @@ const ClassesManager = require('../components/tools/classes');
 const LearnManager = require('../components/tools/learn');
 const LessonsManager = require('../components/tools/lessons');
 const LessonView = require('../components/tools/lessons/lesson');
+const InsightsView = require('../components/tools/insights');
 const AssignmentView = require('../components/tools/assignments');
 const HomeManager = require('../components/tools/home');
+const EditsManager = require('../components/edits-view');
 
 const {startTrack} = require('./sessionTracker');
 
@@ -65,6 +67,9 @@ TwineRouter.map({
 			},
 			'/classes': {
 				component: ClassesManager
+			},
+			'/insights': {
+				component: InsightsView
 			},
 			'/lessons': {
 				component: LessonsManager
@@ -122,7 +127,22 @@ TwineRouter.map({
 					},
 				}
 			},
+			'/stories/:id/edits/:pid': {
+				component: {
+					template: '<edits-view :story-id="id" :passage-id="pid"></edits-view>',
 
+					components: {
+						'edits-view': EditsManager
+					},
+
+					data() {
+						return {
+							id: this.$route.params.id,
+							pid: this.$route.params.pid
+						};
+					}
+				},
+			},
 			'/stories/:id': {
 				component: {
 					template: '<div><story-edit :story-id="id"></story-edit></div>',

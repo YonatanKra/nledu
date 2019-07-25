@@ -43,7 +43,10 @@ const goal = {
 const story = {
 	addStoryMetaData : serviceURL + 'addStoryMetaData',
 	updateStoryMetaData : serviceURL + 'updateStoryMetaData',
-	getData : serviceURL + 'getData'
+	getData : serviceURL + 'getData',
+	savePassageAsVersion : serviceURL + 'savePassageAsVersion',
+	getEdits : serviceURL + 'getEdits',
+	selectEdit : serviceURL + 'selectEdit'
 }
 
 const classes = {

@@ -71,6 +71,13 @@ const initTools = ()=>{
 		icon: 'assignment',
 		path: '#!/home/assignment'
 	});
+
+	tools.push({
+		name: 'Insights',
+		order: 2,
+		icon: 'pie_chart',
+		path: '#!/home/insights'
+	});
 }
 initTools();
 module.exports = Vue.extend({

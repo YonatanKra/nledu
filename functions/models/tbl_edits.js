@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
 		id: {
 			type: DataTypes.TEXT,
 			allowNull: false,
-			defaultValue: 'uuid_in((md5((random())',
+			defaultValue:  DataTypes.UUIDV4,
 			primaryKey: true
 		},
 		person: {
@@ -26,13 +26,26 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		modified: {
 			type: DataTypes.DATE,
-			allowNull: true,
+			allowNull: false,
 			defaultValue: sequelize.fn('now')
 		},
-		notes: {
+		textHTML: {
 			type: DataTypes.TEXT,
-			allowNull: true
-		}
+			allowNull: false
+		},
+		passage: {
+			type: DataTypes.TEXT,
+			allowNull: false
+		},
+		status: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: '1',
+			references: {
+				model: 'lov_statuses',
+				key: 'id'
+			}
+		},
 	}, {
 		tableName: 'tbl_edits'
 	});

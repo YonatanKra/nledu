@@ -6,6 +6,13 @@
 			<input type="text" id="passageName" placeholder="{{ 'Passage Name' | say }}" v-model="userPassageName">
 
 			<input type="text" id="passageDuration" placeholder="{{ 'Passage Duration' | say }}" v-model="userPassageDuration">
+
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" v-on:click="saveAsVersion">
+				שמור גרסא
+			  </button>
+			  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" v-on:click="showEdits">
+			ניהול גרסאות
+			  </button>
 		</span>
 
 		<p class="error" v-if="!userPassageNameValid">

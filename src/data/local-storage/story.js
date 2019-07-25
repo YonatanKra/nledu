@@ -79,6 +79,52 @@ const story = module.exports = {
 		}
 
 	},
+	async getAllEdits(){	
+		const res = await axios.get(storyPath.getEdits);
+		const data = await res.data;
+
+
+		return data;
+	},
+	async selectEdit(id,passage,story){
+		try {
+			 const passageData = {
+				id : id,
+				story : story,
+				passage : passage
+			 }
+
+			const res = axios.post(storyPath.selectEdit, passageData);
+			const data = await res.data;
+
+			showMessage("passage version selected succesfully");
+
+		} catch (error) {
+			showMessage('Error saving passage: ' + err.message + " " + err.response.data);
+		}
+	},
+	async savePassageAsVersion(passage, user){
+		if (!passage.id) {
+			throw new Error('Story has no id');
+		}
+
+		try {
+			 const passageData = {
+				textHTML : passage.text,
+				passage : passage.id,
+				person : user,
+				story : passage.story
+			 }
+
+			const res = axios.post(storyPath.savePassageAsVersion, passageData);
+			const data = await res.data;
+
+			showMessage("passage version created succesfully");
+
+		} catch (error) {
+			showMessage('Error saving passage: ' + err.message + " " + err.response.data);
+		}
+	},
 	saveStory(transaction, story) {
 		if (!story.id) {
 			throw new Error('Story has no id');

@@ -4,12 +4,22 @@ A modal dialog for editing a single passage.
 
 const Vue = require('vue');
 const locale = require('../../locale');
-const { thenable } = require('../../vue/mixins/thenable');
-const { changeLinksInStory, updatePassage } = require('../../data/actions/passage');
-const { loadFormat } = require('../../data/actions/story-format');
-const { passageDefaults } = require('../../data/store/story');
-
-
+const {
+	thenable
+} = require('../../vue/mixins/thenable');
+const {
+	changeLinksInStory,
+	updatePassage
+} = require('../../data/actions/passage');
+const {
+	loadFormat
+} = require('../../data/actions/story-format');
+const {
+	passageDefaults
+} = require('../../data/store/story');
+const {
+	savePassageAsVersion
+} = require('../../data/local-storage/story');
 
 require('./index.less');
 
@@ -21,7 +31,7 @@ module.exports = Vue.extend({
 		storyId: '',
 		oldWindowTitle: '',
 		userPassageName: '',
-		userPassageDuration : 0,
+		userPassageDuration: 0,
 		saveError: '',
 		origin: null
 	}),
@@ -40,34 +50,44 @@ module.exports = Vue.extend({
 		userPassageNameValid() {
 			return !(this.parentStory.passages.some(
 				passage => passage.name === this.userPassageName &&
-					passage.id !== this.passage.id
+				passage.id !== this.passage.id
 			));
 		},
-		
+
 		autocompletions() {
 			return this.parentStory.passages.map(passage => passage.name);
 		}
 	},
 
 	methods: {
+		saveAsVersion() {
+			savePassageAsVersion(this.passage, this.currentUser.uid)
+		},
+		showEdits() {
+			window.location.hash += '/edits/' + this.passage.id;
+
+			
+		},
 		autocomplete() {
 
-			},
+		},
 
 		saveText(text) {
 			debugger;
 			this.updatePassage(
 				this.parentStory.id,
-				this.passage.id,
-				{ text: text }
+				this.passage.id, {
+					text: text
+				}
 			);
 		},
 
 		saveTags(tags) {
 			this.updatePassage(
 				this.parentStory.id,
-				this.passage.id,
-				{ tags: tags }
+				this.passage.id, {
+					tags: tags
+				}
 			);
 		},
 
@@ -86,8 +106,10 @@ module.exports = Vue.extend({
 
 					this.updatePassage(
 						this.parentStory.id,
-						this.passage.id,
-						{ name: this.userPassageName, min_duration : this.userPassageDuration }
+						this.passage.id, {
+							name: this.userPassageName,
+							min_duration: this.userPassageDuration
+						}
 					);
 				}
 
@@ -121,7 +143,7 @@ module.exports = Vue.extend({
 					modeName += `-${/^\d+/.exec(format.version)}`;
 				}
 
-		
+
 			});
 		}
 
@@ -134,9 +156,9 @@ module.exports = Vue.extend({
 
 	components: {
 		'modal-dialog': require('../../ui/modal-dialog'),
-		'tags-selector' : require('../../components/tags-selector'),
-		'froala' : require('../../components/froala'),
-		'slide-panel' : require('../../components/slide-panel')
+		'tags-selector': require('../../components/tags-selector'),
+		'froala': require('../../components/froala'),
+		'slide-panel': require('../../components/slide-panel')
 	},
 
 	vuex: {
@@ -147,7 +169,8 @@ module.exports = Vue.extend({
 		},
 
 		getters: {
-			allStories: state => state.story.stories
+			allStories: state => state.story.stories,
+			currentUser: state => state.auth.currentUser,
 		}
 	},
 
