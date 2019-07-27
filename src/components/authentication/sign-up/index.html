@@ -2,7 +2,7 @@
 
 	<div class="demo-card-wide mdl-card mdl-shadow--2dp">
 		<div class="mdl-card__title">
-			<h2 class="mdl-card__title-text">Sign Up</h2>
+			<h2 class="mdl-card__title-text">הרשמה</h2>
 		</div>
 		<div class="mdl-card__supporting-text">
 
@@ -11,16 +11,16 @@
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="insert_sign_up_first_name" name="firstName"
 							v-model="firstName" pattern="\w{2,}" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_first_name">First Name</label>
-						<span class="mdl-textfield__error">Enter at least 2 characters</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_first_name">שם פרטי</label>
+						<span class="mdl-textfield__error">הזן לפחות שני תווים</span>
 					</div>
 				</div>
 				<div class="mdl-cell mdl-cell--6-col">
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="insert_sign_up_surname" name="Surname"
 							v-model="surname" pattern="\w{2,}" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_surname">Surname</label>
-						<span class="mdl-textfield__error">Enter at least 2 characters</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_surname">שם משפחה</label>
+						<span class="mdl-textfield__error">הזן לפחות שני תווים</span>
 					</div>
 				</div>
 			</div>
@@ -29,16 +29,16 @@
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="insert_sign_up_email" name="email"
 							v-model="email" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_email">Email</label>
-						<span class="mdl-textfield__error">Enter correct email</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_email">כתובת מייל</label>
+						<span class="mdl-textfield__error">הזן כתובת תקינה</span>
 					</div>
 				</div>
 				<div class="mdl-cell mdl-cell--4-col">
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="insert_sign_up_password" name="password"
 							v-model="password" pattern="\w{6,}" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_password">Password</label>
-						<span class="mdl-textfield__error">Enter at least 6 characters</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_password">סיסמא</label>
+						<span class="mdl-textfield__error">הזן לפחות 6 תווים</span>
 					</div>
 				</div>
 			</div>
@@ -47,8 +47,8 @@
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="insert_sign_up_phone" name="phone"
 							v-model="phone" pattern="-?[0-9]*(\.[0-9]+)?" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_phone">Phone Number</label>
-						<span class="mdl-textfield__error">Enter correct phone number</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_phone">מספר טלפון</label>
+						<span class="mdl-textfield__error">הזן מספר תקין</span>
 					</div>
 				</div>
 
@@ -56,15 +56,15 @@
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" id="insert_sign_up_birth_date" name="birthDate"
 							v-model="birthDate" placeholder="dd/mm/yyyy" pattern="^\d{1,2}\/\d{1,2}\/\d{4}$" form-required>
-						<label class="mdl-textfield__label" for="insert_sign_up_birth_date">BirthDate</label>
-						<span class="mdl-textfield__error">Enter a valid date</span>
+						<label class="mdl-textfield__label" for="insert_sign_up_birth_date">תאריך לידה</label>
+						<span class="mdl-textfield__error">הזן תאריך תקין</span>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="mdl-card__actions mdl-card--border">
 			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" v-on:click="signUpDelegate" :disabled="isDisabled" >
-				Register
+				הרשמה
 			</a>
 		</div>
 	</div>
