@@ -28,18 +28,26 @@ module.exports = Vue.extend({
 	ready() {
 		const chartElement = this.$el.querySelector('.chart');
 
-		const data =[['x'].concat(Array.apply(null, {
-			length: 30
-		}).map(Number.call, Number).map(t => moment().subtract(t + 1, 'day').format('YYYY-MM-DD')))]
-	.concat(this.students.filter(s => s.role === 4).map(s => [s.first_name + ' ' + s.surname].concat(Array.from({
-		length: 30
-	}, () => Math.floor(Math.random() * 40)))));
+		const data = [
+				['x'].concat(Array.apply(null, {
+					length: 30
+				}).map(Number.call, Number).map(t => moment().subtract(t + 1, 'day').format('YYYY-MM-DD')))
+			]
+			.concat(this.students.filter((s, i) => s.role === 4 && i <= 6).map(s => [s.first_name + ' ' + s.surname].concat(Array.from({
+				length: 30
+			}, () => Math.floor(Math.random() * 40)))));
 
 		var chart = c3.generate({
 			bindto: chartElement,
 			data: {
 				x: 'x',
 				columns: data
+			},
+
+			spline: {
+				interpolation: {
+					type: 'basis'
+				}
 			},
 			axis: {
 				x: {

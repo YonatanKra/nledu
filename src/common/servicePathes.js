@@ -10,6 +10,7 @@ const storage = {
 }
 const assetsPath = {
 	getAssets: serviceURL + 'getAssets',
+	getAssetTypes: serviceURL + 'getAssetTypes',
 	addAsset: serviceURL + 'addAsset'
 }
 
